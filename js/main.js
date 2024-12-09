@@ -24,7 +24,17 @@ const crosswordData = {
 // Vytvoření mřížky
 function createGrid() {
     const grid = document.getElementById('crosswordGrid');
-    const tooltip = document.getElementById('tooltip');
+    const tooltip = document.createElement('div');
+    tooltip.id = 'tooltip';
+    tooltip.style.position = 'absolute';
+    tooltip.style.backgroundColor = '#002f4f';
+    tooltip.style.color = '#ffffff';
+    tooltip.style.padding = '5px 10px';
+    tooltip.style.borderRadius = '5px';
+    tooltip.style.display = 'none';
+    tooltip.style.zIndex = '10';
+    tooltip.style.fontSize = '14px';
+    document.body.appendChild(tooltip);
 
     for (let i = 1; i <= crosswordData.size; i++) {
         for (let j = 1; j <= crosswordData.size; j++) {
@@ -35,21 +45,49 @@ function createGrid() {
             cell.dataset.row = i;
             cell.dataset.col = j;
             cell.disabled = true;
+
+            // Tooltip on hover or focus
+            cell.addEventListener('mouseenter', (event) => {
+                const wordId = event.target.dataset.wordId;
+                if (wordId) {
+                    tooltip.textContent = crosswordData.words[wordId].clue;
+                    tooltip.style.left = `${event.pageX + 10}px`;
+                    tooltip.style.top = `${event.pageY + 10}px`;
+                    tooltip.style.display = 'block';
+                }
+            });
+
+            cell.addEventListener('mouseleave', () => {
+                tooltip.style.display = 'none';
+            });
+
+            cell.addEventListener('focus', (event) => {
+                const wordId = event.target.dataset.wordId;
+                if (wordId) {
+                    tooltip.textContent = crosswordData.words[wordId].clue;
+                    tooltip.style.left = `${event.pageX + 10}px`;
+                    tooltip.style.top = `${event.pageY + 10}px`;
+                    tooltip.style.display = 'block';
+                }
+            });
+
+            cell.addEventListener('blur', () => {
+                tooltip.style.display = 'none';
+            });
+
             grid.appendChild(cell);
         }
     }
 
+    // Enable grid cells for the crossword words
     for (const [id, word] of Object.entries(crosswordData.words)) {
         const { row, col, answer, direction } = word;
-
         for (let i = 0; i < answer.length; i++) {
             const currentRow = direction === 'across' ? row : row + i;
             const currentCol = direction === 'across' ? col + i : col;
             const cell = grid.querySelector(`.cell[data-row="${currentRow}"][data-col="${currentCol}"]`);
             cell.disabled = false;
             cell.dataset.wordId = id;
-            cell.addEventListener('focus', () => highlightClue(id, word.direction));
-            cell.addEventListener('blur', () => removeHighlight());
         }
     }
 }
