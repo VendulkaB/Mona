@@ -50,7 +50,7 @@
             grid-template-rows: 1fr repeat(12, 40px);
             gap: 2px;
         }
-        .grid-row-label, .grid-column-label {
+        .grid-column-label, .grid-row-label {
             font-size: 14px;
             color: #00ffcc;
             text-align: center;
@@ -167,16 +167,7 @@
     <h1>Křížovka pro Móňu</h1>
     <div class="content">
         <div class="grid-container">
-            <div class="grid-wrapper">
-                <!-- Sloupcové popisky -->
-                <div class="grid-column-label"></div>
-                ${Array.from({ length: 12 }, (_, i) => `<div class="grid-column-label">${i + 1}</div>`).join('')}
-                <!-- Řádkové popisky a mřížka -->
-                ${Array.from({ length: 12 }, (_, i) =>
-                    `<div class="grid-row-label">${i + 1}</div>` +
-                    Array.from({ length: 12 }, () => `<div class="cell"></div>`).join('')
-                ).join('')}
-            </div>
+            <div class="grid-wrapper" id="crosswordGrid"></div>
         </div>
         <div class="clues-container">
             <div class="clues">
@@ -196,19 +187,57 @@
     <script>
         const crosswordData = {
             size: 12,
-            words: { /* Data zůstávají stejná */ }
+            words: {
+                1: { clue: "Hlavní město Itálie", answer: "RIM", row: 1, col: 1, direction: "across" },
+                2: { clue: "Největší kontinent světa", answer: "ASIE", row: 2, col: 4, direction: "down" },
+                3: { clue: "Známý vědec, který formuloval teorii relativity", answer: "EINSTEIN", row: 4, col: 2, direction: "across" },
+                4: { clue: "Základní část rostliny, která je pod zemí", answer: "KOREN", row: 6, col: 3, direction: "down" },
+                5: { clue: "Řeka protékající Londýnem", answer: "TEMZE", row: 8, col: 1, direction: "across" },
+                6: { clue: "Slavný italský malíř, autor obrazu Mona Lisa", answer: "DAVINCI", row: 2, col: 7, direction: "down" },
+                7: { clue: "Planeta pojmenovaná po římském bohu války", answer: "MARS", row: 10, col: 2, direction: "across" },
+                8: { clue: "Hudební nástroj s klávesami", answer: "PIANO", row: 3, col: 8, direction: "down" },
+                9: { clue: "První prezident Československa", answer: "MASARYK", row: 11, col: 3, direction: "across" },
+                10: { clue: "Název pro vědecký pokus", answer: "EXPERIMENT", row: 1, col: 6, direction: "down" }
+            }
         };
 
         function createGrid() {
-            // Kód pro generování mřížky
+            const grid = document.getElementById('crosswordGrid');
+            for (let i = 0; i < crosswordData.size + 1; i++) {
+                for (let j = 0; j < crosswordData.size + 1; j++) {
+                    const div = document.createElement('div');
+                    if (i === 0 && j > 0) {
+                        div.textContent = j;
+                        div.className = 'grid-column-label';
+                    } else if (j === 0 && i > 0) {
+                        div.textContent = i;
+                        div.className = 'grid-row-label';
+                    } else if (i > 0 && j > 0) {
+                        div.className = 'cell';
+                    }
+                    grid.appendChild(div);
+                }
+            }
         }
 
         function generateClues() {
-            // Kód pro generování nápověd
+            const acrossClues = document.getElementById('acrossClues');
+            const downClues = document.getElementById('downClues');
+
+            for (const [id, word] of Object.entries(crosswordData.words)) {
+                const clueElement = document.createElement('p');
+                clueElement.textContent = `${id}. ${word.clue}`;
+
+                if (word.direction === 'across') {
+                    acrossClues.appendChild(clueElement);
+                } else if (word.direction === 'down') {
+                    downClues.appendChild(clueElement);
+                }
+            }
         }
 
         function checkSolution() {
-            // Kód pro kontrolu řešení
+            alert("Funkce pro kontrolu bude přidána!");
         }
 
         createGrid();
