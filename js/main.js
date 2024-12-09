@@ -66,4 +66,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
         crosswordData.tajenka.forEach(({ row, col }) => {
             const index = (row - 1) * (crosswordData.size + 1) + col;
-  
+            const cell = grid.children[index];
+            const input = cell.querySelector("input");
+            if (input) input.classList.add("cell-tajenka");
+        });
+    }
+
+    function generateClues() {
+        const acrossClues = document.getElementById("acrossClues");
+        const downClues = document.getElementById("downClues");
+
+        for (const [id, word] of Object.entries(crosswordData.words)) {
+            const clueElement = document.createElement("p");
+            clueElement.textContent = `${id}. ${word.clue}`;
+            if (word.direction === "across") acrossClues.appendChild(clueElement);
+            else downClues.appendChild(clueElement);
+        }
+    }
+
+    function checkSolution() {
+        const solution = crosswordData.tajenka
+            .map(({ row, col }) => {
+                const index = (row - 1) * (crosswordData.size + 1) + col;
+                const cell = document.getElementById("crosswordGrid").children[index];
+                const input = cell.querySelector("input");
+                return input ? input.value.toUpperCase() : "";
+            })
+            .join("");
+
+        alert(solution === "OTECFURA" ? "Tajenka je správně: Otec Fura!" : "Tajenka není správná.");
+    }
+
+    createGrid();
+    generateClues();
+});
