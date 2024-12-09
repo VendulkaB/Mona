@@ -1,0 +1,92 @@
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, #0e172c, #1e2a48, #2f4b6e);
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.photo-header {
+    width: 100%;
+    height: 250px;
+    background-image: url('../Image (21).jpg');
+    background-size: cover;
+    background-position: center;
+    border-bottom: 5px solid #00ffcc;
+}
+
+h1 {
+    font-size: clamp(1.5rem, 5vw, 3rem);
+    color: #00ffff;
+    text-shadow: 0 0 10px #00ffff;
+}
+
+.grid-container {
+    max-width: 90vw;
+    margin: 20px auto;
+    overflow-x: auto;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(12, 40px);
+    grid-template-rows: repeat(12, 40px);
+    gap: 2px;
+    background: #333;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.cell {
+    width: 100%;
+    height: 100%;
+    background: white;
+    border: 1px solid #00ffff;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.cell-number {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    font-size: 10px;
+}
+
+.cell-tajenka {
+    background: #00ffcc;
+}
+
+.clues-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    max-width: 90vw;
+    margin: 20px auto;
+}
+
+@media (min-width: 768px) {
+    .clues-container {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.clues {
+    background: #1e2a48;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: left;
+}
+
+.btn-check {
+    background: #00ffcc;
+    color: #1e2a48;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}

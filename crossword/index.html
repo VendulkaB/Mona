@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Křížovka pro Móňu</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="photo-header"></div>
+    <h1>Křížovka pro Móňu</h1>
+    
+    <div class="grid-container">
+        <div class="grid-labels">
+            <!-- Čísla sloupců -->
+        </div>
+        <div class="grid-with-rows">
+            <div class="row-labels">
+                <!-- Čísla řádků -->
+            </div>
+            <div id="crosswordGrid" class="grid"></div>
+        </div>
+    </div>
+
+    <div class="clues-container">
+        <div class="clues">
+            <h3>Vodorovně</h3>
+            <div id="acrossClues"></div>
+        </div>
+        <div class="clues">
+            <h3>Svisle</h3>
+            <div id="downClues"></div>
+        </div>
+    </div>
+
+    <button class="btn-check" onclick="checkSolution()">Zkontrolovat řešení</button>
+    <script src="js/main.js"></script>
+</body>
+</html>
