@@ -9,10 +9,10 @@
 </head>
 <body>
     <div class="photo-header">
-        <img src="img/Image (21).jpg" alt="Křížovka pro Móňu" loading="lazy">
+        <img src="img/Image%20(21).jpg" alt="Křížovka pro Móňu" loading="lazy">
     </div>
 
-    <div class="puzzle-container">
+    <main class="puzzle-container">
         <h1>Křížovka pro Móňu</h1>
 
         <div id="crosswordGrid" class="grid-container"></div>
@@ -22,11 +22,23 @@
                 <h3>Vodorovně</h3>
                 <div id="acrossClues"></div>
             </div>
-        </main>
+            
+            <div class="clues">
+                <h3>Svisle</h3>
+                <div id="downClues"></div>
+            </div>
+        </div>
+
+        <button class="btn-check" onclick="checkSolution()">
+            Zkontrolovat řešení
+        </button>
+    </main>
+
     <footer>
         <p>Vytvořeno s láskou ❤️</p>
     </footer>
 
+    <div id="tooltip"></div>
     <script src="js/main.js"></script>
 </body>
 </html>
