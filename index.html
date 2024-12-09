@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(to bottom, #d1f4ff, #8ecae6, #219ebc);
+            background: linear-gradient(to bottom, #d9f0ff, #bde7f8, #a1dff0);
             color: #333;
             margin: 0;
             padding: 0;
@@ -15,28 +15,29 @@
         }
         h1 {
             color: #023047;
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             margin-top: 20px;
             text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
         }
-        .grid-container {
+        .content {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin: 20px auto;
+            padding: 20px;
+        }
+        .grid-container {
+            margin: 20px 0;
             padding: 10px;
-            width: 100%;
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 90%;
+            overflow: auto;
         }
         .grid {
             display: grid;
             grid-template-columns: repeat(12, 40px);
             gap: 2px;
-            background-color: #023047;
-            padding: 10px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-            max-width: 100%;
-            overflow: auto;
         }
         .cell {
             position: relative;
@@ -65,45 +66,51 @@
             font-weight: normal;
             color: #023047;
         }
-        .clues {
+        .clues-container {
             display: flex;
-            justify-content: space-between;
             flex-wrap: wrap;
-            margin: 20px;
-            padding: 10px;
-            max-width: 800px;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 20px;
+            max-width: 1000px;
         }
-        .clues div {
-            width: 100%;
-            text-align: center;
+        .clues {
+            width: 45%;
+            background-color: #f5faff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
         .clues h3 {
             color: #023047;
             font-size: 1.8rem;
+            margin-bottom: 10px;
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
         }
         .clues p {
             margin: 10px 0;
             font-size: 1rem;
             text-align: left;
+            color: #023047;
         }
         .btn-check {
             background-color: #023047;
             color: white;
-            padding: 10px 30px;
+            padding: 12px 30px;
             border: none;
             border-radius: 25px;
             font-size: 1.2rem;
             cursor: pointer;
-            margin-top: 20px;
+            margin-top: 30px;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
         }
         .btn-check:hover {
             background-color: #03538a;
         }
         footer {
-            margin-top: 20px;
-            font-size: 0.8rem;
+            margin-top: 30px;
+            font-size: 0.9rem;
             color: #023047;
         }
 
@@ -121,6 +128,10 @@
             .cell-number {
                 font-size: 10px;
             }
+            .clues {
+                width: 100%;
+                margin: 0 auto;
+            }
             .clues h3 {
                 font-size: 1.5rem;
             }
@@ -129,50 +140,29 @@
             }
             .btn-check {
                 font-size: 1rem;
-                padding: 8px 20px;
-            }
-        }
-        @media (max-width: 480px) {
-            .grid {
-                grid-template-columns: repeat(12, 25px);
-            }
-            .cell {
-                width: 25px;
-                height: 25px;
-                font-size: 12px;
-            }
-            .cell-number {
-                font-size: 8px;
-            }
-            .clues h3 {
-                font-size: 1.2rem;
-            }
-            .clues p {
-                font-size: 0.8rem;
-            }
-            .btn-check {
-                font-size: 0.9rem;
-                padding: 6px 15px;
+                padding: 10px 20px;
             }
         }
     </style>
 </head>
 <body>
     <h1>Křížovka pro Móňu</h1>
-    <div class="grid-container">
-        <div class="grid" id="crosswordGrid"></div>
-    </div>
-    <div class="clues">
-        <div>
-            <h3>Vodorovně</h3>
-            <div id="acrossClues"></div>
+    <div class="content">
+        <div class="grid-container">
+            <div class="grid" id="crosswordGrid"></div>
         </div>
-        <div>
-            <h3>Svisle</h3>
-            <div id="downClues"></div>
+        <div class="clues-container">
+            <div class="clues">
+                <h3>Vodorovně</h3>
+                <div id="acrossClues"></div>
+            </div>
+            <div class="clues">
+                <h3>Svisle</h3>
+                <div id="downClues"></div>
+            </div>
         </div>
+        <button class="btn-check" onclick="checkSolution()">Zkontrolovat řešení</button>
     </div>
-    <button class="btn-check" onclick="checkSolution()">Zkontrolovat řešení</button>
     <footer>
         <p>Vytvořeno s láskou ❤️</p>
     </footer>
@@ -222,7 +212,6 @@
                     const input = cell.querySelector('input');
                     input.disabled = false;
 
-                    // Přidání čísla otázky na začátek slova
                     if (i === 0) {
                         const number = document.createElement('span');
                         number.className = 'cell-number';
