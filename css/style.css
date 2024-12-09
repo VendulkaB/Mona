@@ -1,3 +1,4 @@
+/* Globální stylování */
 body {
     font-family: 'Arial', sans-serif;
     background: linear-gradient(to bottom, #001f3f, #005f7f);
@@ -34,9 +35,9 @@ h1 {
     gap: 2px;
     margin: 20px auto;
     padding: 10px;
-    background: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    background: transparent;
+    max-width: 100%;
+    overflow-x: auto;
 }
 
 .cell {
