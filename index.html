@@ -7,16 +7,17 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #fff8e1;
+            background: linear-gradient(to bottom, #d1f4ff, #b2e4fa, #8cd4f3);
             color: #333;
             margin: 0;
             padding: 0;
             text-align: center;
         }
         h1 {
-            color: #d35400;
-            font-size: 2.5rem;
+            color: #045c99;
+            font-size: 2.8rem;
             margin-top: 20px;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
         }
         .grid-container {
             display: flex;
@@ -27,9 +28,9 @@
         }
         .grid {
             display: grid;
-            grid-template-columns: repeat(10, 40px);
+            grid-template-columns: repeat(12, 40px);
             gap: 2px;
-            background-color: #d35400;
+            background-color: #045c99;
             padding: 10px;
             border-radius: 10px;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
@@ -37,18 +38,19 @@
         .cell {
             width: 40px;
             height: 40px;
-            background-color: #fff;
+            background-color: #e6f9ff;
+            border: 2px solid #045c99;
             text-align: center;
             font-size: 18px;
             font-weight: bold;
-            border: none;
+            color: #045c99;
             text-transform: uppercase;
-            color: #333;
             outline: none;
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
         }
         .cell:disabled {
-            background-color: #d35400;
-            color: #fff;
+            background-color: #045c99;
+            color: white;
             font-weight: normal;
         }
         .clues {
@@ -62,16 +64,17 @@
             width: 45%;
         }
         .clues h3 {
-            color: #d35400;
-            font-size: 1.5rem;
+            color: #045c99;
+            font-size: 1.8rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
         }
         .clues p {
-            margin: 5px 0;
+            margin: 10px 0;
             font-size: 1rem;
             text-align: left;
         }
         .btn-check {
-            background-color: #d35400;
+            background-color: #045c99;
             color: white;
             padding: 10px 30px;
             border: none;
@@ -82,12 +85,12 @@
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
         }
         .btn-check:hover {
-            background-color: #e67e22;
+            background-color: #0679b5;
         }
         footer {
             margin-top: 20px;
             font-size: 0.8rem;
-            color: #888;
+            color: #045c99;
         }
     </style>
 </head>
@@ -111,22 +114,22 @@
         <p>Vytvořeno s láskou ❤️</p>
     </footer>
     <script>
-        // Data pro křížovku
         const crosswordData = {
-            size: 10,
+            size: 12,
             words: {
-                1: { clue: "Hlavní město České republiky", answer: "PRAHA", row: 1, col: 1, direction: "across" },
-                2: { clue: "Jaké číslo je římsky V?", answer: "PET", row: 3, col: 1, direction: "across" },
-                3: { clue: "Planeta nejblíže Slunci", answer: "MERKUR", row: 5, col: 2, direction: "across" },
-                4: { clue: "Slavný český král, který založil univerzitu", answer: "KAREL", row: 7, col: 3, direction: "across" },
-                5: { clue: "Největší oceán na světě", answer: "TICHY", row: 1, col: 4, direction: "down" },
-                6: { clue: "Chemická značka pro zlato", answer: "AU", row: 3, col: 3, direction: "down" },
-                7: { clue: "Jaké číslo má římskou podobu X?", answer: "DESET", row: 5, col: 5, direction: "down" },
-                8: { clue: "Jaké je hlavní město Francie?", answer: "PARIZ", row: 1, col: 8, direction: "down" }
+                1: { clue: "Hlavní město Itálie", answer: "RIM", row: 1, col: 1, direction: "across" },
+                2: { clue: "Největší kontinent světa", answer: "ASIE", row: 2, col: 4, direction: "down" },
+                3: { clue: "Známý vědec, který formuloval teorii relativity", answer: "EINSTEIN", row: 4, col: 2, direction: "across" },
+                4: { clue: "Základní část rostliny, která je pod zemí", answer: "KOREN", row: 6, col: 3, direction: "down" },
+                5: { clue: "Řeka protékající Londýnem", answer: "TEMZE", row: 8, col: 1, direction: "across" },
+                6: { clue: "Slavný italský malíř, autor obrazu Mona Lisa", answer: "DAVINCI", row: 2, col: 7, direction: "down" },
+                7: { clue: "Planeta pojmenovaná po římském bohu války", answer: "MARS", row: 10, col: 2, direction: "across" },
+                8: { clue: "Hudební nástroj s klávesami", answer: "PIANO", row: 3, col: 8, direction: "down" },
+                9: { clue: "První prezident Československa", answer: "MASARYK", row: 11, col: 3, direction: "across" },
+                10: { clue: "Název pro vědecký pokus", answer: "EXPERIMENT", row: 1, col: 6, direction: "down" }
             }
         };
 
-        // Vytvoření mřížky
         function createGrid() {
             const grid = document.getElementById('crosswordGrid');
             grid.style.gridTemplateColumns = `repeat(${crosswordData.size}, 40px)`;
@@ -144,7 +147,6 @@
                 }
             }
 
-            // Aktivace políček pro slova
             for (const [id, word] of Object.entries(crosswordData.words)) {
                 const row = word.row - 1;
                 const col = word.col - 1;
@@ -160,43 +162,6 @@
             }
         }
 
-        // Načtení odpovědí uživatele
-        function getUserSolution() {
-            const solution = {};
-            for (const [id, word] of Object.entries(crosswordData.words)) {
-                let userWord = '';
-                const row = word.row - 1;
-                const col = word.col - 1;
-                const length = word.answer.length;
-
-                for (let i = 0; i < length; i++) {
-                    const cellRow = word.direction === 'across' ? row : row + i;
-                    const cellCol = word.direction === 'across' ? col + i : col;
-                    const cell = document.querySelector(`.cell[data-row="${cellRow}"][data-col="${cellCol}"]`);
-                    userWord += cell.value.toUpperCase() || ' ';
-                }
-                solution[id] = userWord.trim();
-            }
-            return solution;
-        }
-
-        // Kontrola řešení
-        function checkSolution() {
-            const solution = getUserSolution();
-            let allCorrect = true;
-
-            for (const [id, userAnswer] of Object.entries(solution)) {
-                const correctAnswer = crosswordData.words[id].answer.toUpperCase();
-                if (userAnswer !== correctAnswer) {
-                    allCorrect = false;
-                    break;
-                }
-            }
-
-            alert(allCorrect ? 'Gratulujeme! Tajenka je správně vyřešena!' : 'Zkontrolujte ještě jednou vaše odpovědi.');
-        }
-
-        // Vygenerování nápověd
         function generateClues() {
             const acrossClues = document.getElementById('acrossClues');
             const downClues = document.getElementById('downClues');
@@ -213,9 +178,13 @@
             }
         }
 
-        // Inicializace
-        createGrid();
-        generateClues();
-    </script>
-</body>
-</html>
+        function checkSolution() {
+            const solution = {};
+            for (const [id, word] of Object.entries(crosswordData.words)) {
+                let userWord = '';
+                const row = word.row - 1;
+                const col = word.col - 1;
+                const length = word.answer.length;
+
+                for (let i = 0; i < length; i++) {
+                    const cellRow
