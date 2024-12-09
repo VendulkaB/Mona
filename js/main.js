@@ -1,4 +1,4 @@
-// Crossword Data
+// Crossword data structure
 const crosswordData = {
     size: 12,
     words: {
@@ -21,18 +21,17 @@ const crosswordData = {
     }
 };
 
-// Initialize the crossword
-function initializeCrossword() {
+// Initialize crossword
+document.addEventListener('DOMContentLoaded', () => {
     createGrid();
     generateClues();
-    setupEventListeners();
-}
+});
 
-// Create the crossword grid
+// Create crossword grid
 function createGrid() {
     const grid = document.getElementById('crosswordGrid');
-    grid.innerHTML = ''; // Clear existing content
-
+    
+    // Create cells
     for (let i = 1; i <= crosswordData.size; i++) {
         for (let j = 1; j <= crosswordData.size; j++) {
             const cell = document.createElement('input');
@@ -42,10 +41,17 @@ function createGrid() {
             cell.dataset.row = i;
             cell.dataset.col = j;
             cell.disabled = true;
+            
+            // Add event listeners
+            cell.addEventListener('input', handleInput);
+            cell.addEventListener('keydown', handleKeydown);
+            cell.addEventListener('focus', handleFocus);
+            cell.addEventListener('blur', handleBlur);
+            
             grid.appendChild(cell);
         }
     }
-
+    
     // Enable cells for words
     Object.entries(crosswordData.words).forEach(([id, word]) => {
         const { row, col, answer, direction } = word;
@@ -65,9 +71,7 @@ function createGrid() {
 function generateClues() {
     const acrossClues = document.getElementById('acrossClues');
     const downClues = document.getElementById('downClues');
-    acrossClues.innerHTML = '';
-    downClues.innerHTML = '';
-
+    
     Object.entries(crosswordData.words)
         .sort((a, b) => parseInt(a[0]) - parseInt(b[0]))
         .forEach(([id, word]) => {
@@ -75,7 +79,7 @@ function generateClues() {
             clueElement.textContent = `${id}. ${word.clue}`;
             clueElement.dataset.id = id;
             clueElement.addEventListener('click', () => highlightWord(id));
-
+            
             if (word.direction === 'across') {
                 acrossClues.appendChild(clueElement);
             } else {
@@ -84,70 +88,36 @@ function generateClues() {
         });
 }
 
-// Highlight a word and its clue
-function highlightWord(id) {
-    removeHighlights();
-    const word = crosswordData.words[id];
-    if (!word) return;
-
-    // Highlight clue
-    const clueElement = document.querySelector(`p[data-id="${id}"]`);
-    if (clueElement) clueElement.classList.add('highlight');
-
-    // Highlight cells
-    for (let i = 0; i < word.answer.length; i++) {
-        const currentRow = word.direction === 'across' ? word.row : word.row + i;
-        const currentCol = word.direction === 'across' ? word.col + i : word.col;
-        const cell = findCell(currentRow, currentCol);
-        if (cell) cell.classList.add('highlight');
-    }
-}
-
-// Remove all highlights
-function removeHighlights() {
-    document.querySelectorAll('.highlight').forEach(el => el.classList.remove('highlight'));
-}
-
-// Helper function to find a cell
-function findCell(row, col) {
-    return document.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
-}
-
-// Setup event listeners
-function setupEventListeners() {
-    const tooltip = document.getElementById('tooltip');
+// Handle input in cells
+function handleInput(event) {
+    const cell = event.target;
+    cell.value = cell.value.toUpperCase();
     
-    document.querySelectorAll('.cell:not([disabled])').forEach(cell => {
-        cell.addEventListener('focus', handleCellFocus);
-        cell.addEventListener('input', handleCellInput);
-        cell.addEventListener('keydown', handleCellKeydown);
-    });
-}
-
-// Handle cell focus
-function handleCellFocus(event) {
-    const wordId = event.target.dataset.wordId;
-    if (wordId) {
-        highlightWord(wordId);
-        showTooltip(event.target, crosswordData.words[wordId].clue);
-    }
-}
-
-// Handle cell input
-function handleCellInput(event) {
-    const input = event.target;
-    input.value = input.value.toUpperCase();
-    if (input.value) {
-        const nextCell = findNextCell(input);
+    if (cell.value) {
+        const wordId = cell.dataset.wordId;
+        const word = crosswordData.words[wordId];
+        const nextCell = findNextCell(cell, word.direction);
         if (nextCell) nextCell.focus();
     }
 }
 
-// Handle cell keydown
-function handleCellKeydown(event) {
+// Handle keyboard navigation
+function handleKeydown(event) {
     const cell = event.target;
     
-    switch(event.key) {
+    switch (event.key) {
+        case 'ArrowRight':
+            moveFocus(cell, 0, 1);
+            break;
+        case 'ArrowLeft':
+            moveFocus(cell, 0, -1);
+            break;
+        case 'ArrowUp':
+            moveFocus(cell, -1, 0);
+            break;
+        case 'ArrowDown':
+            moveFocus(cell, 1, 0);
+            break;
         case 'Backspace':
             if (!cell.value) {
                 const prevCell = findPrevCell(cell);
@@ -157,54 +127,53 @@ function handleCellKeydown(event) {
                 }
             }
             break;
-        case 'ArrowRight':
-        case 'ArrowLeft':
-        case 'ArrowUp':
-        case 'ArrowDown':
-            event.preventDefault();
-            const nextCell = findAdjacentCell(cell, event.key);
-            if (nextCell) nextCell.focus();
-            break;
     }
 }
 
-// Show tooltip
-function showTooltip(element, text) {
-    const tooltip = document.getElementById('tooltip');
-    tooltip.textContent = text;
-    tooltip.style.display = 'block';
+// Handle cell focus
+function handleFocus(event) {
+    const cell = event.target;
+    const wordId = cell.dataset.wordId;
+    if (wordId) {
+        highlightWord(wordId);
+        showTooltip(cell, crosswordData.words[wordId].clue);
+    }
+}
+
+// Handle cell blur
+function handleBlur() {
+    hideTooltip();
+}
+
+// Helper functions
+function findCell(row, col) {
+    return document.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
+}
+
+function findNextCell(currentCell, direction) {
+    const currentRow = parseInt(currentCell.dataset.row);
+    const currentCol = parseInt(currentCell.dataset.col);
     
-    const rect = element.getBoundingClientRect();
-    tooltip.style.left = `${rect.left}px`;
-    tooltip.style.top = `${rect.bottom + 5}px`;
-}
-
-// Check solution
-function checkSolution() {
-    let correct = 0;
-    let total = 0;
-
-    Object.entries(crosswordData.words).forEach(([id, word]) => {
-        const userAnswer = getUserAnswer(word);
-        if (userAnswer === word.answer) correct++;
-        total++;
-    });
-
-    const percentage = Math.round((correct / total) * 100);
-    alert(`Správně vyplněno: ${correct} z ${total} (${percentage}%)`);
-}
-
-// Get user answer for a word
-function getUserAnswer(word) {
-    let answer = '';
-    for (let i = 0; i < word.answer.length; i++) {
-        const currentRow = word.direction === 'across' ? word.row : word.row + i;
-        const currentCol = word.direction === 'across' ? word.col + i : word.col;
-        const cell = findCell(currentRow, currentCol);
-        answer += (cell?.value || '').toUpperCase();
+    if (direction === 'across') {
+        return findCell(currentRow, currentCol + 1);
+    } else {
+        return findCell(currentRow + 1, currentCol);
     }
-    return answer;
 }
 
-// Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', initializeCrossword);
+function findPrevCell(currentCell) {
+    const currentRow = parseInt(currentCell.dataset.row);
+    const currentCol = parseInt(currentCell.dataset.col);
+    return findCell(currentRow, currentCol - 1) || findCell(currentRow - 1, currentCol);
+}
+
+function moveFocus(cell, rowDelta, colDelta) {
+    const currentRow = parseInt(cell.dataset.row);
+    const currentCol = parseInt(cell.dataset.col);
+    const nextCell = findCell(currentRow + rowDelta, currentCol + colDelta);
+    if (nextCell && !nextCell.disabled) {
+        nextCell.focus();
+    }
+}
+
+function</antArtifact>
