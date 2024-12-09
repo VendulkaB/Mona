@@ -55,7 +55,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     (direction === "across" ? col + i - 1 : col - 1);
                 const cell = grid.children[index];
                 cell.disabled = false;
-                cell.placeholder = id;
+                cell.dataset.answer = answer[i];
+                cell.dataset.word = id;
             }
         }
 
@@ -79,16 +80,31 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function checkSolution() {
-        const solution = crosswordData.tajenka
-            .map(({ row, col }) => {
-                const index = (row - 1) * (crosswordData.size) + (col - 1);
-                const cell = document.getElementById("crosswordGrid").children[index];
-                const input = cell.querySelector("input");
-                return input ? input.value.toUpperCase() : "";
-            })
-            .join("");
+        const grid = document.getElementById("crosswordGrid").children;
 
-        alert(solution === "OTECFURA" ? "Tajenka je správně: Otec Fura!" : "Tajenka není správná.");
+        let allCorrect = true;
+
+        for (const cell of grid) {
+            if (!cell.disabled) {
+                const userInput = cell.value.toUpperCase();
+                const correctAnswer = cell.dataset.answer;
+
+                if (userInput === correctAnswer) {
+                    cell.style.backgroundColor = "#00ffcc"; // Zelená pro správnou odpověď
+                    cell.style.color = "#1e2a48";
+                } else {
+                    cell.style.backgroundColor = "#ff4d4d"; // Červená pro špatnou odpověď
+                    cell.style.color = "#ffffff";
+                    allCorrect = false;
+                }
+            }
+        }
+
+        if (allCorrect) {
+            alert("Gratulujeme! Tajenka je správně: Otec Fura!");
+        } else {
+            alert("Některé odpovědi nejsou správné. Zkontrolujte je, prosím.");
+        }
     }
 
     createGrid();
