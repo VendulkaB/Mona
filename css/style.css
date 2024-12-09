@@ -1,36 +1,60 @@
-/* Globální stylování */
+/* Global styling */
 body {
     font-family: 'Arial', sans-serif;
     background: linear-gradient(to bottom, #001f3f, #005f7f);
     color: #ffffff;
     margin: 0;
-    text-align: center;
+    padding: 20px;
+    min-height: 100vh;
 }
 
-/* Titulek */
-h1 {
-    font-size: 2.5rem;
-    color: #00e0ff;
-    text-shadow: 0 0 5px #00e0ff, 0 0 10px #00cfff;
-    margin: 20px 0;
+/* Header Image Optimization */
+.photo-header {
+    max-width: 800px;
+    margin: 0 auto 20px;
 }
 
 .photo-header img {
     width: 100%;
-    height: 300px;
+    height: 200px;
     object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+/* Title */
+h1 {
+    font-size: 2rem;
+    color: #00e0ff;
+    text-shadow: 0 0 5px #00e0ff, 0 0 10px #00cfff;
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* Main content wrapper */
+.puzzle-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Grid styling */
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(12, 40px);
+    grid-template-columns: repeat(12, minmax(30px, 40px));
     gap: 2px;
     justify-content: center;
     margin: 20px auto;
+    background: #002f4f;
+    padding: 10px;
+    border-radius: 8px;
 }
 
 .cell {
-    width: 40px;
+    width: 100%;
     height: 40px;
     border: 1px solid #00e0ff;
     text-align: center;
@@ -42,59 +66,111 @@ h1 {
 
 .cell:focus {
     border-color: #00ffcc;
+    outline: none;
+    background: #003366;
 }
 
+/* Clues section */
 .clues-container {
     display: flex;
-    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
     margin: 20px auto;
-    width: 80%;
+    width: 100%;
+    max-width: 1000px;
 }
 
 .clues {
+    flex: 1;
+    min-width: 300px;
     text-align: left;
-    padding: 10px;
+    padding: 15px;
     background: #002f4f;
-    border-radius: 5px;
-    width: 45%;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .clues h3 {
     color: #00e0ff;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #00e0ff;
+    padding-bottom: 5px;
 }
 
 .clues p {
-    margin: 5px 0;
+    margin: 8px 0;
+    padding: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.clues p:hover {
+    background: #003366;
 }
 
 .highlight {
-    background: #00ffcc;
-    color: black;
+    background: #00466e !important;
+    color: #00ffcc;
 }
 
+/* Button styling */
 .btn-check {
     background: #00e0ff;
-    color: black;
+    color: #001f3f;
     border: none;
-    padding: 10px 20px;
+    padding: 12px 25px;
     font-size: 16px;
-    border-radius: 5px;
+    border-radius: 25px;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: all 0.3s ease;
+    margin: 20px auto;
+    display: block;
+    font-weight: bold;
 }
 
 .btn-check:hover {
     background: #00ffcc;
+    transform: scale(1.05);
 }
 
+/* Tooltip */
 #tooltip {
     position: absolute;
-    background: #002f4f;
+    background: #004466;
     color: #ffffff;
-    padding: 5px 10px;
-    border-radius: 5px;
+    padding: 8px 15px;
+    border-radius: 4px;
     display: none;
-    z-index: 10;
+    z-index: 100;
     font-size: 14px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    max-width: 250px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .grid-container {
+        grid-template-columns: repeat(12, minmax(25px, 35px));
+    }
+    
+    .cell {
+        height: 35px;
+        font-size: 14px;
+    }
+    
+    .clues-container {
+        flex-direction: column;
+    }
+    
+    .clues {
+        width: 100%;
+        min-width: unset;
+    }
+}
+
+/* Empty cell styling */
+.cell[disabled] {
+    background: #001f3f;
+    cursor: not-allowed;
 }
