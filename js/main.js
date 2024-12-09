@@ -2,30 +2,32 @@ document.addEventListener("DOMContentLoaded", () => {
     const crosswordData = {
         size: 12,
         words: {
-            1: { clue: "Hlavní město Itálie", answer: "RIM", row: 1, col: 2, direction: "across" },
-            2: { clue: "Nejvyšší hora světa", answer: "EVEREST", row: 2, col: 4, direction: "down" },
-            3: { clue: "Největší oceán na světě", answer: "PACIFIK", row: 4, col: 1, direction: "across" },
-            4: { clue: "Autor Hamleta", answer: "SHAKESPEARE", row: 1, col: 8, direction: "down" },
-            5: { clue: "Planeta nejblíže Slunci", answer: "MERKUR", row: 7, col: 3, direction: "across" },
-            6: { clue: "Slavný italský malíř", answer: "DAVINCI", row: 5, col: 6, direction: "down" },
-            7: { clue: "Hlavní město Japonska", answer: "TOKIO", row: 10, col: 2, direction: "across" },
-            8: { clue: "Chemický prvek Au", answer: "ZLATO", row: 8, col: 5, direction: "down" },
-            9: { clue: "Největší kontinent světa", answer: "ASIE", row: 3, col: 10, direction: "down" },
-            10: { clue: "Hlavní město Francie", answer: "PARIZ", row: 2, col: 6, direction: "across" },
-            11: { clue: "Nejvyšší vodopád světa", answer: "ANGEL", row: 9, col: 5, direction: "across" },
-            12: { clue: "Největší savce", answer: "VELRYBA", row: 12, col: 1, direction: "across" },
-            13: { clue: "Řeka protékající Londýnem", answer: "TEMZE", row: 5, col: 8, direction: "across" },
-            14: { clue: "Planeta pojmenovaná po bohu války", answer: "MARS", row: 11, col: 3, direction: "down" },
-            15: { clue: "Hlavní město Německa", answer: "BERLIN", row: 6, col: 3, direction: "down" },
-            16: { clue: "Řeka v Egyptě", answer: "NIL", row: 7, col: 6, direction: "across" }
+            1: { clue: "Hlavní město Itálie", answer: "RIM", row: 1, col: 1, direction: "across" },
+            2: { clue: "Nejvyšší hora světa", answer: "EVEREST", row: 1, col: 5, direction: "down" },
+            3: { clue: "Planeta nejblíže Slunci", answer: "MERKUR", row: 3, col: 1, direction: "across" },
+            4: { clue: "Autor Hamleta", answer: "SHAKESPEARE", row: 3, col: 7, direction: "down" },
+            5: { clue: "Největší oceán", answer: "PACIFIK", row: 6, col: 2, direction: "across" },
+            6: { clue: "Hlavní město Japonska", answer: "TOKIO", row: 8, col: 4, direction: "down" },
+            7: { clue: "Chemický prvek Au", answer: "ZLATO", row: 10, col: 3, direction: "across" },
+            8: { clue: "Řeka protékající Londýnem", answer: "TEMZE", row: 10, col: 6, direction: "across" },
+            9: { clue: "Nejvyšší vodopád", answer: "ANGEL", row: 4, col: 8, direction: "across" },
+            10: { clue: "Základní část rostliny", answer: "KOREN", row: 2, col: 2, direction: "down" },
+            11: { clue: "Slavný italský malíř", answer: "DAVINCI", row: 9, col: 5, direction: "down" },
+            12: { clue: "Planeta pojmenovaná po bohu války", answer: "MARS", row: 7, col: 10, direction: "across" },
+            13: { clue: "Hlavní město Německa", answer: "BERLIN", row: 6, col: 3, direction: "down" },
+            14: { clue: "Největší kontinent světa", answer: "ASIE", row: 5, col: 9, direction: "across" },
+            15: { clue: "Řeka v Egyptě", answer: "NIL", row: 8, col: 6, direction: "across" },
+            16: { clue: "Hlavní město Francie", answer: "PARIZ", row: 4, col: 5, direction: "down" }
         },
         tajenka: [
-            { row: 1, col: 2 },
-            { row: 2, col: 4 },
-            { row: 4, col: 1 },
-            { row: 7, col: 3 },
-            { row: 8, col: 5 },
-            { row: 10, col: 2 }
+            { row: 1, col: 1 },
+            { row: 1, col: 5 },
+            { row: 3, col: 1 },
+            { row: 3, col: 7 },
+            { row: 6, col: 2 },
+            { row: 10, col: 3 },
+            { row: 7, col: 10 },
+            { row: 10, col: 6 }
         ]
     };
 
