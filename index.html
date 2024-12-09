@@ -39,6 +39,7 @@
             overflow: auto;
         }
         .cell {
+            position: relative;
             width: 40px;
             height: 40px;
             background-color: #e6f9ff;
@@ -55,6 +56,14 @@
             background-color: #023047;
             color: white;
             font-weight: normal;
+        }
+        .cell-number {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            font-size: 12px;
+            font-weight: normal;
+            color: #023047;
         }
         .clues {
             display: flex;
@@ -109,6 +118,9 @@
                 height: 30px;
                 font-size: 14px;
             }
+            .cell-number {
+                font-size: 10px;
+            }
             .clues h3 {
                 font-size: 1.5rem;
             }
@@ -128,6 +140,9 @@
                 width: 25px;
                 height: 25px;
                 font-size: 12px;
+            }
+            .cell-number {
+                font-size: 8px;
             }
             .clues h3 {
                 font-size: 1.2rem;
@@ -184,13 +199,13 @@
 
             for (let i = 0; i < crosswordData.size; i++) {
                 for (let j = 0; j < crosswordData.size; j++) {
-                    const cell = document.createElement('input');
-                    cell.type = 'text';
-                    cell.maxLength = 1;
+                    const cell = document.createElement('div');
                     cell.className = 'cell';
-                    cell.dataset.row = i;
-                    cell.dataset.col = j;
-                    cell.disabled = true;
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.maxLength = 1;
+                    input.disabled = true;
+                    cell.appendChild(input);
                     grid.appendChild(cell);
                 }
             }
@@ -204,8 +219,16 @@
                     const cellRow = word.direction === 'across' ? row : row + i;
                     const cellCol = word.direction === 'across' ? col + i : col;
                     const cell = grid.children[cellRow * crosswordData.size + cellCol];
-                    cell.disabled = false;
-                    cell.dataset.wordId = id;
+                    const input = cell.querySelector('input');
+                    input.disabled = false;
+
+                    // Přidání čísla otázky na začátek slova
+                    if (i === 0) {
+                        const number = document.createElement('span');
+                        number.className = 'cell-number';
+                        number.textContent = id;
+                        cell.appendChild(number);
+                    }
                 }
             }
         }
@@ -237,7 +260,7 @@
                 for (let i = 0; i < length; i++) {
                     const cellRow = word.direction === 'across' ? row : row + i;
                     const cellCol = word.direction === 'across' ? col + i : col;
-                    const cell = document.querySelector(`.cell[data-row="${cellRow}"][data-col="${cellCol}"]`);
+                    const cell = document.querySelector(`.grid > :nth-child(${cellRow * crosswordData.size + cellCol + 1}) input`);
                     userWord += cell.value.toUpperCase() || ' ';
                 }
                 solution[id] = userWord.trim();
