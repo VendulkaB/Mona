@@ -8,43 +8,47 @@
 </head>
 <body>
     <div class="main-container">
-        <header class="photo-header">
+        <div class="photo-header">
             <img src="img/crossword-header.jpg" alt="Křížovka pro Móňu" loading="lazy">
-        </header>
+        </div>
 
         <h1>Křížovka pro Móňu</h1>
-
+        
         <div class="solution-info">
             <p>Najděte tajenku! Písmena v barevných polích tvoří řešení.</p>
         </div>
 
-        <div class="crossword-container">
-            <div id="crosswordGrid" class="grid-container"></div>
-
-            <div class="legend-container">
-                <div class="legend-section">
-                    <h2>Vodorovně</h2>
+        <div class="crossword-section">
+            <div class="grid-wrapper">
+                <div id="crosswordGrid" class="grid-container"></div>
+                <div id="tooltip" class="tooltip"></div>
+            </div>
+            
+            <div class="clues-container">
+                <div class="clues-section">
+                    <h3>Vodorovně</h3>
                     <div id="acrossClues" class="clues-list"></div>
                 </div>
 
-                <div class="legend-section">
-                    <h2>Svisle</h2>
+                <div class="clues-section">
+                    <h3>Svisle</h3>
                     <div id="downClues" class="clues-list"></div>
                 </div>
             </div>
         </div>
 
         <div class="controls">
-            <button class="check-button" onclick="checkSolution()">
-                Zkontrolovat řešení
-            </button>
+            <button class="btn-check" onclick="checkSolution()">Zkontrolovat řešení</button>
         </div>
-
-        <footer>
-            <p>Vytvořeno s láskou ❤️</p>
-        </footer>
     </div>
 
+    <footer>
+        <p>Vytvořeno s láskou ❤️</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
     <div id="tooltip" class="tooltip"></div>
     <script src="js/main.js"></script>
 </body>
