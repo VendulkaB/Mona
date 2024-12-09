@@ -1,117 +1,87 @@
 /* Globální stylování */
 body {
-    font-family: 'Arial', sans-serif;
-    background: linear-gradient(to bottom, #001f3f, #005f7f);
-    color: #ffffff;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, #001f3f, #0077b6);
+    color: white;
     margin: 0;
     text-align: center;
 }
 
 h1 {
     font-size: 2.5rem;
-    color: #00e0ff;
-    text-shadow: 0 0 5px #00e0ff, 0 0 10px #00cfff;
     margin: 20px 0;
+    color: #00e0ff;
+    text-shadow: 0 0 10px #00e0ff;
 }
 
 .photo-header img {
     width: 100%;
-    height: 250px;
+    height: 300px;
     object-fit: cover;
-    border-bottom: 3px solid #00ffcc;
-}
-
-.puzzle-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 20px;
 }
 
 .grid-container {
     display: grid;
     grid-template-columns: repeat(12, 40px);
-    grid-auto-rows: 40px;
     gap: 2px;
+    justify-content: center;
     margin: 20px auto;
-    padding: 10px;
-    background: transparent;
-    max-width: 100%;
-    overflow-x: auto;
 }
 
 .cell {
     width: 40px;
     height: 40px;
-    background: #1e2a48;
-    border: 1px solid #00ffff;
+    border: 1px solid #00e0ff;
     text-align: center;
     font-size: 16px;
-    font-weight: bold;
-    color: #ffffff;
     text-transform: uppercase;
+    background: #001f3f;
+    color: white;
 }
 
-.cell:disabled {
-    background: #00334d;
-}
-
-.cell-tajenka {
-    background: #00ffcc;
-    border: 2px solid #00ff99;
-    color: #1e2a48;
-}
-
-.tooltip {
-    display: none;
-    position: absolute;
-    background: #00ffaa;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-    color: #1e2a48;
-}
-
-.tooltip.active {
-    display: block;
+.cell:focus {
+    border-color: #00ffcc;
 }
 
 .clues-container {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
     margin: 20px auto;
-    gap: 20px;
     width: 80%;
 }
 
 .clues {
+    text-align: left;
+    padding: 10px;
     background: #002f4f;
-    padding: 15px;
-    border-radius: 10px;
+    border-radius: 5px;
     width: 45%;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .clues h3 {
-    font-size: 1.8rem;
     color: #00e0ff;
-    margin-bottom: 10px;
+}
+
+.clues p {
+    margin: 5px 0;
+}
+
+.highlight {
+    background: #00ffcc;
+    color: black;
 }
 
 .btn-check {
-    background: #00ffaa;
-    color: #1e2a48;
-    padding: 10px 20px;
-    font-size: 1.2rem;
-    border-radius: 5px;
+    background: #00e0ff;
+    color: black;
     border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
     cursor: pointer;
-    margin-top: 20px;
-    transition: transform 0.3s, background 0.3s;
+    transition: background 0.3s ease;
 }
 
 .btn-check:hover {
     background: #00ffcc;
-    transform: scale(1.05);
 }
