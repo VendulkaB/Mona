@@ -7,17 +7,26 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(to bottom, #d9f0ff, #bde7f8, #a1dff0);
-            color: #333;
+            background: linear-gradient(to bottom, #0e172c, #1e2a48, #2f4b6e);
+            color: #ffffff;
             margin: 0;
             padding: 0;
             text-align: center;
         }
         h1 {
-            color: #023047;
+            color: #ff69b4;
             font-size: 2.8rem;
             margin-top: 20px;
-            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+            text-shadow: 1px 1px 10px rgba(255, 105, 180, 0.8);
+        }
+        .photo-header {
+            width: 100%;
+            height: 300px;
+            background-image: url('Image (21).jpg');
+            background-size: cover;
+            background-position: center;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
         }
         .content {
             display: flex;
@@ -43,20 +52,21 @@
             position: relative;
             width: 40px;
             height: 40px;
-            background-color: #e6f9ff;
-            border: 2px solid #023047;
+            background-color: #1e2a48;
+            border: 2px solid #ff69b4;
             text-align: center;
             font-size: 18px;
             font-weight: bold;
-            color: #023047;
+            color: #ff69b4;
             text-transform: uppercase;
             outline: none;
-            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
         }
-        .cell:disabled {
-            background-color: #023047;
-            color: white;
-            font-weight: normal;
+        .cell-tajenka {
+            background-color: #ff69b4;
+            color: #0e172c;
+            font-weight: bold;
+            border: 2px solid #ff69b4;
         }
         .cell-number {
             position: absolute;
@@ -64,7 +74,7 @@
             left: 2px;
             font-size: 12px;
             font-weight: normal;
-            color: #023047;
+            color: #ffffff;
         }
         .clues-container {
             display: flex;
@@ -76,25 +86,25 @@
         }
         .clues {
             width: 45%;
-            background-color: #f5faff;
+            background-color: #1e2a48;
             padding: 15px;
             border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
         .clues h3 {
-            color: #023047;
+            color: #ff69b4;
             font-size: 1.8rem;
             margin-bottom: 10px;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+            text-shadow: 1px 1px 3px rgba(255, 105, 180, 0.8);
         }
         .clues p {
             margin: 10px 0;
             font-size: 1rem;
             text-align: left;
-            color: #023047;
+            color: #ffffff;
         }
         .btn-check {
-            background-color: #023047;
+            background-color: #ff69b4;
             color: white;
             padding: 12px 30px;
             border: none;
@@ -106,12 +116,12 @@
             transition: background-color 0.3s ease;
         }
         .btn-check:hover {
-            background-color: #03538a;
+            background-color: #ff85c0;
         }
         footer {
             margin-top: 30px;
             font-size: 0.9rem;
-            color: #023047;
+            color: #ffffff;
         }
 
         /* Responzivita */
@@ -146,6 +156,7 @@
     </style>
 </head>
 <body>
+    <div class="photo-header"></div>
     <h1>Křížovka pro Móňu</h1>
     <div class="content">
         <div class="grid-container">
@@ -187,19 +198,6 @@
             const grid = document.getElementById('crosswordGrid');
             grid.style.gridTemplateColumns = `repeat(${crosswordData.size}, 40px)`;
 
-            for (let i = 0; i < crosswordData.size; i++) {
-                for (let j = 0; j < crosswordData.size; j++) {
-                    const cell = document.createElement('div');
-                    cell.className = 'cell';
-                    const input = document.createElement('input');
-                    input.type = 'text';
-                    input.maxLength = 1;
-                    input.disabled = true;
-                    cell.appendChild(input);
-                    grid.appendChild(cell);
-                }
-            }
-
             for (const [id, word] of Object.entries(crosswordData.words)) {
                 const row = word.row - 1;
                 const col = word.col - 1;
@@ -208,16 +206,21 @@
                 for (let i = 0; i < length; i++) {
                     const cellRow = word.direction === 'across' ? row : row + i;
                     const cellCol = word.direction === 'across' ? col + i : col;
-                    const cell = grid.children[cellRow * crosswordData.size + cellCol];
-                    const input = cell.querySelector('input');
-                    input.disabled = false;
 
-                    if (i === 0) {
-                        const number = document.createElement('span');
-                        number.className = 'cell-number';
-                        number.textContent = id;
-                        cell.appendChild(number);
+                    const cell = document.createElement('div');
+                    cell.className = 'cell';
+
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.maxLength = 1;
+                    input.style.color = "#ffffff";
+
+                    if (id === "1") {
+                        cell.classList.add('cell-tajenka');
                     }
+
+                    cell.appendChild(input);
+                    grid.appendChild(cell);
                 }
             }
         }
@@ -239,9 +242,10 @@
         }
 
         function checkSolution() {
-            const solution = {};
+            let allCorrect = true;
+
             for (const [id, word] of Object.entries(crosswordData.words)) {
-                let userWord = '';
+                let userWord = "";
                 const row = word.row - 1;
                 const col = word.col - 1;
                 const length = word.answer.length;
@@ -250,21 +254,15 @@
                     const cellRow = word.direction === 'across' ? row : row + i;
                     const cellCol = word.direction === 'across' ? col + i : col;
                     const cell = document.querySelector(`.grid > :nth-child(${cellRow * crosswordData.size + cellCol + 1}) input`);
-                    userWord += cell.value.toUpperCase() || ' ';
+                    userWord += cell.value.toUpperCase() || " ";
                 }
-                solution[id] = userWord.trim();
-            }
 
-            let allCorrect = true;
-
-            for (const [id, word] of Object.entries(crosswordData.words)) {
-                if (solution[id] !== word.answer.toUpperCase()) {
+                if (userWord !== word.answer.toUpperCase()) {
                     allCorrect = false;
-                    break;
                 }
             }
 
-            alert(allCorrect ? 'Gratulujeme! Tajenka je správná!' : 'Některá slova nejsou správná.');
+            alert(allCorrect ? "Gratulujeme! Tajenka je správná!" : "Zkontrolujte si odpovědi.");
         }
 
         createGrid();
