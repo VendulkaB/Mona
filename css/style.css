@@ -1,4 +1,3 @@
-/* Globální stylování */
 body {
     font-family: 'Arial', sans-serif;
     background: linear-gradient(to bottom, #001f3f, #005f7f);
@@ -14,7 +13,6 @@ h1 {
     margin: 20px 0;
 }
 
-/* Foto záhlaví */
 .photo-header img {
     width: 100%;
     height: 250px;
@@ -22,7 +20,6 @@ h1 {
     border-bottom: 3px solid #00ffcc;
 }
 
-/* Puzzle wrapper */
 .puzzle-wrapper {
     display: flex;
     flex-direction: column;
@@ -30,7 +27,6 @@ h1 {
     margin: 20px;
 }
 
-/* Grid container */
 .grid-container {
     display: grid;
     grid-template-columns: repeat(12, 40px);
@@ -41,11 +37,8 @@ h1 {
     background: #ffffff;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    max-width: 100%;
-    overflow-x: auto;
 }
 
-/* Buňky mřížky */
 .cell {
     width: 40px;
     height: 40px;
@@ -68,21 +61,34 @@ h1 {
     color: #1e2a48;
 }
 
-/* Nápovědy */
+.tooltip {
+    display: none;
+    position: absolute;
+    background: #00ffaa;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    color: #1e2a48;
+}
+
+.tooltip.active {
+    display: block;
+}
+
 .clues-container {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 20px;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 20px auto;
     gap: 20px;
+    width: 80%;
 }
 
 .clues {
     background: #002f4f;
     padding: 15px;
     border-radius: 10px;
-    width: 90%;
-    max-width: 400px;
+    width: 45%;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
@@ -92,13 +98,6 @@ h1 {
     margin-bottom: 10px;
 }
 
-.clues p {
-    font-size: 1rem;
-    margin: 5px 0;
-    text-align: left;
-}
-
-/* Tlačítko */
 .btn-check {
     background: #00ffaa;
     color: #1e2a48;
@@ -114,48 +113,4 @@ h1 {
 .btn-check:hover {
     background: #00ffcc;
     transform: scale(1.05);
-}
-
-/* Footer */
-footer {
-    margin-top: 20px;
-    font-size: 1rem;
-    color: #00ffff;
-}
-
-/* Responzivita */
-@media (max-width: 768px) {
-    .photo-header img {
-        height: 180px;
-    }
-
-    h1 {
-        font-size: 2rem;
-    }
-
-    .grid-container {
-        grid-template-columns: repeat(12, 30px);
-        grid-auto-rows: 30px;
-    }
-
-    .cell {
-        width: 30px;
-        height: 30px;
-        font-size: 14px;
-    }
-
-    .clues h3 {
-        font-size: 1.5rem;
-    }
-
-    .btn-check {
-        font-size: 1rem;
-        padding: 8px 16px;
-    }
-}
-
-.highlight {
-    background-color: #ffe066;
-    padding: 5px;
-    border-radius: 5px;
 }
