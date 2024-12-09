@@ -4,133 +4,134 @@ const crosswordData = {
     solution: "OTEC FURA",
     words: {
         1: { 
-            clue: "Hlavní město České republiky", 
-            answer: "PRAHA", 
+            clue: "Pevná část motoru", 
+            answer: "STATOR", 
             row: 1, 
-            col: 2, 
+            col: 3, 
             direction: "across",
             solutionLetters: {2: 0} // 'O' pro OTEC
         },
         2: { 
-            clue: "Chemický prvek Fe", 
-            answer: "ZELEZO", 
+            clue: "Silniční poplatek", 
+            answer: "MYTNE", 
             row: 2, 
-            col: 4, 
-            direction: "across",
-            solutionLetters: {4: 1} // 'T' pro OTEC
-        },
-        3: { 
-            clue: "Řeka protékající Prahou", 
-            answer: "VLTAVA", 
-            row: 1, 
-            col: 4, 
-            direction: "down",
-            solutionLetters: {2: 2} // 'E' pro OTEC
-        },
-        4: { 
-            clue: "Největší český skladatel (Antonín)", 
-            answer: "DVORAK", 
-            row: 3, 
             col: 1, 
             direction: "across",
-            solutionLetters: {5: 3} // 'C' pro OTEC
+            solutionLetters: {2: 1} // 'T' pro OTEC
+        },
+        3: { 
+            clue: "Nemocniční oddělení", 
+            answer: "INTERNA", 
+            row: 3, 
+            col: 4, 
+            direction: "down",
+            solutionLetters: {3: 2} // 'E' pro OTEC
+        },
+        4: { 
+            clue: "Část molekuly vody", 
+            answer: "VODIK", 
+            row: 1, 
+            col: 5, 
+            direction: "down",
+            solutionLetters: {4: 3} // 'C' pro OTEC
         },
         5: { 
-            clue: "Značka českých aut", 
-            answer: "SKODA", 
+            clue: "Hlavní město Francie", 
+            answer: "PARIZ", 
             row: 4, 
-            col: 3, 
-            direction: "down",
-            solutionLetters: {0: 4} // 'F' pro FURA
+            col: 2, 
+            direction: "across",
+            solutionLetters: {3: 4} // 'F' pro FURA
         },
         6: { 
-            clue: "Národní strom ČR", 
-            answer: "LIPA", 
+            clue: "Severský mořský pták", 
+            answer: "ALKA", 
             row: 5, 
-            col: 2, 
+            col: 6, 
             direction: "across",
             solutionLetters: {2: 5} // 'U' pro FURA
         },
         7: { 
-            clue: "Planetka objevená českými astronomy", 
-            answer: "EROS", 
+            clue: "Český hudebník (Karel)", 
+            answer: "KRYL", 
             row: 6, 
-            col: 5, 
+            col: 3, 
             direction: "across",
-            solutionLetters: {0: 6} // 'R' pro FURA
+            solutionLetters: {1: 6} // 'R' pro FURA
         },
         8: { 
-            clue: "První česká světice", 
-            answer: "LUDMILA", 
-            row: 4, 
+            clue: "Jméno herce Rodena", 
+            answer: "KAREL", 
+            row: 3, 
             col: 7, 
             direction: "down",
-            solutionLetters: {5: 7} // 'A' pro FURA
+            solutionLetters: {3: 7} // 'A' pro FURA
         },
         9: {
-            clue: "Nejvyšší hora ČR", 
-            answer: "SNEZKA", 
-            row: 7, 
-            col: 3, 
-            direction: "across"
-        },
-        10: {
-            clue: "Písmeno řecké abecedy", 
-            answer: "BETA", 
-            row: 3, 
-            col: 6, 
+            clue: "Část svíčky", 
+            answer: "KNOT", 
+            row: 2, 
+            col: 8, 
             direction: "down"
         },
+        10: {
+            clue: "Plemeno psa", 
+            answer: "BOXR", 
+            row: 7, 
+            col: 1, 
+            direction: "across"
+        },
         11: {
-            clue: "Chemická značka zlata", 
-            answer: "AU", 
+            clue: "Část nohy", 
+            answer: "PATA", 
+            row: 5, 
+            col: 1, 
+            direction: "down"
+        },
+        12: {
+            clue: "Tužkou nakreslený obrázek", 
+            answer: "SKICA", 
             row: 8, 
             col: 4, 
             direction: "across"
         },
-        12: {
-            clue: "Jednotka elektrického napětí", 
-            answer: "VOLT", 
-            row: 5, 
+        13: {
+            clue: "Dopravní prostředek", 
+            answer: "METRO", 
+            row: 4, 
             col: 8, 
             direction: "down"
-        },
-        13: {
-            clue: "Hlavní město Norska", 
-            answer: "OSLO", 
-            row: 2, 
-            col: 9, 
-            direction: "across"
         },
         14: {
-            clue: "Český vynálezce lodního šroubu", 
-            answer: "RESSEL", 
-            row: 1, 
-            col: 8, 
-            direction: "down"
+            clue: "Citoslovce bolesti", 
+            answer: "AU", 
+            row: 9, 
+            col: 6, 
+            direction: "across"
         },
         15: {
-            clue: "Část molekuly vody", 
-            answer: "VODIK", 
+            clue: "Český zpěvák (Václav)", 
+            answer: "NECKAR", 
             row: 6, 
-            col: 1, 
+            col: 7, 
             direction: "down"
         },
         16: {
             clue: "Chemická značka dusíku", 
             answer: "N", 
-            row: 4, 
+            row: 3, 
             col: 10, 
             direction: "across"
         }
     }
 };
 
-// Initialize crossword
+// Initialize crossword when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     initializeCrossword();
 });
 
+// Initialize all crossword components
 function initializeCrossword() {
     createGrid();
     generateClues();
@@ -143,7 +144,7 @@ function createGrid() {
     const grid = document.getElementById('crosswordGrid');
     grid.innerHTML = '';
 
-    // Create the grid cells
+    // Create cells
     for (let i = 1; i <= crosswordData.size; i++) {
         for (let j = 1; j <= crosswordData.size; j++) {
             const wrapper = document.createElement('div');
@@ -166,27 +167,25 @@ function createGrid() {
     const numberedCells = new Set();
     Object.entries(crosswordData.words).forEach(([id, word]) => {
         enableWordCells(id, word);
-        addCellNumber(id, word, numberedCells);
+        
+        // Add cell number
+        const cellId = `${word.row}-${word.col}`;
+        if (!numberedCells.has(cellId)) {
+            const cell = findCell(word.row, word.col);
+            if (cell) {
+                const wrapper = cell.closest('.cell-wrapper');
+                const number = document.createElement('div');
+                number.className = 'cell-number';
+                number.textContent = id;
+                wrapper.appendChild(number);
+                numberedCells.add(cellId);
+            }
+        }
     });
 }
-
-function addCellNumber(id, word, numberedCells) {
-    const cellId = `${word.row}-${word.col}`;
-    if (!numberedCells.has(cellId)) {
-        const cell = findCell(word.row, word.col);
-        if (cell) {
-            const wrapper = cell.closest('.cell-wrapper');
-            const number = document.createElement('div');
-            number.className = 'cell-number';
-            number.textContent = id;
-            wrapper.appendChild(number);
-            numberedCells.add(cellId);
-        }
-    }
-}
-// Enable cells for a word and setup tooltips
+// Enable cells for a word
 function enableWordCells(id, word) {
-    const { row, col, answer, direction, solutionLetters, clue } = word;
+    const { row, col, answer, direction, solutionLetters } = word;
     
     for (let i = 0; i < answer.length; i++) {
         const currentRow = direction === 'across' ? row : row + i;
@@ -198,9 +197,7 @@ function enableWordCells(id, word) {
             cell.dataset.wordId = id;
             cell.dataset.direction = direction;
             cell.dataset.index = i;
-            cell.dataset.clue = clue;
             
-            // Add solution cell marking
             if (solutionLetters && solutionLetters[i] !== undefined) {
                 cell.classList.add('solution-cell');
                 const wrapper = cell.closest('.cell-wrapper');
@@ -209,14 +206,46 @@ function enableWordCells(id, word) {
                 indicator.textContent = parseInt(solutionLetters[i]) + 1;
                 wrapper.appendChild(indicator);
             }
-
-            // Add tooltip events
-            cell.addEventListener('mouseenter', showTooltip);
-            cell.addEventListener('mouseleave', hideTooltip);
-            cell.addEventListener('focus', showTooltip);
-            cell.addEventListener('blur', hideTooltip);
         }
     }
+}
+
+// Generate clues
+function generateClues() {
+    const acrossClues = document.getElementById('acrossClues');
+    const downClues = document.getElementById('downClues');
+    acrossClues.innerHTML = '';
+    downClues.innerHTML = '';
+
+    Object.entries(crosswordData.words)
+        .sort((a, b) => parseInt(a[0]) - parseInt(b[0]))
+        .forEach(([id, word]) => {
+            const clueElement = document.createElement('p');
+            clueElement.textContent = `${id}. ${word.clue}`;
+            clueElement.dataset.id = id;
+            clueElement.addEventListener('click', () => {
+                highlightWord(id);
+                focusFirstCell(word);
+            });
+
+            if (word.direction === 'across') {
+                acrossClues.appendChild(clueElement);
+            } else {
+                downClues.appendChild(clueElement);
+            }
+        });
+}
+
+// Setup event listeners
+function setupEventListeners() {
+    document.querySelectorAll('.cell:not([disabled])').forEach(cell => {
+        cell.addEventListener('input', handleInput);
+        cell.addEventListener('keydown', handleKeydown);
+        cell.addEventListener('focus', handleFocus);
+        cell.addEventListener('blur', handleBlur);
+        cell.addEventListener('mouseenter', showTooltip);
+        cell.addEventListener('mouseleave', hideTooltip);
+    });
 }
 
 // Setup tooltip
@@ -230,7 +259,18 @@ function setupTooltip() {
     }
 }
 
-// Show tooltip with clue
+// Handle input
+function handleInput(event) {
+    const cell = event.target;
+    cell.value = cell.value.toUpperCase();
+    
+    if (cell.value) {
+        checkWord(cell);
+        moveToNextCell(cell);
+    }
+}
+
+// Show tooltip
 function showTooltip(event) {
     const cell = event.target;
     const wordId = cell.dataset.wordId;
@@ -241,7 +281,6 @@ function showTooltip(event) {
         tooltip.textContent = `${wordId}. ${word.clue}`;
         tooltip.style.display = 'block';
         
-        // Position tooltip
         const rect = cell.getBoundingClientRect();
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
@@ -259,64 +298,6 @@ function hideTooltip() {
     const tooltip = document.getElementById('tooltip');
     if (tooltip) {
         tooltip.style.display = 'none';
-    }
-}
-
-// Generate clues with improved highlighting
-function generateClues() {
-    const acrossClues = document.getElementById('acrossClues');
-    const downClues = document.getElementById('downClues');
-    acrossClues.innerHTML = '';
-    downClues.innerHTML = '';
-
-    Object.entries(crosswordData.words)
-        .sort((a, b) => parseInt(a[0]) - parseInt(b[0]))
-        .forEach(([id, word]) => {
-            const clueElement = document.createElement('p');
-            clueElement.textContent = `${id}. ${word.clue}`;
-            clueElement.dataset.id = id;
-            clueElement.dataset.direction = word.direction;
-            
-            // Add click event for highlighting
-            clueElement.addEventListener('click', () => {
-                highlightWord(id);
-                focusFirstCell(word);
-            });
-
-            if (word.direction === 'across') {
-                acrossClues.appendChild(clueElement);
-            } else {
-                downClues.appendChild(clueElement);
-            }
-        });
-}
-
-// Focus first cell of a word
-function focusFirstCell(word) {
-    const firstCell = findCell(word.row, word.col);
-    if (firstCell) {
-        firstCell.focus();
-    }
-}
-
-// Setup event listeners for cells
-function setupEventListeners() {
-    document.querySelectorAll('.cell:not([disabled])').forEach(cell => {
-        cell.addEventListener('input', handleInput);
-        cell.addEventListener('keydown', handleKeydown);
-        cell.addEventListener('focus', handleFocus);
-        cell.addEventListener('blur', handleBlur);
-    });
-}
-
-// Handle input in cells
-function handleInput(event) {
-    const cell = event.target;
-    cell.value = cell.value.toUpperCase();
-    
-    if (cell.value) {
-        checkWord(cell);
-        moveToNextCell(cell);
     }
 }
 
@@ -356,6 +337,7 @@ function handleArrowKey(key, cell) {
     const [rowDelta, colDelta] = movements[key];
     moveFocus(cell, rowDelta, colDelta);
 }
+
 // Handle backspace
 function handleBackspace(event, cell) {
     if (!cell.value) {
@@ -368,6 +350,13 @@ function handleBackspace(event, cell) {
     }
 }
 
+// Focus first cell of a word
+function focusFirstCell(word) {
+    const cell = findCell(word.row, word.col);
+    if (cell) {
+        cell.focus();
+    }
+}
 // Move focus in specified direction
 function moveFocus(cell, rowDelta, colDelta) {
     const currentRow = parseInt(cell.dataset.row);
@@ -387,7 +376,29 @@ function moveToNextCell(cell) {
     }
 }
 
-// Highlight word and its clue
+// Move to next word
+function moveToNextWord(cell, reverse = false) {
+    const currentWordId = parseInt(cell.dataset.wordId);
+    const wordIds = Object.keys(crosswordData.words)
+        .map(Number)
+        .sort((a, b) => a - b);
+    
+    const currentIndex = wordIds.indexOf(currentWordId);
+    const nextIndex = reverse ? 
+        (currentIndex - 1 + wordIds.length) % wordIds.length : 
+        (currentIndex + 1) % wordIds.length;
+    
+    const nextWordId = wordIds[nextIndex];
+    const nextWord = crosswordData.words[nextWordId];
+    const nextCell = findCell(nextWord.row, nextWord.col);
+    
+    if (nextCell) {
+        nextCell.focus();
+        highlightWord(nextWordId);
+    }
+}
+
+// Highlight word
 function highlightWord(wordId) {
     // Remove previous highlights
     document.querySelectorAll('.cell.highlight, .clues-list p.highlight')
@@ -397,14 +408,8 @@ function highlightWord(wordId) {
     if (!word) return;
 
     // Highlight cells
-    for (let i = 0; i < word.answer.length; i++) {
-        const currentRow = word.direction === 'across' ? word.row : word.row + i;
-        const currentCol = word.direction === 'across' ? word.col + i : word.col;
-        const cell = findCell(currentRow, currentCol);
-        if (cell) {
-            cell.classList.add('highlight');
-        }
-    }
+    const cells = getWordCells(word);
+    cells.forEach(cell => cell.classList.add('highlight'));
 
     // Highlight clue
     const clue = document.querySelector(`.clues-list p[data-id="${wordId}"]`);
@@ -429,48 +434,10 @@ function checkWord(cell) {
                 cell.classList.add('solution-revealed');
             }
         });
-        
-        // If correct, update related words
-        if (isCorrect) {
-            updateCrossingWords(word);
-        }
     }
 }
 
-// Update crossing words when a word is completed correctly
-function updateCrossingWords(word) {
-    const { row, col, answer, direction } = word;
-    
-    for (let i = 0; i < answer.length; i++) {
-        const currentRow = direction === 'across' ? row : row + i;
-        const currentCol = direction === 'across' ? col + i : col;
-        const cell = findCell(currentRow, currentCol);
-        
-        if (cell) {
-            const crossingWordId = getCrossingWordId(cell, direction);
-            if (crossingWordId) {
-                const crossingWord = crosswordData.words[crossingWordId];
-                checkWord(cell);
-            }
-        }
-    }
-}
-
-// Get crossing word ID
-function getCrossingWordId(cell, currentDirection) {
-    const crossingCells = document.querySelectorAll(
-        `.cell[data-row="${cell.dataset.row}"][data-col="${cell.dataset.col}"]`
-    );
-    
-    for (const crossingCell of crossingCells) {
-        if (crossingCell.dataset.direction !== currentDirection) {
-            return crossingCell.dataset.wordId;
-        }
-    }
-    return null;
-}
-
-// Get all cells for a word
+// Get cells for a word
 function getWordCells(word) {
     const cells = [];
     const { row, col, answer, direction } = word;
@@ -486,21 +453,11 @@ function getWordCells(word) {
 
 // Get user's answer for a word
 function getUserAnswer(word) {
-    let answer = '';
-    const { row, col, answer: correctAnswer, direction } = word;
-    
-    for (let i = 0; i < correctAnswer.length; i++) {
-        const currentRow = direction === 'across' ? row : row + i;
-        const currentCol = direction === 'across' ? col + i : col;
-        const cell = findCell(currentRow, currentCol);
-        if (cell) {
-            answer += (cell.value || '').toUpperCase();
-        }
-    }
-    return answer;
+    const cells = getWordCells(word);
+    return cells.map(cell => cell.value || '').join('').toUpperCase();
 }
 
-// Helper functions for cell navigation
+// Helper functions
 function findCell(row, col) {
     return document.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
 }
@@ -537,8 +494,10 @@ function checkSolution() {
 
     Object.entries(crosswordData.words).forEach(([id, word]) => {
         const userAnswer = getUserAnswer(word);
+        
         if (userAnswer === word.answer) {
             correct++;
+            // Add solution letters if word is correct
             if (word.solutionLetters) {
                 Object.entries(word.solutionLetters).forEach(([letterIndex, solutionIndex]) => {
                     revealedSolution[solutionIndex] = word.answer[letterIndex];
@@ -554,16 +513,69 @@ function checkSolution() {
     const solution = revealedSolution.join('');
     
     if (correct === total) {
-        alert(`Gratulujeme! Vyřešili jste křížovku správně!\nTajenka je: ${solution}`);
+        createSuccessModal(`
+            <h2>🎉 Gratulujeme! 🎉</h2>
+            <p>Úspěšně jste vyřešili křížovku!</p>
+            <p>Tajenka je: <strong>${solution}</strong></p>
+        `);
+        
         // Highlight all solution cells
         document.querySelectorAll('.solution-cell').forEach(cell => {
             cell.classList.add('solution-revealed');
         });
     } else {
-        let message = `Správně vyplněno: ${correct} z ${total} slov (${percentage}%)\n`;
-        if (incorrectWords.length > 0) {
-            message += `Zkontrolujte slova s čísly: ${incorrectWords.join(', ')}`;
-        }
-        alert(message);
+        const message = `
+            <h2>Ještě to není ono...</h2>
+            <p>Správně vyplněno: ${correct} z ${total} slov (${percentage}%)</p>
+            ${incorrectWords.length > 0 ? 
+                `<p>Zkontrolujte slova s čísly: ${incorrectWords.join(', ')}</p>` : 
+                ''}
+        `;
+        createInfoModal(message);
     }
+}
+
+// Create modal for messages
+function createModal(content, type = 'info') {
+    const modal = document.createElement('div');
+    modal.className = `modal modal-${type}`;
+    modal.innerHTML = `
+        <div class="modal-content">
+            ${content}
+            <button class="modal-close">Zavřít</button>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    const closeBtn = modal.querySelector('.modal-close');
+    closeBtn.addEventListener('click', () => {
+        modal.remove();
+    });
+
+    setTimeout(() => {
+        modal.classList.add('show');
+    }, 10);
+}
+
+function createSuccessModal(content) {
+    createModal(content, 'success');
+}
+
+function createInfoModal(content) {
+    createModal(content, 'info');
+}
+
+// Handle focus and blur events
+function handleFocus(event) {
+    const cell = event.target;
+    const wordId = cell.dataset.wordId;
+    if (wordId) {
+        highlightWord(wordId);
+    }
+}
+
+function handleBlur(event) {
+    // Optional: Remove highlights
+    // Keeping highlights for better UX
 }
