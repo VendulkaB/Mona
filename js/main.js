@@ -36,44 +36,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function createGrid() {
         const grid = document.getElementById("crosswordGrid");
-        for (let i = 0; i <= crosswordData.size; i++) {
-            for (let j = 0; j <= crosswordData.size; j++) {
-                const cell = document.createElement("div");
-                if (i === 0 && j > 0) {
-                    cell.textContent = j;
-                    cell.className = "label";
-                } else if (j === 0 && i > 0) {
-                    cell.textContent = i;
-                    cell.className = "label";
-                } else if (i > 0 && j > 0) {
-                    const input = document.createElement("input");
-                    input.type = "text";
-                    input.className = "cell";
-                    input.maxLength = 1;
-                    input.disabled = true;
-                    cell.appendChild(input);
-                }
+        grid.style.gridTemplateColumns = `repeat(${crosswordData.size}, 40px)`;
+
+        for (let i = 0; i < crosswordData.size; i++) {
+            for (let j = 0; j < crosswordData.size; j++) {
+                const cell = document.createElement("input");
+                cell.type = "text";
+                cell.className = "cell";
+                cell.maxLength = 1;
+                cell.disabled = true;
                 grid.appendChild(cell);
             }
         }
 
         for (const [id, word] of Object.entries(crosswordData.words)) {
             const { row, col, answer, direction } = word;
+
             for (let i = 0; i < answer.length; i++) {
                 const index =
-                    (row - 1) * (crosswordData.size + 1) +
-                    (direction === "across" ? col + i : col);
+                    (row - 1) * crosswordData.size +
+                    (direction === "across" ? col + i - 1 : col - 1);
                 const cell = grid.children[index];
-                const input = cell.querySelector("input");
-                if (input) input.disabled = false;
+                cell.disabled = false;
+                cell.placeholder = id;
             }
         }
 
         crosswordData.tajenka.forEach(({ row, col }) => {
-            const index = (row - 1) * (crosswordData.size + 1) + col;
+            const index = (row - 1) * crosswordData.size + (col - 1);
             const cell = grid.children[index];
-            const input = cell.querySelector("input");
-            if (input) input.classList.add("cell-tajenka");
+            cell.classList.add("cell-tajenka");
         });
     }
 
@@ -92,7 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function checkSolution() {
         const solution = crosswordData.tajenka
             .map(({ row, col }) => {
-                const index = (row - 1) * (crosswordData.size + 1) + col;
+                const index = (row - 1) * (crosswordData.size) + (col - 1);
                 const cell = document.getElementById("crosswordGrid").children[index];
                 const input = cell.querySelector("input");
                 return input ? input.value.toUpperCase() : "";
