@@ -1,155 +1,93 @@
-/* style.css */
 body {
-   background: linear-gradient(to bottom, #0e172c, #1e2a48, #2f4b6e);
-   color: #fff;
-   margin: 0;
-   padding: 20px;
-   font-family: Arial, sans-serif;
-}
-
-.container {
-   max-width: 1200px;
-   margin: 0 auto;
-}
-
-.photo-header img {
-   width: 100%;
-   height: 250px;
-   object-fit: cover;
-   border-bottom: 5px solid #00ffcc;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, #1c1c3c, #1e2a48, #2f4b6e);
+    color: #ffffff;
+    margin: 0;
+    text-align: center;
 }
 
 h1 {
-   text-align: center;
-   color: #00ffff;
-   text-shadow: 0 0 10px rgba(0,255,255,0.5);
-   margin: 20px 0;
+    font-size: 2.5rem;
+    color: #00ffff;
+    text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffcc;
+    margin: 20px;
 }
 
-.puzzle-wrapper {
-   display: flex;
-   gap: 30px;
-   flex-wrap: wrap;
+.photo-header img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
 }
 
 .grid-container {
-   background: #1e2a48;
-   padding: 20px;
-   border-radius: 10px;
+    display: grid;
+    grid-template-columns: 40px repeat(12, 40px);
+    grid-template-rows: 40px repeat(12, 40px);
+    gap: 2px;
+    margin: 20px auto;
+    padding: 10px;
+    border: 3px solid #00ffff;
+    border-radius: 10px;
 }
 
-.column-labels, .row-labels {
-   display: grid;
-   gap: 1px;
-   background: #333;
-}
-
-.column-labels {
-   grid-template-columns: 40px repeat(12, 40px);
-   margin-bottom: 5px;
-}
-
-.row-labels {
-   grid-template-rows: repeat(12, 40px);
-}
-
-.empty-corner {
-   width: 40px;
-   height: 40px;
-}
-
-.column-labels div, .row-labels div {
-   background: #1e2a48;
-   color: #00ffff;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   font-weight: bold;
-}
-
-.grid-with-labels {
-   display: flex;
-}
-
-#crosswordGrid {
-   display: grid;
-   grid-template-columns: repeat(12, 40px);
-   grid-template-rows: repeat(12, 40px);
-   gap: 1px;
-   background: #333;
+.label {
+    font-size: 14px;
+    color: #00ffff;
+    text-align: center;
+    font-weight: bold;
 }
 
 .cell {
-   width: 100%;
-   height: 100%;
-   background: white;
-   border: none;
-   text-align: center;
-   font-size: 20px;
-   font-weight: bold;
-   text-transform: uppercase;
+    width: 40px;
+    height: 40px;
+    border: 1px solid #00ffff;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: white;
 }
 
-.cell-number {
-   position: absolute;
-   top: 2px;
-   left: 2px;
-   font-size: 12px;
-   color: #333;
+.cell:disabled {
+    background-color: #1e2a48;
+    border-color: #333;
 }
 
-.tajenka {
-   background: #b3e6ff !important;
+.cell-tajenka {
+    background-color: #00ffcc;
+    border-color: #00ffcc;
+}
+
+.clues-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
 }
 
 .clues {
-   flex: 1;
-   display: grid;
-   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-   gap: 20px;
+    background-color: #1e2a48;
+    padding: 15px;
+    border-radius: 10px;
+    width: 45%;
+    color: #ffffff;
 }
 
-.horizontal, .vertical {
-   background: rgba(255,255,255,0.1);
-   padding: 20px;
-   border-radius: 10px;
-}
-
-h2 {
-   color: #00ffff;
-   margin-top: 0;
+.clues h3 {
+    font-size: 1.8rem;
+    color: #00ffff;
 }
 
 .clues p {
-   margin: 10px 0;
+    margin: 5px 0;
 }
 
-button {
-   display: block;
-   margin: 20px auto;
-   padding: 15px 30px;
-   background: #00ffcc;
-   color: #1e2a48;
-   border: none;
-   border-radius: 5px;
-   font-size: 16px;
-   cursor: pointer;
-}
-
-@media (max-width: 768px) {
-   .puzzle-wrapper {
-       flex-direction: column;
-   }
-   
-   .cell {
-       font-size: 16px;
-   }
-   
-   .column-labels, #crosswordGrid {
-       grid-template-columns: repeat(12, 30px);
-   }
-   
-   .row-labels {
-       grid-template-rows: repeat(12, 30px);
-   }
+.btn-check {
+    margin-top: 20px;
+    background-color: #00ffcc;
+    color: #1e2a48;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
 }
