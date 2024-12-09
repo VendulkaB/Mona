@@ -19,10 +19,19 @@
             color: #00ffff;
             text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffcc, 0 0 30px #00ffa1;
         }
+        .photo-header {
+            width: 100%;
+            height: 250px;
+            background-image: url('Image (21).jpg');
+            background-size: cover;
+            background-position: center;
+            border-bottom: 5px solid #00ffcc;
+            margin-bottom: 20px;
+        }
         .grid-container {
             display: inline-grid;
-            grid-template-columns: 30px repeat(10, 40px);
-            grid-template-rows: 30px repeat(10, 40px);
+            grid-template-columns: 30px repeat(12, 40px);
+            grid-template-rows: 30px repeat(12, 40px);
             gap: 2px;
             margin: 20px auto;
             background-color: #333;
@@ -92,6 +101,7 @@
     </style>
 </head>
 <body>
+    <div class="photo-header"></div>
     <h1>Křížovka pro Móňu</h1>
     <div class="grid-container" id="crosswordGrid"></div>
     <div class="clues-container">
@@ -107,24 +117,23 @@
     <button class="btn-check" onclick="checkSolution()">Zkontrolovat řešení</button>
     <script>
         const crosswordData = {
-            size: 10,
+            size: 12,
             words: {
-                1: { clue: "Hlavní město Francie", answer: "PARIZ", row: 1, col: 1, direction: "across" },
-                2: { clue: "Nejvyšší hora světa", answer: "EVEREST", row: 2, col: 2, direction: "down" },
+                1: { clue: "Hlavní město Itálie", answer: "RIM", row: 1, col: 2, direction: "across" },
+                2: { clue: "Nejvyšší hora světa", answer: "EVEREST", row: 2, col: 1, direction: "down" },
                 3: { clue: "Největší oceán na světě", answer: "PACIFIK", row: 4, col: 3, direction: "across" },
-                4: { clue: "Autor 'Hamleta'", answer: "SHAKESPEARE", row: 1, col: 5, direction: "down" },
-                5: { clue: "Název chemického prvku Au", answer: "ZLATO", row: 6, col: 1, direction: "across" },
-                6: { clue: "Planeta, která je nejblíže Slunci", answer: "MERKUR", row: 8, col: 4, direction: "across" },
-                7: { clue: "Slavný italský malíř", answer: "DAVINCI", row: 3, col: 7, direction: "down" },
-                8: { clue: "Řeka protékající Egyptem", answer: "NIL", row: 10, col: 2, direction: "across" }
+                4: { clue: "Autor 'Hamleta'", answer: "SHAKESPEARE", row: 1, col: 7, direction: "down" },
+                5: { clue: "Řeka protékající Londýnem", answer: "TEMZE", row: 6, col: 1, direction: "across" },
+                6: { clue: "Planeta nejblíže Slunci", answer: "MERKUR", row: 8, col: 5, direction: "across" },
+                7: { clue: "Název chemického prvku Au", answer: "ZLATO", row: 10, col: 3, direction: "across" }
             },
             tajenka: [
-                { row: 1, col: 1 },
-                { row: 2, col: 2 },
+                { row: 1, col: 2 },
+                { row: 2, col: 1 },
                 { row: 4, col: 3 },
-                { row: 6, col: 5 },
-                { row: 8, col: 4 },
-                { row: 10, col: 2 }
+                { row: 6, col: 4 },
+                { row: 8, col: 5 },
+                { row: 10, col: 3 }
             ]
         };
 
