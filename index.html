@@ -4,36 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Křížovka pro Móňu</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-    <div class="photo-header"></div>
-    <h1>Křížovka pro Móňu</h1>
-    
-    <div class="grid-container">
-        <div class="grid-labels">
-            <!-- Čísla sloupců -->
+    <div class="container">
+        <header class="photo-header">
+            <img src="./img/Image (21).jpg" alt="Hlavička křížovky">
+        </header>
+        
+        <h1>Křížovka pro Móňu</h1>
+
+        <div class="instructions">
+            <p>Tajenka je zvýrazněna modře. Použijte Tab nebo šipky pro navigaci mezi políčky.</p>
         </div>
-        <div class="grid-with-rows">
-            <div class="row-labels">
-                <!-- Čísla řádků -->
+        
+        <main class="puzzle-container">
+            <div class="grid-layout">
+                <!-- Čísla sloupců -->
+                <div class="column-numbers">
+                    <span></span>
+                    <span>1</span>...<span>12</span>
+                </div>
+                
+                <!-- Křížovka s řádky -->
+                <div class="puzzle-area">
+                    <div class="row-numbers">
+                        <span>1</span>...<span>12</span>
+                    </div>
+                    <div id="crosswordGrid" class="crossword-grid"></div>
+                </div>
             </div>
-            <div id="crosswordGrid" class="grid"></div>
-        </div>
+
+            <!-- Nápovědy -->
+            <div class="hints">
+                <div class="across">
+                    <h2>Vodorovně</h2>
+                    <div id="acrossClues" class="hint-list"></div>
+                </div>
+                <div class="down">
+                    <h2>Svisle</h2>
+                    <div id="downClues" class="hint-list"></div>
+                </div>
+            </div>
+
+            <button class="check-solution" onclick="checkSolution()">
+                Zkontrolovat tajenku
+            </button>
+        </main>
     </div>
 
-    <div class="clues-container">
-        <div class="clues">
-            <h3>Vodorovně</h3>
-            <div id="acrossClues"></div>
-        </div>
-        <div class="clues">
-            <h3>Svisle</h3>
-            <div id="downClues"></div>
-        </div>
-    </div>
-
-    <button class="btn-check" onclick="checkSolution()">Zkontrolovat řešení</button>
-    <script src="js/main.js"></script>
+    <script src="./js/main.js"></script>
 </body>
 </html>
