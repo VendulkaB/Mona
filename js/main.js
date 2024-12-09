@@ -1,6 +1,6 @@
 // Data pro křížovku
 const crosswordData = {
-    size: 12, // Velikost mřížky
+    size: 12,
     words: {
         1: { clue: "Hlavní město Itálie", answer: "RIM", row: 1, col: 1, direction: "across" },
         2: { clue: "Největší hora světa", answer: "EVEREST", row: 1, col: 3, direction: "down" },
@@ -26,47 +26,48 @@ function createGrid() {
     const grid = document.getElementById('crosswordGrid');
     const tooltip = document.getElementById('tooltip');
 
-    for (let i = 0; i < crosswordData.size; i++) {
-        for (let j = 0; j < crosswordData.size; j++) {
+    for (let i = 1; i <= crosswordData.size; i++) {
+        for (let j = 1; j <= crosswordData.size; j++) {
             const cell = document.createElement('input');
             cell.type = 'text';
             cell.maxLength = 1;
             cell.classList.add('cell');
-            cell.dataset.row = i + 1;
-            cell.dataset.col = j + 1;
+            cell.dataset.row = i;
+            cell.dataset.col = j;
             cell.disabled = true;
-            cell.addEventListener('focus', () => {
-                const wordId = cell.dataset.wordId;
-                if (wordId) {
-                    const word = crosswordData.words[wordId];
-                    tooltip.textContent = `${wordId}. ${word.clue}`;
-                    tooltip.style.display = 'block';
-                }
-            });
-            cell.addEventListener('blur', () => {
-                tooltip.style.display = 'none';
-            });
             grid.appendChild(cell);
         }
     }
 
-    // Povolit buňky pro odpovědi
     for (const [id, word] of Object.entries(crosswordData.words)) {
         const { row, col, answer, direction } = word;
+
         for (let i = 0; i < answer.length; i++) {
             const currentRow = direction === 'across' ? row : row + i;
             const currentCol = direction === 'across' ? col + i : col;
             const cell = grid.querySelector(`.cell[data-row="${currentRow}"][data-col="${currentCol}"]`);
             cell.disabled = false;
             cell.dataset.wordId = id;
-            if (answer === "OTEC FURA" && i < 8) {
-                cell.classList.add('cell-tajenka');
-            }
+            cell.addEventListener('focus', () => highlightClue(id, word.direction));
+            cell.addEventListener('blur', () => removeHighlight());
         }
     }
 }
 
-// Vygenerování nápověd
+// Zvýraznění nápovědy
+function highlightClue(id, direction) {
+    const clues = document.getElementById(direction === 'across' ? 'acrossClues' : 'downClues');
+    const clueElement = clues.querySelector(`[data-id="${id}"]`);
+    clueElement.classList.add('highlight');
+}
+
+// Odstranění zvýraznění
+function removeHighlight() {
+    const highlights = document.querySelectorAll('.highlight');
+    highlights.forEach(element => element.classList.remove('highlight'));
+}
+
+// Generování nápověd
 function generateClues() {
     const acrossClues = document.getElementById('acrossClues');
     const downClues = document.getElementById('downClues');
@@ -74,10 +75,11 @@ function generateClues() {
     for (const [id, word] of Object.entries(crosswordData.words)) {
         const clueElement = document.createElement('p');
         clueElement.textContent = `${id}. ${word.clue}`;
+        clueElement.dataset.id = id;
 
         if (word.direction === 'across') {
             acrossClues.appendChild(clueElement);
-        } else if (word.direction === 'down') {
+        } else {
             downClues.appendChild(clueElement);
         }
     }
@@ -85,8 +87,8 @@ function generateClues() {
 
 // Kontrola odpovědí
 function checkSolution() {
-    let correct = true;
-    const grid = document.getElementById('crosswordGrid');
+    let correct = 0;
+    let total = 0;
 
     for (const [id, word] of Object.entries(crosswordData.words)) {
         const { row, col, answer, direction } = word;
@@ -95,29 +97,18 @@ function checkSolution() {
         for (let i = 0; i < answer.length; i++) {
             const currentRow = direction === 'across' ? row : row + i;
             const currentCol = direction === 'across' ? col + i : col;
-            const cell = grid.querySelector(`.cell[data-row="${currentRow}"][data-col="${currentCol}"]`);
+            const cell = document.querySelector(`.cell[data-row="${currentRow}"][data-col="${currentCol}"]`);
             userAnswer += cell.value.toUpperCase();
         }
 
-        if (userAnswer !== answer) {
-            correct = false;
-            for (let i = 0; i < answer.length; i++) {
-                const currentRow = direction === 'across' ? row : row + i;
-                const currentCol = direction === 'across' ? col + i : col;
-                const cell = grid.querySelector(`.cell[data-row="${currentRow}"][data-col="${currentCol}"]`);
-                cell.classList.add('error');
-            }
+        if (userAnswer === answer) {
+            correct++;
         }
+        total++;
     }
 
-    if (correct) {
-        alert('Gratulujeme! Tajenka je správná!');
-    } else {
-        alert('Některé odpovědi jsou nesprávné. Opravte je.');
-    }
+    alert(`Správně: ${correct} z ${total}`);
 }
 
-// Inicializace
 createGrid();
 generateClues();
-
