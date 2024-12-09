@@ -38,7 +38,7 @@
         }
         .grid {
             display: grid;
-            grid-template-columns: repeat(12, 40px);
+            grid-template-columns: repeat(9, 40px);
             gap: 1px;
             background-color: #333;
         }
@@ -125,19 +125,17 @@
     <button class="btn-check" onclick="checkSolution()">Zkontrolovat řešení</button>
     <script>
         const crosswordData = {
-            size: 12,
+            size: 9,
             words: {
                 1: { clue: "Hlavní město Itálie", answer: "RIM", row: 1, col: 1, direction: "across" },
-                2: { clue: "Největší kontinent světa", answer: "ASIE", row: 2, col: 4, direction: "down" },
-                3: { clue: "Známý vědec, který formuloval teorii relativity", answer: "EINSTEIN", row: 4, col: 2, direction: "across" },
-                4: { clue: "Základní část rostliny, která je pod zemí", answer: "KOREN", row: 6, col: 3, direction: "down" },
-                5: { clue: "Řeka protékající Londýnem", answer: "TEMZE", row: 8, col: 1, direction: "across" },
-                6: { clue: "Slavný italský malíř, autor obrazu Mona Lisa", answer: "DAVINCI", row: 2, col: 7, direction: "down" },
-                7: { clue: "Planeta pojmenovaná po římském bohu války", answer: "MARS", row: 10, col: 2, direction: "across" },
-                8: { clue: "Hudební nástroj s klávesami", answer: "PIANO", row: 3, col: 8, direction: "down" },
-                9: { clue: "První prezident Československa", answer: "MASARYK", row: 11, col: 3, direction: "across" },
-                10: { clue: "Název pro vědecký pokus", answer: "EXPERIMENT", row: 1, col: 6, direction: "down" }
-            }
+                2: { clue: "Největší kontinent světa", answer: "ASIE", row: 1, col: 5, direction: "down" },
+                3: { clue: "Známý vědec, který formuloval teorii relativity", answer: "EINSTEIN", row: 3, col: 2, direction: "across" },
+                4: { clue: "Základní část rostliny, která je pod zemí", answer: "KOREN", row: 2, col: 7, direction: "down" },
+                5: { clue: "Řeka protékající Londýnem", answer: "TEMZE", row: 5, col: 1, direction: "across" },
+                6: { clue: "Planeta pojmenovaná po římském bohu války", answer: "MARS", row: 7, col: 3, direction: "across" },
+                7: { clue: "První prezident Československa", answer: "MASARYK", row: 9, col: 2, direction: "across" }
+            },
+            tajenka: [1, 2, 6, 5]
         };
 
         function createGrid() {
@@ -148,7 +146,7 @@
                     cell.type = 'text';
                     cell.maxLength = 1;
                     cell.className = 'cell';
-                    cell.disabled = true; // Disable all cells initially
+                    cell.disabled = true;
                     grid.appendChild(cell);
                 }
             }
@@ -171,6 +169,10 @@
                         number.textContent = id;
                         cell.parentNode.insertBefore(number, cell);
                     }
+
+                    if (crosswordData.tajenka.includes(parseInt(id))) {
+                        cell.classList.add('cell-tajenka');
+                    }
                 }
             }
         }
@@ -182,7 +184,6 @@
             for (const [id, word] of Object.entries(crosswordData.words)) {
                 const clueElement = document.createElement('p');
                 clueElement.textContent = `${id}. ${word.clue}`;
-
                 if (word.direction === 'across') {
                     acrossClues.appendChild(clueElement);
                 } else {
