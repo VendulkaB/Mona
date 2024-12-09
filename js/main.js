@@ -4,124 +4,124 @@ const crosswordData = {
     solution: "OTEC FURA",
     words: {
         1: { 
-            clue: "Otáčivá část elektromotoru", 
-            answer: "ROTOR", 
+            clue: "Hlavní město České republiky", 
+            answer: "PRAHA", 
             row: 1, 
-            col: 5, 
-            direction: "across",
-            solutionLetters: {1: 0}
-        },
-        2: { 
-            clue: "Planeta s prstencem", 
-            answer: "SATURN", 
-            row: 2, 
             col: 3, 
             direction: "across",
-            solutionLetters: {2: 1}
+            solutionLetters: {2: 0} // 'O' pro OTEC
+        },
+        2: { 
+            clue: "Nejvyšší hora světa", 
+            answer: "EVEREST", 
+            row: 1, 
+            col: 1, 
+            direction: "down",
+            solutionLetters: {3: 1} // 'T' pro OTEC
         },
         3: { 
-            clue: "Slavný český malíř (Mikoláš)", 
-            answer: "ALES", 
-            row: 3, 
-            col: 7, 
-            direction: "down",
-            solutionLetters: {0: 2}
-        },
-        4: { 
-            clue: "Chemický prvek Ca", 
-            answer: "VAPNIK", 
-            row: 4, 
-            col: 2, 
-            direction: "across",
-            solutionLetters: {2: 3}
-        },
-        5: { 
-            clue: "Mražený dezert", 
-            answer: "FROZEN", 
-            row: 5, 
+            clue: "Chemický prvek Fe", 
+            answer: "ZELEZO", 
+            row: 2, 
             col: 4, 
             direction: "across",
-            solutionLetters: {0: 4}
+            solutionLetters: {2: 2} // 'E' pro OTEC
+        },
+        4: { 
+            clue: "Jméno skladatele Dvořáka", 
+            answer: "ANTONIN", 
+            row: 3, 
+            col: 2, 
+            direction: "across",
+            solutionLetters: {5: 3} // 'C' pro OTEC
+        },
+        5: { 
+            clue: "Nejrychlejší suchozemské zvíře", 
+            answer: "GEPARD", 
+            row: 4, 
+            col: 5, 
+            direction: "down",
+            solutionLetters: {0: 4} // 'F' pro FURA
         },
         6: { 
-            clue: "Jihomoravské město proslulé vínem", 
-            answer: "UHERSKE", 
+            clue: "Planeta nejblíže Slunci", 
+            answer: "MERKUR", 
+            row: 5, 
+            col: 3, 
+            direction: "across",
+            solutionLetters: {3: 5} // 'U' pro FURA
+        },
+        7: { 
+            clue: "Hlavní město Francie", 
+            answer: "PARIZ", 
             row: 6, 
             col: 1, 
             direction: "across",
-            solutionLetters: {0: 5}
-        },
-        7: { 
-            clue: "Hlavní město Lotyšska", 
-            answer: "RIGA", 
-            row: 7, 
-            col: 6, 
-            direction: "across",
-            solutionLetters: {0: 6}
+            solutionLetters: {2: 6} // 'R' pro FURA
         },
         8: { 
-            clue: "Český hudební skladatel (Bedřich)", 
-            answer: "SMETANA", 
-            row: 3, 
-            col: 1, 
-            direction: "down",
-            solutionLetters: {4: 7}
+            clue: "Velká pouštˇ v Africe", 
+            answer: "SAHARA", 
+            row: 7, 
+            col: 4, 
+            direction: "across",
+            solutionLetters: {1: 7} // 'A' pro FURA
         },
         9: {
-            clue: "Lesní plod", 
-            answer: "MALINA", 
-            row: 8, 
-            col: 3, 
-            direction: "across"
+            clue: "Nejdelší řeka ČR", 
+            answer: "VLTAVA", 
+            row: 3, 
+            col: 6, 
+            direction: "down"
         },
         10: {
-            clue: "Značka českých hodinek", 
-            answer: "PRIM", 
-            row: 9, 
-            col: 5, 
+            clue: "Základní jednotka délky", 
+            answer: "METR", 
+            row: 8, 
+            col: 2, 
             direction: "down"
         },
         11: {
-            clue: "Základní jednotka délky", 
-            answer: "METR", 
-            row: 10, 
-            col: 2, 
-            direction: "across"
-        },
-        12: {
             clue: "Největší savec", 
             answer: "VELRYBA", 
-            row: 11, 
-            col: 4, 
+            row: 6, 
+            col: 8, 
+            direction: "down"
+        },
+        12: {
+            clue: "Český národní strom", 
+            answer: "LIPA", 
+            row: 4, 
+            col: 1, 
             direction: "across"
         },
         13: {
-            clue: "Italská sopka", 
-            answer: "ETNA", 
-            row: 7, 
-            col: 1, 
-            direction: "down"
-        },
-        14: {
-            clue: "Materiál na výrobu skla", 
-            answer: "PISEK", 
-            row: 5, 
-            col: 8, 
-            direction: "down"
-        },
-        15: {
-            clue: "Hlavní město Norska", 
-            answer: "OSLO", 
-            row: 2, 
-            col: 10, 
+            clue: "Značka českých aut", 
+            answer: "SKODA", 
+            row: 9, 
+            col: 3, 
             direction: "across"
         },
-        16: {
+        14: {
+            clue: "Protiklad dne", 
+            answer: "NOC", 
+            row: 8, 
+            col: 7, 
+            direction: "across"
+        },
+        15: {
             clue: "Jednotka elektrického napětí", 
             answer: "VOLT", 
-            row: 1, 
-            col: 8, 
+            row: 2, 
+            col: 9, 
             direction: "down"
+        },
+        16: {
+            clue: "Název našeho Slunce", 
+            answer: "SOL", 
+            row: 5, 
+            col: 8, 
+            direction: "across"
         }
     }
 };
@@ -133,11 +133,12 @@ document.addEventListener('DOMContentLoaded', () => {
     setupEventListeners();
 });
 
-// Create the grid
+// Create the crossword grid
 function createGrid() {
     const grid = document.getElementById('crosswordGrid');
     grid.innerHTML = '';
 
+    // Create the grid cells
     for (let i = 1; i <= crosswordData.size; i++) {
         for (let j = 1; j <= crosswordData.size; j++) {
             const wrapper = document.createElement('div');
@@ -176,7 +177,6 @@ function createGrid() {
         }
     });
 }
-
 // Enable cells for a word
 function enableWordCells(id, word) {
     const { row, col, answer, direction, solutionLetters } = word;
@@ -190,6 +190,7 @@ function enableWordCells(id, word) {
             cell.disabled = false;
             cell.dataset.wordId = id;
             cell.dataset.direction = direction;
+            cell.dataset.index = i;
             
             if (solutionLetters && solutionLetters[i] !== undefined) {
                 cell.classList.add('solution-cell');
@@ -226,7 +227,7 @@ function generateClues() {
         });
 }
 
-// Setup event listeners
+// Setup event listeners for all cells
 function setupEventListeners() {
     document.querySelectorAll('.cell:not([disabled])').forEach(cell => {
         cell.addEventListener('input', handleInput);
@@ -236,9 +237,11 @@ function setupEventListeners() {
     });
 }
 
-// Handle input
+// Handle input in cells
 function handleInput(event) {
     const cell = event.target;
+    
+    // Convert input to uppercase
     cell.value = cell.value.toUpperCase();
     
     if (cell.value) {
@@ -269,7 +272,14 @@ function handleKeydown(event) {
             moveFocus(cell, 1, 0);
             break;
         case 'Backspace':
-            handleBackspace(event, cell);
+            if (!cell.value) {
+                event.preventDefault();
+                const prevCell = findPrevCell(cell);
+                if (prevCell) {
+                    prevCell.focus();
+                    prevCell.value = '';
+                }
+            }
             break;
         case 'Delete':
             cell.value = '';
@@ -278,18 +288,6 @@ function handleKeydown(event) {
             event.preventDefault();
             moveToNextWord(cell, event.shiftKey);
             break;
-    }
-}
-
-// Handle backspace
-function handleBackspace(event, cell) {
-    if (!cell.value) {
-        event.preventDefault();
-        const prevCell = findPrevCell(cell);
-        if (prevCell) {
-            prevCell.focus();
-            prevCell.value = '';
-        }
     }
 }
 
@@ -336,7 +334,6 @@ function findPrevCell(cell) {
         return findCell(currentRow - 1, currentCol);
     }
 }
-
 // Move to next word
 function moveToNextWord(cell, reverse = false) {
     const currentWordId = parseInt(cell.dataset.wordId);
@@ -361,10 +358,13 @@ function moveToNextWord(cell, reverse = false) {
 
 // Highlight word
 function highlightWord(wordId) {
-    document.querySelectorAll('.cell.highlight, .clues p.highlight')
+    // Remove previous highlights
+    document.querySelectorAll('.cell.highlight, .clues-list p.highlight')
         .forEach(el => el.classList.remove('highlight'));
 
     const word = crosswordData.words[wordId];
+    
+    // Highlight word cells
     for (let i = 0; i < word.answer.length; i++) {
         const currentRow = word.direction === 'across' ? word.row : word.row + i;
         const currentCol = word.direction === 'across' ? word.col + i : word.col;
@@ -374,7 +374,8 @@ function highlightWord(wordId) {
         }
     }
 
-    const clue = document.querySelector(`.clues p[data-id="${wordId}"]`);
+    // Highlight clue
+    const clue = document.querySelector(`.clues-list p[data-id="${wordId}"]`);
     if (clue) {
         clue.classList.add('highlight');
         clue.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -399,7 +400,7 @@ function checkWord(cell) {
     }
 }
 
-// Get cells for a word
+// Get all cells for a word
 function getWordCells(word) {
     const cells = [];
     for (let i = 0; i < word.answer.length; i++) {
@@ -411,7 +412,7 @@ function getWordCells(word) {
     return cells;
 }
 
-// Get user answer for a word
+// Get user's answer for a word
 function getUserAnswer(word) {
     let answer = '';
     for (let i = 0; i < word.answer.length; i++) {
@@ -423,7 +424,7 @@ function getUserAnswer(word) {
     return answer;
 }
 
-// Helper function to find cell
+// Find cell by coordinates
 function findCell(row, col) {
     return document.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
 }
@@ -437,8 +438,9 @@ function handleFocus(event) {
     }
 }
 
-function handleBlur() {
-    // Optional: Add blur handling if needed
+function handleBlur(event) {
+    // Optionally remove highlights when leaving a cell
+    // Currently left empty for better UX
 }
 
 // Check complete solution
@@ -468,6 +470,10 @@ function checkSolution() {
     
     if (correct === total) {
         alert(`Gratulujeme! Vyřešili jste křížovku správně!\nTajenka je: ${solution}`);
+        // Highlight all solution cells
+        document.querySelectorAll('.solution-cell').forEach(cell => {
+            cell.classList.add('solution-revealed');
+        });
     } else {
         let message = `Správně vyplněno: ${correct} z ${total} slov (${percentage}%)\n`;
         if (incorrectWords.length > 0) {
