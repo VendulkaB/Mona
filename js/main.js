@@ -58,15 +58,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 cell.dataset.answer = answer[i];
                 cell.dataset.word = id;
 
+                // Přidat číslo otázky pouze na první políčko
                 if (i === 0) {
-                    const number = document.createElement("span");
-                    number.textContent = id;
-                    number.className = `clue-number ${direction}`;
-                    cell.parentNode.appendChild(number);
+                    cell.placeholder = id;
+                    cell.style.color = direction === "across" ? "#00aaff" : "#00ffaa";
                 }
             }
         }
 
+        // Zvýraznit tajenku
         crosswordData.tajenka.forEach(({ row, col }) => {
             const index = (row - 1) * crosswordData.size + (col - 1);
             const cell = grid.children[index];
@@ -74,23 +74,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    function generateClues() {
-        const acrossClues = document.getElementById("acrossClues");
-        const downClues = document.getElementById("downClues");
-
-        for (const [id, word] of Object.entries(crosswordData.words)) {
-            const clueElement = document.createElement("p");
-            clueElement.id = `clue-${id}`;
-            clueElement.textContent = `${id}. ${word.clue}`;
-            if (word.direction === "across") acrossClues.appendChild(clueElement);
-            else downClues.appendChild(clueElement);
-        }
-    }
-
     function highlightClue(wordId) {
-        document.querySelectorAll(".highlight").forEach((el) => {
-            el.classList.remove("highlight");
-        });
+        document.querySelectorAll(".highlight").forEach((el) => el.classList.remove("highlight"));
 
         const clue = document.getElementById(`clue-${wordId}`);
         if (clue) clue.classList.add("highlight");
@@ -105,6 +90,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 highlightClue(wordId);
             });
         });
+    }
+
+    function generateClues() {
+        const acrossClues = document.getElementById("acrossClues");
+        const downClues = document.getElementById("downClues");
+
+        for (const [id, word] of Object.entries(crosswordData.words)) {
+            const clueElement = document.createElement("p");
+            clueElement.id = `clue-${id}`;
+            clueElement.textContent = `${id}. ${word.clue}`;
+            if (word.direction === "across") acrossClues.appendChild(clueElement);
+            else downClues.appendChild(clueElement);
+        }
     }
 
     function checkSolution() {
