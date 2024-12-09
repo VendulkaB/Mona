@@ -8,51 +8,45 @@
 </head>
 <body>
     <div class="container">
-        <header class="photo-header">
-            <img src="./img/Image (21).jpg" alt="Hlavička křížovky">
+        <header>
+            <img src="./img/Image (21).jpg" alt="Header" class="header-image">
+            <h1>Křížovka pro Móňu</h1>
         </header>
-        
-        <h1>Křížovka pro Móňu</h1>
 
         <div class="instructions">
-            <p>Tajenka je zvýrazněna modře. Použijte Tab nebo šipky pro navigaci mezi políčky.</p>
+            <p>Tajenka je zvýrazněna modře</p>
         </div>
-        
-        <main class="puzzle-container">
-            <div class="grid-layout">
-                <!-- Čísla sloupců -->
-                <div class="column-numbers">
-                    <span></span>
-                    <span>1</span>...<span>12</span>
-                </div>
-                
-                <!-- Křížovka s řádky -->
-                <div class="puzzle-area">
-                    <div class="row-numbers">
-                        <span>1</span>...<span>12</span>
-                    </div>
-                    <div id="crosswordGrid" class="crossword-grid"></div>
-                </div>
+
+        <main class="crossword-container">
+            <!-- Číslování sloupců -->
+            <div class="column-numbers">
+                <div class="number-cell empty"></div>
+                <!-- 1-12 generováno v JS -->
             </div>
 
-            <!-- Nápovědy -->
-            <div class="hints">
+            <div class="grid-container">
+                <!-- Číslování řádků generováno v JS -->
+                <div class="row-numbers"></div>
+                
+                <!-- Křížovka -->
+                <div id="crosswordGrid" class="grid"></div>
+            </div>
+
+            <!-- Otázky -->
+            <div class="clues">
                 <div class="across">
-                    <h2>Vodorovně</h2>
-                    <div id="acrossClues" class="hint-list"></div>
+                    <h3>Vodorovně</h3>
+                    <ol id="acrossClues"></ol>
                 </div>
                 <div class="down">
-                    <h2>Svisle</h2>
-                    <div id="downClues" class="hint-list"></div>
+                    <h3>Svisle</h3>
+                    <ol id="downClues"></ol>
                 </div>
             </div>
 
-            <button class="check-solution" onclick="checkSolution()">
-                Zkontrolovat tajenku
-            </button>
+            <button class="check-button">Zkontrolovat tajenku</button>
         </main>
     </div>
-
     <script src="./js/main.js"></script>
 </body>
 </html>
