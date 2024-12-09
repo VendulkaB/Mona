@@ -1,52 +1,53 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Křížovka pro Móňu</title>
-    <link rel="stylesheet" href="./css/style.css">
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Křížovka pro Móňu</title>
+   <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <img src="./img/Image (21).jpg" alt="Header" class="header-image">
-            <h1>Křížovka pro Móňu</h1>
-        </header>
+   <div class="container">
+       <header>
+           <img src="./img/Image (21).jpg" alt="Header" class="header-image">
+           <h1>Křížovka pro Móňu</h1>
+       </header>
 
-        <div class="instructions">
-            <p>Tajenka je zvýrazněna modře</p>
-        </div>
+       <div class="crossword-layout">
+           <section class="grid-section">
+               <div class="grid-container">
+                   <!-- Číslování sloupců -->
+                   <div class="column-numbers">
+                       <div class="number-cell"></div>
+                       <div class="number-cell">1</div>
+                       <!-- ... další čísla -->
+                   </div>
+                   <!-- Číslování řádků a křížovka -->
+                   <div class="row-numbers">
+                       <div class="number-cell">1</div>
+                       <!-- ... další čísla -->
+                   </div>
+                   <div id="crosswordGrid" class="grid"></div>
+               </div>
+           </section>
 
-        <main class="crossword-container">
-            <!-- Číslování sloupců -->
-            <div class="column-numbers">
-                <div class="number-cell empty"></div>
-                <!-- 1-12 generováno v JS -->
-            </div>
-
-            <div class="grid-container">
-                <!-- Číslování řádků generováno v JS -->
-                <div class="row-numbers"></div>
-                
-                <!-- Křížovka -->
-                <div id="crosswordGrid" class="grid"></div>
-            </div>
-
-            <!-- Otázky -->
-            <div class="clues">
-                <div class="across">
-                    <h3>Vodorovně</h3>
-                    <ol id="acrossClues"></ol>
-                </div>
-                <div class="down">
-                    <h3>Svisle</h3>
-                    <ol id="downClues"></ol>
-                </div>
-            </div>
-
-            <button class="check-button">Zkontrolovat tajenku</button>
-        </main>
-    </div>
-    <script src="./js/main.js"></script>
+           <section class="clues-section">
+               <div class="clues">
+                   <div class="across">
+                       <h3>Vodorovně</h3>
+                       <ol id="acrossClues"></ol>
+                   </div>
+                   <div class="down">
+                       <h3>Svisle</h3>
+                       <ol id="downClues"></ol>
+                   </div>
+               </div>
+               <button class="check-button" onclick="checkSolution()">
+                   Zkontrolovat tajenku
+               </button>
+           </section>
+       </div>
+   </div>
+   <script src="./js/main.js"></script>
 </body>
 </html>
