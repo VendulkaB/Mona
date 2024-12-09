@@ -1,99 +1,156 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const crosswordData = {
-        size: 12,
-        words: {
-            // 8 Vodorovně
-            1: { clue: "Hlavní město Itálie", answer: "RIM", row: 1, col: 1, direction: "across" },
-            2: { clue: "Planeta nejblíže Slunci", answer: "MERKUR", row: 2, col: 2, direction: "across" },
-            3: { clue: "Největší oceán", answer: "PACIFIK", row: 4, col: 1, direction: "across" },
-            4: { clue: "Řeka protékající Londýnem", answer: "TEMZE", row: 6, col: 3, direction: "across" },
-            5: { clue: "Planeta pojmenovaná po bohu války", answer: "MARS", row: 8, col: 1, direction: "across" },
-            6: { clue: "Největší kontinent světa", answer: "ASIE", row: 9, col: 5, direction: "across" },
-            7: { clue: "Název chemického prvku Au", answer: "ZLATO", row: 11, col: 2, direction: "across" },
-            8: { clue: "Hlavní město Francie", answer: "PARIZ", row: 12, col: 6, direction: "across" },
+/* Globální stylování */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to bottom, #001f3f, #005f7f);
+    color: #ffffff;
+    margin: 0;
+    text-align: center;
+    overflow-x: hidden;
+}
 
-            // 8 Svisle
-            9: { clue: "Nejvyšší hora světa", answer: "EVEREST", row: 1, col: 4, direction: "down" },
-            10: { clue: "Autor Hamleta", answer: "SHAKESPEARE", row: 1, col: 8, direction: "down" },
-            11: { clue: "Hlavní město Japonska", answer: "TOKIO", row: 3, col: 7, direction: "down" },
-            12: { clue: "Základní část rostliny", answer: "KOREN", row: 5, col: 2, direction: "down" },
-            13: { clue: "Slavný italský malíř", answer: "DAVINCI", row: 5, col: 6, direction: "down" },
-            14: { clue: "Řeka v Egyptě", answer: "NIL", row: 7, col: 9, direction: "down" },
-            15: { clue: "První prezident Československa", answer: "MASARYK", row: 10, col: 4, direction: "down" },
-            16: { clue: "Planeta nejvzdálenější od Slunce", answer: "NEPTUN", row: 2, col: 11, direction: "down" }
-        },
-        tajenka: [
-            { row: 1, col: 1 },
-            { row: 2, col: 2 },
-            { row: 4, col: 1 },
-            { row: 8, col: 1 },
-            { row: 6, col: 3 },
-            { row: 9, col: 5 },
-            { row: 11, col: 2 },
-            { row: 12, col: 6 }
-        ]
-    };
+h1 {
+    font-size: 2.5rem;
+    color: #00e0ff;
+    text-shadow: 0 0 5px #00e0ff, 0 0 10px #00cfff;
+    margin: 20px 0;
+}
 
-    function createGrid() {
-        const grid = document.getElementById("crosswordGrid");
-        grid.style.gridTemplateColumns = `repeat(${crosswordData.size}, 40px)`;
+/* Foto záhlaví */
+.photo-header img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-bottom: 3px solid #00ffcc;
+}
 
-        for (let i = 0; i < crosswordData.size; i++) {
-            for (let j = 0; j < crosswordData.size; j++) {
-                const cell = document.createElement("input");
-                cell.type = "text";
-                cell.className = "cell";
-                cell.maxLength = 1;
-                cell.disabled = true;
-                grid.appendChild(cell);
-            }
-        }
+/* Puzzle wrapper */
+.puzzle-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+}
 
-        for (const [id, word] of Object.entries(crosswordData.words)) {
-            const { row, col, answer, direction } = word;
+/* Grid container */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(12, 40px);
+    grid-auto-rows: 40px;
+    gap: 2px;
+    margin: 20px auto;
+    padding: 10px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    max-width: 100%;
+    overflow-x: auto;
+}
 
-            for (let i = 0; i < answer.length; i++) {
-                const index =
-                    (row - 1) * crosswordData.size +
-                    (direction === "across" ? col + i - 1 : col - 1);
-                const cell = grid.children[index];
-                cell.disabled = false;
-                cell.placeholder = id;
-            }
-        }
+/* Buňky mřížky */
+.cell {
+    width: 40px;
+    height: 40px;
+    background: #1e2a48;
+    border: 1px solid #00ffff;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+    text-transform: uppercase;
+}
 
-        crosswordData.tajenka.forEach(({ row, col }) => {
-            const index = (row - 1) * crosswordData.size + (col - 1);
-            const cell = grid.children[index];
-            cell.classList.add("cell-tajenka");
-        });
+.cell:disabled {
+    background: #00334d;
+}
+
+.cell-tajenka {
+    background: #00ffcc;
+    border: 2px solid #00ff99;
+    color: #1e2a48;
+}
+
+/* Nápovědy */
+.clues-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+    gap: 20px;
+}
+
+.clues {
+    background: #002f4f;
+    padding: 15px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.clues h3 {
+    font-size: 1.8rem;
+    color: #00e0ff;
+    margin-bottom: 10px;
+}
+
+.clues p {
+    font-size: 1rem;
+    margin: 5px 0;
+    text-align: left;
+}
+
+/* Tlačítko */
+.btn-check {
+    background: #00ffaa;
+    color: #1e2a48;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: transform 0.3s, background 0.3s;
+}
+
+.btn-check:hover {
+    background: #00ffcc;
+    transform: scale(1.05);
+}
+
+/* Footer */
+footer {
+    margin-top: 20px;
+    font-size: 1rem;
+    color: #00ffff;
+}
+
+/* Responzivita */
+@media (max-width: 768px) {
+    .photo-header img {
+        height: 180px;
     }
 
-    function generateClues() {
-        const acrossClues = document.getElementById("acrossClues");
-        const downClues = document.getElementById("downClues");
-
-        for (const [id, word] of Object.entries(crosswordData.words)) {
-            const clueElement = document.createElement("p");
-            clueElement.textContent = `${id}. ${word.clue}`;
-            if (word.direction === "across") acrossClues.appendChild(clueElement);
-            else downClues.appendChild(clueElement);
-        }
+    h1 {
+        font-size: 2rem;
     }
 
-    function checkSolution() {
-        const solution = crosswordData.tajenka
-            .map(({ row, col }) => {
-                const index = (row - 1) * (crosswordData.size) + (col - 1);
-                const cell = document.getElementById("crosswordGrid").children[index];
-                const input = cell.querySelector("input");
-                return input ? input.value.toUpperCase() : "";
-            })
-            .join("");
-
-        alert(solution === "OTECFURA" ? "Tajenka je správně: Otec Fura!" : "Tajenka není správná.");
+    .grid-container {
+        grid-template-columns: repeat(12, 30px);
+        grid-auto-rows: 30px;
     }
 
-    createGrid();
-    generateClues();
-});
+    .cell {
+        width: 30px;
+        height: 30px;
+        font-size: 14px;
+    }
+
+    .clues h3 {
+        font-size: 1.5rem;
+    }
+
+    .btn-check {
+        font-size: 1rem;
+        padding: 8px 16px;
+    }
+}
