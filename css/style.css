@@ -1,24 +1,29 @@
+/* Globální stylování */
 body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(to bottom, #1c1c3c, #1e2a48, #2f4b6e);
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to bottom, #0e172c, #1e2a48, #2f4b6e);
     color: #ffffff;
     margin: 0;
+    padding: 0;
     text-align: center;
 }
 
 h1 {
-    font-size: 2.5rem;
+    font-size: 3rem;
     color: #00ffff;
-    text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffcc;
+    text-shadow: 0 0 10px #00ffff, 0 0 20px #00ccff;
     margin: 20px;
 }
 
+/* Foto záhlaví */
 .photo-header img {
     width: 100%;
-    height: 200px;
+    height: 250px;
     object-fit: cover;
+    border-bottom: 3px solid #00ffcc;
 }
 
+/* Kontejner pro mřížku */
 .grid-container {
     display: grid;
     grid-template-columns: 40px repeat(12, 40px);
@@ -26,68 +31,87 @@ h1 {
     gap: 2px;
     margin: 20px auto;
     padding: 10px;
-    border: 3px solid #00ffff;
     border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
 }
 
+/* Čísla řádků a sloupců */
 .label {
     font-size: 14px;
     color: #00ffff;
     text-align: center;
-    font-weight: bold;
 }
 
+/* Pole mřížky */
 .cell {
     width: 40px;
     height: 40px;
-    border: 1px solid #00ffff;
+    background: #ffffff;
+    border: 2px solid #00ffff;
     text-align: center;
     text-transform: uppercase;
     font-size: 18px;
     font-weight: bold;
-    background-color: white;
 }
 
 .cell:disabled {
-    background-color: #1e2a48;
-    border-color: #333;
+    background: #1e2a48;
 }
 
 .cell-tajenka {
-    background-color: #00ffcc;
-    border-color: #00ffcc;
+    background: #00ffcc;
+    color: #1e2a48;
+    border: 3px solid #00ffaa;
 }
 
+/* Kontejner pro nápovědy */
 .clues-container {
+    max-width: 800px;
+    margin: 20px auto;
     display: flex;
-    justify-content: center;
-    gap: 20px;
+    justify-content: space-between;
 }
 
 .clues {
-    background-color: #1e2a48;
+    background: #1e2a48;
     padding: 15px;
     border-radius: 10px;
     width: 45%;
-    color: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .clues h3 {
     font-size: 1.8rem;
     color: #00ffff;
+    margin-bottom: 10px;
 }
 
 .clues p {
+    font-size: 1rem;
+    color: #ffffff;
     margin: 5px 0;
 }
 
+/* Tlačítko */
 .btn-check {
-    margin-top: 20px;
-    background-color: #00ffcc;
+    background: #00ffaa;
     color: #1e2a48;
     padding: 10px 20px;
+    font-size: 1.2rem;
     border-radius: 5px;
     border: none;
     cursor: pointer;
-    font-size: 1rem;
+    margin-top: 20px;
 }
+
+.btn-check:hover {
+    background: #00ffcc;
+}
+
+/* Footer */
+footer {
+    margin-top: 20px;
+    font-size: 1rem;
+    color: #00ffff;
+}
+
