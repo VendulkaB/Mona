@@ -58,80 +58,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 cell.dataset.answer = answer[i];
                 cell.dataset.word = id;
 
-                // Přidat číslo otázky pouze na první políčko
                 if (i === 0) {
                     cell.placeholder = id;
-                    cell.style.color = direction === "across" ? "#00aaff" : "#00ffaa";
                 }
             }
-        }
-
-        // Zvýraznit tajenku
-        crosswordData.tajenka.forEach(({ row, col }) => {
-            const index = (row - 1) * crosswordData.size + (col - 1);
-            const cell = grid.children[index];
-            cell.classList.add("cell-tajenka");
-        });
-    }
-
-    function highlightClue(wordId) {
-        document.querySelectorAll(".highlight").forEach((el) => el.classList.remove("highlight"));
-
-        const clue = document.getElementById(`clue-${wordId}`);
-        if (clue) clue.classList.add("highlight");
-    }
-
-    function setupEventListeners() {
-        const grid = document.getElementById("crosswordGrid").children;
-
-        Array.from(grid).forEach((cell) => {
-            cell.addEventListener("focus", () => {
-                const wordId = cell.dataset.word;
-                highlightClue(wordId);
-            });
-        });
-    }
-
-    function generateClues() {
-        const acrossClues = document.getElementById("acrossClues");
-        const downClues = document.getElementById("downClues");
-
-        for (const [id, word] of Object.entries(crosswordData.words)) {
-            const clueElement = document.createElement("p");
-            clueElement.id = `clue-${id}`;
-            clueElement.textContent = `${id}. ${word.clue}`;
-            if (word.direction === "across") acrossClues.appendChild(clueElement);
-            else downClues.appendChild(clueElement);
-        }
-    }
-
-    function checkSolution() {
-        const grid = document.getElementById("crosswordGrid").children;
-
-        let allCorrect = true;
-
-        for (const cell of grid) {
-            if (!cell.disabled) {
-                const userInput = cell.value.toUpperCase();
-                const correctAnswer = cell.dataset.answer;
-
-                if (userInput === correctAnswer) {
-                    cell.style.backgroundColor = "#00ffcc"; // Zelená pro správné odpovědi
-                } else {
-                    cell.style.backgroundColor = "#ff4d4d"; // Červená pro špatné odpovědi
-                    allCorrect = false;
-                }
-            }
-        }
-
-        if (allCorrect) {
-            alert("Gratulujeme! Tajenka je správně: Otec Fura!");
-        } else {
-            alert("Některé odpovědi nejsou správné. Zkontrolujte je, prosím.");
         }
     }
 
     createGrid();
-    generateClues();
-    setupEventListeners();
 });
