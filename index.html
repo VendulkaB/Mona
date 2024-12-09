@@ -4,18 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Křížovka pro Móňu</title>
+    <!-- Odkaz na styl ve složce css -->
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+    <!-- Záhlaví s obrázkem -->
     <div class="photo-header">
         <img src="img/Image (21).jpg" alt="Křížovka pro Móňu">
     </div>
+
+    <!-- Nadpis -->
     <h1>Křížovka pro Móňu</h1>
 
+    <!-- Hlavní obsah -->
     <div class="puzzle-wrapper">
+        <!-- Křížovková mřížka -->
         <div class="grid-container" id="crosswordGrid"></div>
+
+        <!-- Tooltip na otázky -->
         <div id="tooltip" class="tooltip">Kliknutím na políčko zobrazíte otázku...</div>
 
+        <!-- Nápovědy -->
         <div class="clues-container">
             <div class="clues">
                 <h3>Vodorovně</h3>
@@ -28,12 +37,15 @@
         </div>
     </div>
 
+    <!-- Tlačítko pro kontrolu -->
     <button class="btn-check" onclick="checkSolution()">Zkontrolovat řešení</button>
 
+    <!-- Footer -->
     <footer>
         <p>Vytvořeno s láskou ❤️</p>
     </footer>
 
+    <!-- Odkaz na JavaScript ve složce js -->
     <script src="js/main.js" defer></script>
 </body>
 </html>
