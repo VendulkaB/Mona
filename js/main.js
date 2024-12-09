@@ -59,8 +59,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 cell.dataset.word = id;
 
                 if (i === 0) {
-                    cell.placeholder = id; // Číslování otázky
-                    cell.style.color = "#00ffaa";
+                    const number = document.createElement("span");
+                    number.textContent = id;
+                    number.className = `clue-number ${direction}`;
+                    cell.parentNode.appendChild(number);
                 }
             }
         }
@@ -78,10 +80,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
         for (const [id, word] of Object.entries(crosswordData.words)) {
             const clueElement = document.createElement("p");
+            clueElement.id = `clue-${id}`;
             clueElement.textContent = `${id}. ${word.clue}`;
             if (word.direction === "across") acrossClues.appendChild(clueElement);
             else downClues.appendChild(clueElement);
         }
+    }
+
+    function highlightClue(wordId) {
+        document.querySelectorAll(".highlight").forEach((el) => {
+            el.classList.remove("highlight");
+        });
+
+        const clue = document.getElementById(`clue-${wordId}`);
+        if (clue) clue.classList.add("highlight");
+    }
+
+    function setupEventListeners() {
+        const grid = document.getElementById("crosswordGrid").children;
+
+        Array.from(grid).forEach((cell) => {
+            cell.addEventListener("focus", () => {
+                const wordId = cell.dataset.word;
+                highlightClue(wordId);
+            });
+        });
     }
 
     function checkSolution() {
@@ -112,4 +135,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
     createGrid();
     generateClues();
+    setupEventListeners();
 });
