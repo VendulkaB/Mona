@@ -1,4 +1,4 @@
-// Crossword data structure with solution highlighting
+// Crossword data structure
 const crosswordData = {
     size: 15,
     solution: "OTEC FURA",
@@ -9,7 +9,7 @@ const crosswordData = {
             row: 1, 
             col: 5, 
             direction: "across",
-            solutionLetters: {1: 0} // 'O' pro OTEC
+            solutionLetters: {1: 0}
         },
         2: { 
             clue: "Planeta s prstencem", 
@@ -17,7 +17,7 @@ const crosswordData = {
             row: 2, 
             col: 3, 
             direction: "across",
-            solutionLetters: {2: 1} // 'T' pro OTEC
+            solutionLetters: {2: 1}
         },
         3: { 
             clue: "Slavný český malíř (Mikoláš)", 
@@ -25,7 +25,7 @@ const crosswordData = {
             row: 3, 
             col: 7, 
             direction: "down",
-            solutionLetters: {0: 2} // 'E' pro OTEC
+            solutionLetters: {0: 2}
         },
         4: { 
             clue: "Chemický prvek Ca", 
@@ -33,7 +33,7 @@ const crosswordData = {
             row: 4, 
             col: 2, 
             direction: "across",
-            solutionLetters: {2: 3} // 'C' pro OTEC
+            solutionLetters: {2: 3}
         },
         5: { 
             clue: "Mražený dezert", 
@@ -41,7 +41,7 @@ const crosswordData = {
             row: 5, 
             col: 4, 
             direction: "across",
-            solutionLetters: {0: 4} // 'F' pro FURA
+            solutionLetters: {0: 4}
         },
         6: { 
             clue: "Jihomoravské město proslulé vínem", 
@@ -49,7 +49,7 @@ const crosswordData = {
             row: 6, 
             col: 1, 
             direction: "across",
-            solutionLetters: {0: 5} // 'U' pro FURA
+            solutionLetters: {0: 5}
         },
         7: { 
             clue: "Hlavní město Lotyšska", 
@@ -57,7 +57,7 @@ const crosswordData = {
             row: 7, 
             col: 6, 
             direction: "across",
-            solutionLetters: {0: 6} // 'R' pro FURA
+            solutionLetters: {0: 6}
         },
         8: { 
             clue: "Český hudební skladatel (Bedřich)", 
@@ -65,7 +65,7 @@ const crosswordData = {
             row: 3, 
             col: 1, 
             direction: "down",
-            solutionLetters: {4: 7} // 'A' pro FURA
+            solutionLetters: {4: 7}
         },
         9: {
             clue: "Lesní plod", 
@@ -126,28 +126,23 @@ const crosswordData = {
     }
 };
 
-// Initialize when DOM is loaded
+// Initialize crossword
 document.addEventListener('DOMContentLoaded', () => {
-    initializeCrossword();
-});
-
-function initializeCrossword() {
     createGrid();
     generateClues();
-    addNumbersToGrid();
     setupEventListeners();
-}
+});
 
+// Create the grid
 function createGrid() {
     const grid = document.getElementById('crosswordGrid');
     grid.innerHTML = '';
 
-    // Create cells
     for (let i = 1; i <= crosswordData.size; i++) {
         for (let j = 1; j <= crosswordData.size; j++) {
-            const cellWrapper = document.createElement('div');
-            cellWrapper.className = 'cell-wrapper';
-
+            const wrapper = document.createElement('div');
+            wrapper.className = 'cell-wrapper';
+            
             const cell = document.createElement('input');
             cell.type = 'text';
             cell.maxLength = 1;
@@ -155,67 +150,60 @@ function createGrid() {
             cell.dataset.row = i;
             cell.dataset.col = j;
             cell.disabled = true;
-
-            cellWrapper.appendChild(cell);
-            grid.appendChild(cellWrapper);
+            
+            wrapper.appendChild(cell);
+            grid.appendChild(wrapper);
         }
     }
 
-    enableCells();
-}
-
-function enableCells() {
+    // Enable cells and add numbers
+    const numberedCells = new Set();
     Object.entries(crosswordData.words).forEach(([id, word]) => {
-        const { row, col, answer, direction, solutionLetters } = word;
+        enableWordCells(id, word);
         
-        for (let i = 0; i < answer.length; i++) {
-            const currentRow = direction === 'across' ? row : row + i;
-            const currentCol = direction === 'across' ? col + i : col;
-            const cell = findCell(currentRow, currentCol);
-            
+        // Add cell number
+        const cellId = `${word.row}-${word.col}`;
+        if (!numberedCells.has(cellId)) {
+            const cell = findCell(word.row, word.col);
             if (cell) {
-                cell.disabled = false;
-                cell.dataset.wordId = id;
-                cell.dataset.direction = direction;
-                cell.dataset.index = i;
-                
-                if (solutionLetters && solutionLetters[i] !== undefined) {
-                    cell.classList.add('solution-cell');
-                    cell.dataset.solutionIndex = solutionLetters[i];
-                    
-                    // Add solution letter indicator
-                    const wrapper = cell.closest('.cell-wrapper');
-                    const indicator = document.createElement('div');
-                    indicator.className = 'solution-indicator';
-                    indicator.textContent = parseInt(solutionLetters[i]) + 1;
-                    wrapper.appendChild(indicator);
-                }
+                const wrapper = cell.closest('.cell-wrapper');
+                const number = document.createElement('div');
+                number.className = 'cell-number';
+                number.textContent = id;
+                wrapper.appendChild(number);
+                numberedCells.add(cellId);
             }
         }
     });
 }
 
-function addNumbersToGrid() {
-    const numberedCells = new Set();
+// Enable cells for a word
+function enableWordCells(id, word) {
+    const { row, col, answer, direction, solutionLetters } = word;
     
-    Object.entries(crosswordData.words)
-        .sort((a, b) => parseInt(a[0]) - parseInt(b[0]))
-        .forEach(([id, word]) => {
-            const cellId = `${word.row}-${word.col}`;
-            if (!numberedCells.has(cellId)) {
-                const cell = findCell(word.row, word.col);
-                if (cell) {
-                    const wrapper = cell.closest('.cell-wrapper');
-                    const number = document.createElement('div');
-                    number.className = 'cell-number';
-                    number.textContent = id;
-                    wrapper.appendChild(number);
-                    numberedCells.add(cellId);
-                }
+    for (let i = 0; i < answer.length; i++) {
+        const currentRow = direction === 'across' ? row : row + i;
+        const currentCol = direction === 'across' ? col + i : col;
+        const cell = findCell(currentRow, currentCol);
+        
+        if (cell) {
+            cell.disabled = false;
+            cell.dataset.wordId = id;
+            cell.dataset.direction = direction;
+            
+            if (solutionLetters && solutionLetters[i] !== undefined) {
+                cell.classList.add('solution-cell');
+                const wrapper = cell.closest('.cell-wrapper');
+                const indicator = document.createElement('div');
+                indicator.className = 'solution-indicator';
+                indicator.textContent = parseInt(solutionLetters[i]) + 1;
+                wrapper.appendChild(indicator);
             }
-        });
+        }
+    }
 }
 
+// Generate clues
 function generateClues() {
     const acrossClues = document.getElementById('acrossClues');
     const downClues = document.getElementById('downClues');
@@ -230,12 +218,15 @@ function generateClues() {
             clueElement.dataset.id = id;
             clueElement.addEventListener('click', () => highlightWord(id));
 
-            word.direction === 'across' 
-                ? acrossClues.appendChild(clueElement)
-                : downClues.appendChild(clueElement);
+            if (word.direction === 'across') {
+                acrossClues.appendChild(clueElement);
+            } else {
+                downClues.appendChild(clueElement);
+            }
         });
 }
 
+// Setup event listeners
 function setupEventListeners() {
     document.querySelectorAll('.cell:not([disabled])').forEach(cell => {
         cell.addEventListener('input', handleInput);
@@ -245,26 +236,37 @@ function setupEventListeners() {
     });
 }
 
+// Handle input
 function handleInput(event) {
     const cell = event.target;
     cell.value = cell.value.toUpperCase();
     
     if (cell.value) {
-        moveToNextCell(cell);
         checkWord(cell);
+        moveToNextCell(cell);
     }
 }
 
+// Handle keyboard navigation
 function handleKeydown(event) {
     const cell = event.target;
     
     switch (event.key) {
         case 'ArrowRight':
+            event.preventDefault();
+            moveFocus(cell, 0, 1);
+            break;
         case 'ArrowLeft':
+            event.preventDefault();
+            moveFocus(cell, 0, -1);
+            break;
         case 'ArrowUp':
+            event.preventDefault();
+            moveFocus(cell, -1, 0);
+            break;
         case 'ArrowDown':
             event.preventDefault();
-            handleArrowKey(event.key, cell);
+            moveFocus(cell, 1, 0);
             break;
         case 'Backspace':
             handleBackspace(event, cell);
@@ -279,17 +281,7 @@ function handleKeydown(event) {
     }
 }
 
-function handleArrowKey(key, cell) {
-    const movements = {
-        'ArrowRight': [0, 1],
-        'ArrowLeft': [0, -1],
-        'ArrowUp': [-1, 0],
-        'ArrowDown': [1, 0]
-    };
-    const [rowDelta, colDelta] = movements[key];
-    moveFocus(cell, rowDelta, colDelta);
-}
-
+// Handle backspace
 function handleBackspace(event, cell) {
     if (!cell.value) {
         event.preventDefault();
@@ -301,14 +293,7 @@ function handleBackspace(event, cell) {
     }
 }
 
-function moveToNextCell(cell) {
-    const direction = cell.dataset.direction;
-    const nextCell = findNextCell(cell, direction);
-    if (nextCell && !nextCell.disabled) {
-        nextCell.focus();
-    }
-}
-
+// Move focus in specified direction
 function moveFocus(cell, rowDelta, colDelta) {
     const currentRow = parseInt(cell.dataset.row);
     const currentCol = parseInt(cell.dataset.col);
@@ -318,6 +303,41 @@ function moveFocus(cell, rowDelta, colDelta) {
     }
 }
 
+// Move to next cell after input
+function moveToNextCell(cell) {
+    const direction = cell.dataset.direction;
+    const nextCell = findNextCell(cell, direction);
+    if (nextCell && !nextCell.disabled) {
+        nextCell.focus();
+    }
+}
+
+// Find next cell
+function findNextCell(cell, direction) {
+    const currentRow = parseInt(cell.dataset.row);
+    const currentCol = parseInt(cell.dataset.col);
+    
+    if (direction === 'across') {
+        return findCell(currentRow, currentCol + 1);
+    } else {
+        return findCell(currentRow + 1, currentCol);
+    }
+}
+
+// Find previous cell
+function findPrevCell(cell) {
+    const currentRow = parseInt(cell.dataset.row);
+    const currentCol = parseInt(cell.dataset.col);
+    const direction = cell.dataset.direction;
+    
+    if (direction === 'across') {
+        return findCell(currentRow, currentCol - 1);
+    } else {
+        return findCell(currentRow - 1, currentCol);
+    }
+}
+
+// Move to next word
 function moveToNextWord(cell, reverse = false) {
     const currentWordId = parseInt(cell.dataset.wordId);
     const wordIds = Object.keys(crosswordData.words)
@@ -339,6 +359,29 @@ function moveToNextWord(cell, reverse = false) {
     }
 }
 
+// Highlight word
+function highlightWord(wordId) {
+    document.querySelectorAll('.cell.highlight, .clues p.highlight')
+        .forEach(el => el.classList.remove('highlight'));
+
+    const word = crosswordData.words[wordId];
+    for (let i = 0; i < word.answer.length; i++) {
+        const currentRow = word.direction === 'across' ? word.row : word.row + i;
+        const currentCol = word.direction === 'across' ? word.col + i : word.col;
+        const cell = findCell(currentRow, currentCol);
+        if (cell) {
+            cell.classList.add('highlight');
+        }
+    }
+
+    const clue = document.querySelector(`.clues p[data-id="${wordId}"]`);
+    if (clue) {
+        clue.classList.add('highlight');
+        clue.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+}
+
+// Check word completion
 function checkWord(cell) {
     const wordId = cell.dataset.wordId;
     const word = crosswordData.words[wordId];
@@ -356,48 +399,36 @@ function checkWord(cell) {
     }
 }
 
+// Get cells for a word
 function getWordCells(word) {
     const cells = [];
-    const { row, col, answer, direction } = word;
-    
-    for (let i = 0; i < answer.length; i++) {
-        const currentRow = direction === 'across' ? row : row + i;
-        const currentCol = direction === 'across' ? col + i : col;
+    for (let i = 0; i < word.answer.length; i++) {
+        const currentRow = word.direction === 'across' ? word.row : word.row + i;
+        const currentCol = word.direction === 'across' ? word.col + i : word.col;
         const cell = findCell(currentRow, currentCol);
-        if (cell) {
-            cells.push(cell);
-        }
+        if (cell) cells.push(cell);
     }
-    
     return cells;
 }
 
-function highlightWord(wordId) {
-    // Remove previous highlights
-    document.querySelectorAll('.cell.highlight, .clues p.highlight')
-        .forEach(el => el.classList.remove('highlight'));
-
-    const word = crosswordData.words[wordId];
-    const { row, col, answer, direction } = word;
-    
-    // Highlight cells
-    for (let i = 0; i < answer.length; i++) {
-        const currentRow = direction === 'across' ? row : row + i;
-        const currentCol = direction === 'across' ? col + i : col;
+// Get user answer for a word
+function getUserAnswer(word) {
+    let answer = '';
+    for (let i = 0; i < word.answer.length; i++) {
+        const currentRow = word.direction === 'across' ? word.row : word.row + i;
+        const currentCol = word.direction === 'across' ? word.col + i : word.col;
         const cell = findCell(currentRow, currentCol);
-        if (cell) {
-            cell.classList.add('highlight');
-        }
+        if (cell) answer += (cell.value || '').toUpperCase();
     }
-
-    // Highlight clue
-    const clue = document.querySelector(`.clues p[data-id="${wordId}"]`);
-    if (clue) {
-        clue.classList.add('highlight');
-        clue.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
+    return answer;
 }
 
+// Helper function to find cell
+function findCell(row, col) {
+    return document.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
+}
+
+// Handle focus and blur
 function handleFocus(event) {
     const cell = event.target;
     const wordId = cell.dataset.wordId;
@@ -407,46 +438,41 @@ function handleFocus(event) {
 }
 
 function handleBlur() {
-    // Optional: Remove highlights when leaving a cell
+    // Optional: Add blur handling if needed
 }
 
-// Helper functions
-function findCell(row, col) {
-    return document.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
-}
+// Check complete solution
+function checkSolution() {
+    let correct = 0;
+    let total = 0;
+    let revealedSolution = new Array(crosswordData.solution.length).fill('');
+    let incorrectWords = [];
 
-function findNextCell(cell, direction) {
-    const currentRow = parseInt(cell.dataset.row);
-    const currentCol = parseInt(cell.dataset.col);
-    
-    if (direction === 'across') {
-        return findCell(currentRow, currentCol + 1);
-    } else {
-        return findCell(currentRow + 1, currentCol);
-    }
-}
-
-function findPrevCell(cell) {
-    const currentRow = parseInt(cell.dataset.row);
-    const currentCol = parseInt(cell.dataset.col);
-    const direction = cell.dataset.direction;
-    
-    if (direction === 'across') {
-        return findCell(currentRow, currentCol - 1);
-    } else {
-        return findCell(currentRow - 1, currentCol);
-    }
-}
-
-function getUserAnswer(word) {
-    let answer = '';
-    const { row, col, answer: correctAnswer, direction } = word;
-    
-    for (let i = 0; i < correctAnswer.length; i++) {
-        const currentRow = direction === 'across' ? row : row + i;
-        const currentCol = direction === 'across' ? col + i : col;
-        const cell = findCell(currentRow, currentCol);
-        if (cell) {
-            answer += (cell.value || '').toUpperCase();
+    Object.entries(crosswordData.words).forEach(([id, word]) => {
+        const userAnswer = getUserAnswer(word);
+        if (userAnswer === word.answer) {
+            correct++;
+            if (word.solutionLetters) {
+                Object.entries(word.solutionLetters).forEach(([letterIndex, solutionIndex]) => {
+                    revealedSolution[solutionIndex] = word.answer[letterIndex];
+                });
+            }
+        } else if (userAnswer.length > 0) {
+            incorrectWords.push(id);
         }
+        total++;
+    });
+
+    const percentage = Math.round((correct / total) * 100);
+    const solution = revealedSolution.join('');
+    
+    if (correct === total) {
+        alert(`Gratulujeme! Vyřešili jste křížovku správně!\nTajenka je: ${solution}`);
+    } else {
+        let message = `Správně vyplněno: ${correct} z ${total} slov (${percentage}%)\n`;
+        if (incorrectWords.length > 0) {
+            message += `Zkontrolujte slova s čísly: ${incorrectWords.join(', ')}`;
+        }
+        alert(message);
     }
+}
