@@ -1,9 +1,9 @@
-// Data pro křížovku
+// Crossword Data
 const crosswordData = {
     size: 12,
     words: {
         1: { clue: "Hlavní město Itálie", answer: "RIM", row: 1, col: 1, direction: "across" },
-        2: { clue: "Největší hora světa", answer: "EVEREST", row: 1, col: 3, direction: "down" },
+        2: { clue: "Nejvyšší hora světa", answer: "EVEREST", row: 1, col: 3, direction: "down" },
         3: { clue: "Planeta nejblíže Slunci", answer: "MERKUR", row: 2, col: 1, direction: "across" },
         4: { clue: "Autor Hamleta", answer: "SHAKESPEARE", row: 2, col: 5, direction: "down" },
         5: { clue: "Největší oceán", answer: "TICHY", row: 4, col: 1, direction: "across" },
@@ -21,20 +21,17 @@ const crosswordData = {
     }
 };
 
-// Vytvoření mřížky
+// Initialize the crossword
+function initializeCrossword() {
+    createGrid();
+    generateClues();
+    setupEventListeners();
+}
+
+// Create the crossword grid
 function createGrid() {
     const grid = document.getElementById('crosswordGrid');
-    const tooltip = document.createElement('div');
-    tooltip.id = 'tooltip';
-    tooltip.style.position = 'absolute';
-    tooltip.style.backgroundColor = '#002f4f';
-    tooltip.style.color = '#ffffff';
-    tooltip.style.padding = '5px 10px';
-    tooltip.style.borderRadius = '5px';
-    tooltip.style.display = 'none';
-    tooltip.style.zIndex = '10';
-    tooltip.style.fontSize = '14px';
-    document.body.appendChild(tooltip);
+    grid.innerHTML = ''; // Clear existing content
 
     for (let i = 1; i <= crosswordData.size; i++) {
         for (let j = 1; j <= crosswordData.size; j++) {
@@ -45,108 +42,169 @@ function createGrid() {
             cell.dataset.row = i;
             cell.dataset.col = j;
             cell.disabled = true;
-
-            // Tooltip on hover or focus
-            cell.addEventListener('mouseenter', (event) => {
-                const wordId = event.target.dataset.wordId;
-                if (wordId) {
-                    tooltip.textContent = crosswordData.words[wordId].clue;
-                    tooltip.style.left = `${event.pageX + 10}px`;
-                    tooltip.style.top = `${event.pageY + 10}px`;
-                    tooltip.style.display = 'block';
-                }
-            });
-
-            cell.addEventListener('mouseleave', () => {
-                tooltip.style.display = 'none';
-            });
-
-            cell.addEventListener('focus', (event) => {
-                const wordId = event.target.dataset.wordId;
-                if (wordId) {
-                    tooltip.textContent = crosswordData.words[wordId].clue;
-                    tooltip.style.left = `${event.pageX + 10}px`;
-                    tooltip.style.top = `${event.pageY + 10}px`;
-                    tooltip.style.display = 'block';
-                }
-            });
-
-            cell.addEventListener('blur', () => {
-                tooltip.style.display = 'none';
-            });
-
             grid.appendChild(cell);
         }
     }
 
-    // Enable grid cells for the crossword words
-    for (const [id, word] of Object.entries(crosswordData.words)) {
+    // Enable cells for words
+    Object.entries(crosswordData.words).forEach(([id, word]) => {
         const { row, col, answer, direction } = word;
         for (let i = 0; i < answer.length; i++) {
             const currentRow = direction === 'across' ? row : row + i;
             const currentCol = direction === 'across' ? col + i : col;
-            const cell = grid.querySelector(`.cell[data-row="${currentRow}"][data-col="${currentCol}"]`);
-            cell.disabled = false;
-            cell.dataset.wordId = id;
+            const cell = findCell(currentRow, currentCol);
+            if (cell) {
+                cell.disabled = false;
+                cell.dataset.wordId = id;
+            }
         }
-    }
+    });
 }
 
-// Zvýraznění nápovědy
-function highlightClue(id, direction) {
-    const clues = document.getElementById(direction === 'across' ? 'acrossClues' : 'downClues');
-    const clueElement = clues.querySelector(`[data-id="${id}"]`);
-    clueElement.classList.add('highlight');
-}
-
-// Odstranění zvýraznění
-function removeHighlight() {
-    const highlights = document.querySelectorAll('.highlight');
-    highlights.forEach(element => element.classList.remove('highlight'));
-}
-
-// Generování nápověd
+// Generate clues
 function generateClues() {
     const acrossClues = document.getElementById('acrossClues');
     const downClues = document.getElementById('downClues');
+    acrossClues.innerHTML = '';
+    downClues.innerHTML = '';
 
-    for (const [id, word] of Object.entries(crosswordData.words)) {
-        const clueElement = document.createElement('p');
-        clueElement.textContent = `${id}. ${word.clue}`;
-        clueElement.dataset.id = id;
+    Object.entries(crosswordData.words)
+        .sort((a, b) => parseInt(a[0]) - parseInt(b[0]))
+        .forEach(([id, word]) => {
+            const clueElement = document.createElement('p');
+            clueElement.textContent = `${id}. ${word.clue}`;
+            clueElement.dataset.id = id;
+            clueElement.addEventListener('click', () => highlightWord(id));
 
-        if (word.direction === 'across') {
-            acrossClues.appendChild(clueElement);
-        } else {
-            downClues.appendChild(clueElement);
-        }
+            if (word.direction === 'across') {
+                acrossClues.appendChild(clueElement);
+            } else {
+                downClues.appendChild(clueElement);
+            }
+        });
+}
+
+// Highlight a word and its clue
+function highlightWord(id) {
+    removeHighlights();
+    const word = crosswordData.words[id];
+    if (!word) return;
+
+    // Highlight clue
+    const clueElement = document.querySelector(`p[data-id="${id}"]`);
+    if (clueElement) clueElement.classList.add('highlight');
+
+    // Highlight cells
+    for (let i = 0; i < word.answer.length; i++) {
+        const currentRow = word.direction === 'across' ? word.row : word.row + i;
+        const currentCol = word.direction === 'across' ? word.col + i : word.col;
+        const cell = findCell(currentRow, currentCol);
+        if (cell) cell.classList.add('highlight');
     }
 }
 
-// Kontrola odpovědí
+// Remove all highlights
+function removeHighlights() {
+    document.querySelectorAll('.highlight').forEach(el => el.classList.remove('highlight'));
+}
+
+// Helper function to find a cell
+function findCell(row, col) {
+    return document.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
+}
+
+// Setup event listeners
+function setupEventListeners() {
+    const tooltip = document.getElementById('tooltip');
+    
+    document.querySelectorAll('.cell:not([disabled])').forEach(cell => {
+        cell.addEventListener('focus', handleCellFocus);
+        cell.addEventListener('input', handleCellInput);
+        cell.addEventListener('keydown', handleCellKeydown);
+    });
+}
+
+// Handle cell focus
+function handleCellFocus(event) {
+    const wordId = event.target.dataset.wordId;
+    if (wordId) {
+        highlightWord(wordId);
+        showTooltip(event.target, crosswordData.words[wordId].clue);
+    }
+}
+
+// Handle cell input
+function handleCellInput(event) {
+    const input = event.target;
+    input.value = input.value.toUpperCase();
+    if (input.value) {
+        const nextCell = findNextCell(input);
+        if (nextCell) nextCell.focus();
+    }
+}
+
+// Handle cell keydown
+function handleCellKeydown(event) {
+    const cell = event.target;
+    
+    switch(event.key) {
+        case 'Backspace':
+            if (!cell.value) {
+                const prevCell = findPrevCell(cell);
+                if (prevCell) {
+                    prevCell.focus();
+                    prevCell.value = '';
+                }
+            }
+            break;
+        case 'ArrowRight':
+        case 'ArrowLeft':
+        case 'ArrowUp':
+        case 'ArrowDown':
+            event.preventDefault();
+            const nextCell = findAdjacentCell(cell, event.key);
+            if (nextCell) nextCell.focus();
+            break;
+    }
+}
+
+// Show tooltip
+function showTooltip(element, text) {
+    const tooltip = document.getElementById('tooltip');
+    tooltip.textContent = text;
+    tooltip.style.display = 'block';
+    
+    const rect = element.getBoundingClientRect();
+    tooltip.style.left = `${rect.left}px`;
+    tooltip.style.top = `${rect.bottom + 5}px`;
+}
+
+// Check solution
 function checkSolution() {
     let correct = 0;
     let total = 0;
 
-    for (const [id, word] of Object.entries(crosswordData.words)) {
-        const { row, col, answer, direction } = word;
-        let userAnswer = '';
-
-        for (let i = 0; i < answer.length; i++) {
-            const currentRow = direction === 'across' ? row : row + i;
-            const currentCol = direction === 'across' ? col + i : col;
-            const cell = document.querySelector(`.cell[data-row="${currentRow}"][data-col="${currentCol}"]`);
-            userAnswer += cell.value.toUpperCase();
-        }
-
-        if (userAnswer === answer) {
-            correct++;
-        }
+    Object.entries(crosswordData.words).forEach(([id, word]) => {
+        const userAnswer = getUserAnswer(word);
+        if (userAnswer === word.answer) correct++;
         total++;
-    }
+    });
 
-    alert(`Správně: ${correct} z ${total}`);
+    const percentage = Math.round((correct / total) * 100);
+    alert(`Správně vyplněno: ${correct} z ${total} (${percentage}%)`);
 }
 
-createGrid();
-generateClues();
+// Get user answer for a word
+function getUserAnswer(word) {
+    let answer = '';
+    for (let i = 0; i < word.answer.length; i++) {
+        const currentRow = word.direction === 'across' ? word.row : word.row + i;
+        const currentCol = word.direction === 'across' ? word.col + i : word.col;
+        const cell = findCell(currentRow, currentCol);
+        answer += (cell?.value || '').toUpperCase();
+    }
+    return answer;
+}
+
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', initializeCrossword);
