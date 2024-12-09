@@ -5,7 +5,7 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     background: linear-gradient(135deg, #001f3f 0%, #003366 100%);
     color: #ffffff;
     line-height: 1.6;
@@ -40,21 +40,34 @@ h1 {
     text-shadow: 0 0 10px rgba(0, 224, 255, 0.5);
 }
 
+.solution-info {
+    text-align: center;
+    color: #ffd700;
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+}
+
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(12, minmax(35px, 45px));
+    grid-template-columns: repeat(15, minmax(35px, 40px));
     gap: 2px;
     justify-content: center;
     margin: 0 auto 30px;
-    padding: 10px;
+    padding: 15px;
     background: rgba(0, 47, 79, 0.5);
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
+.cell-wrapper {
+    position: relative;
+    width: 100%;
+    height: 40px;
+}
+
 .cell {
     width: 100%;
-    height: 45px;
+    height: 100%;
     border: 1px solid #00e0ff;
     background: #001f3f;
     color: white;
@@ -77,6 +90,41 @@ h1 {
 .cell[disabled] {
     background: transparent;
     border-color: transparent;
+}
+
+.cell-number {
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    font-size: 10px;
+    color: #00e0ff;
+    z-index: 2;
+}
+
+.solution-indicator {
+    position: absolute;
+    bottom: 1px;
+    right: 1px;
+    font-size: 10px;
+    color: #ffd700;
+    font-weight: bold;
+    z-index: 2;
+}
+
+.solution-cell {
+    background-color: rgba(255, 215, 0, 0.1);
+    border: 2px solid #ffd700;
+}
+
+.solution-cell:focus {
+    border-color: #ffd700;
+    box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+}
+
+.solution-revealed {
+    background-color: rgba(255, 215, 0, 0.3);
+    color: #ffd700;
+    font-weight: bold;
 }
 
 .clues-container {
@@ -157,6 +205,7 @@ footer {
     font-size: 16px;
 }
 
+/* Responsive Design */
 @media (max-width: 768px) {
     body {
         padding: 10px;
@@ -167,34 +216,45 @@ footer {
     }
 
     .grid-container {
-        grid-template-columns: repeat(12, minmax(25px, 35px));
+        grid-template-columns: repeat(15, minmax(25px, 30px));
+    }
+
+    .cell-wrapper {
+        height: 30px;
     }
 
     .cell {
-        height: 35px;
         font-size: 16px;
     }
 
     .clues {
         padding: 15px;
     }
+
+    .btn-check {
+        font-size: 16px;
+        padding: 10px 25px;
+    }
 }
 
 @media (max-width: 480px) {
-    h1 {
-        font-size: 1.8rem;
+    .grid-container {
+        grid-template-columns: repeat(15, minmax(20px, 25px));
     }
 
-    .grid-container {
-        grid-template-columns: repeat(12, minmax(20px, 30px));
+    .cell-wrapper {
+        height: 25px;
     }
 
     .cell {
-        height: 30px;
         font-size: 14px;
     }
 
-    .clues h3 {
-        font-size: 1.2rem;
+    .cell-number {
+        font-size: 8px;
+    }
+
+    .solution-indicator {
+        font-size: 8px;
     }
 }
