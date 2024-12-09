@@ -15,7 +15,7 @@
         }
         h1 {
             color: #023047;
-            font-size: 2.8rem;
+            font-size: 2.5rem;
             margin-top: 20px;
             text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
         }
@@ -25,6 +25,7 @@
             align-items: center;
             margin: 20px auto;
             padding: 10px;
+            width: 100%;
         }
         .grid {
             display: grid;
@@ -34,6 +35,8 @@
             padding: 10px;
             border-radius: 10px;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 100%;
+            overflow: auto;
         }
         .cell {
             width: 40px;
@@ -56,12 +59,14 @@
         .clues {
             display: flex;
             justify-content: space-between;
+            flex-wrap: wrap;
             margin: 20px;
             padding: 10px;
             max-width: 800px;
         }
         .clues div {
-            width: 45%;
+            width: 100%;
+            text-align: center;
         }
         .clues h3 {
             color: #023047;
@@ -91,6 +96,49 @@
             margin-top: 20px;
             font-size: 0.8rem;
             color: #023047;
+        }
+
+        /* Responzivita */
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: repeat(12, 30px);
+                gap: 1px;
+            }
+            .cell {
+                width: 30px;
+                height: 30px;
+                font-size: 14px;
+            }
+            .clues h3 {
+                font-size: 1.5rem;
+            }
+            .clues p {
+                font-size: 0.9rem;
+            }
+            .btn-check {
+                font-size: 1rem;
+                padding: 8px 20px;
+            }
+        }
+        @media (max-width: 480px) {
+            .grid {
+                grid-template-columns: repeat(12, 25px);
+            }
+            .cell {
+                width: 25px;
+                height: 25px;
+                font-size: 12px;
+            }
+            .clues h3 {
+                font-size: 1.2rem;
+            }
+            .clues p {
+                font-size: 0.8rem;
+            }
+            .btn-check {
+                font-size: 0.9rem;
+                padding: 6px 15px;
+            }
         }
     </style>
 </head>
