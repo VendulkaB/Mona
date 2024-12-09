@@ -1,3 +1,12 @@
+:root {
+    --primary-color: #00e0ff;
+    --secondary-color: #ffd700;
+    --bg-dark: #001f3f;
+    --bg-medium: #003366;
+    --grid-cell-size: 40px;
+    --grid-border-color: #004466;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -6,14 +15,13 @@
 
 body {
     font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #001f3f 0%, #003366 100%);
+    background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-medium) 100%);
     color: #ffffff;
-    line-height: 1.6;
     min-height: 100vh;
     padding: 20px;
 }
 
-.container {
+.main-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
@@ -34,7 +42,7 @@ body {
 
 h1 {
     text-align: center;
-    color: #00e0ff;
+    color: var(--primary-color);
     font-size: 2.5rem;
     margin-bottom: 20px;
     text-shadow: 0 0 10px rgba(0, 224, 255, 0.5);
@@ -42,73 +50,60 @@ h1 {
 
 .solution-info {
     text-align: center;
-    color: #ffd700;
-    margin-bottom: 20px;
+    color: var(--secondary-color);
+    margin-bottom: 30px;
     font-size: 1.2rem;
 }
 
-.crossword-wrapper {
+.crossword-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 30px;
-    margin: 20px 0;
 }
 
+/* Grid Styles */
 .grid-container {
     display: inline-grid;
-    grid-template-columns: repeat(15, 40px);
-    gap: 0;
-    padding: 10px;
-    background: rgba(0, 47, 79, 0.5);
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    grid-template-columns: repeat(15, var(--grid-cell-size));
+    gap: 1px;
+    padding: 1px;
+    background-color: var(--grid-border-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .cell-wrapper {
     position: relative;
-    width: 40px;
-    height: 40px;
-    padding: 1px;
-    background: rgba(0, 47, 79, 0.5);
+    width: var(--grid-cell-size);
+    height: var(--grid-cell-size);
+    background-color: var(--bg-dark);
 }
 
 .cell {
     width: 100%;
     height: 100%;
-    border: 1px solid #00e0ff;
-    background: #001f3f;
+    border: none;
+    background-color: transparent;
     color: white;
-    font-size: 18px;
+    font-size: 20px;
     text-align: center;
     text-transform: uppercase;
     padding: 0;
-    transition: all 0.3s ease;
 }
 
 .cell:not([disabled]) {
     cursor: text;
-}
-
-.cell[disabled] {
-    background: transparent;
-    border: none;
+    background-color: var(--bg-dark);
 }
 
 .cell:focus {
     outline: none;
-    border: 2px solid #00ffcc;
-    background: #002b4f;
+    background-color: #004466;
 }
 
-.cell.solution-cell {
-    background-color: rgba(255, 215, 0, 0.1);
-    border: 2px solid #ffd700;
-}
-
-.cell.solution-cell:focus {
-    border-color: #ffd700;
-    box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+.cell[disabled] {
+    background-color: transparent;
 }
 
 .cell-number {
@@ -116,9 +111,12 @@ h1 {
     top: 2px;
     left: 2px;
     font-size: 10px;
-    color: #00e0ff;
+    color: var(--primary-color);
     z-index: 2;
-    pointer-events: none;
+}
+
+.solution-cell {
+    background-color: rgba(255, 215, 0, 0.1);
 }
 
 .solution-indicator {
@@ -126,37 +124,36 @@ h1 {
     bottom: 2px;
     right: 2px;
     font-size: 10px;
-    color: #ffd700;
+    color: var(--secondary-color);
     font-weight: bold;
-    z-index: 2;
-    pointer-events: none;
 }
 
-.clues-container {
+/* Legend Styles */
+.legend-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    gap: 30px;
     width: 100%;
     max-width: 1000px;
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
-.clues {
+.legend-section {
     background: rgba(0, 47, 79, 0.5);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-.clues h3 {
-    color: #00e0ff;
+.legend-section h2 {
+    color: var(--primary-color);
     font-size: 1.4rem;
     margin-bottom: 15px;
     padding-bottom: 10px;
-    border-bottom: 2px solid #00e0ff;
+    border-bottom: 2px solid var(--primary-color);
 }
 
-.clues p {
+.clues-list p {
     margin: 8px 0;
     padding: 8px;
     cursor: pointer;
@@ -164,7 +161,7 @@ h1 {
     transition: background-color 0.3s ease;
 }
 
-.clues p:hover {
+.clues-list p:hover {
     background: rgba(0, 51, 102, 0.5);
 }
 
@@ -173,13 +170,17 @@ h1 {
     color: #00ffcc;
 }
 
-.btn-check {
-    display: block;
-    margin: 30px auto;
+/* Button Styles */
+.controls {
+    margin: 30px 0;
+    text-align: center;
+}
+
+.check-button {
     padding: 12px 30px;
     font-size: 18px;
-    color: #001f3f;
-    background: #00e0ff;
+    color: var(--bg-dark);
+    background: var(--primary-color);
     border: none;
     border-radius: 25px;
     cursor: pointer;
@@ -187,7 +188,7 @@ h1 {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-.btn-check:hover {
+.check-button:hover {
     background: #00ffcc;
     transform: translateY(-2px);
 }
@@ -195,7 +196,7 @@ h1 {
 .tooltip {
     position: absolute;
     background: rgba(0, 47, 79, 0.9);
-    color: #ffffff;
+    color: white;
     padding: 8px 15px;
     border-radius: 5px;
     display: none;
@@ -208,29 +209,42 @@ h1 {
 footer {
     text-align: center;
     margin-top: 40px;
-    color: #00e0ff;
+    color: var(--primary-color);
     font-size: 16px;
 }
 
 /* Responsive Design */
 @media (max-width: 1200px) {
-    .clues-container {
+    .legend-container {
         grid-template-columns: 1fr;
     }
 }
 
 @media (max-width: 768px) {
-    .grid-container {
-        grid-template-columns: repeat(15, 30px);
-    }
-
-    .cell-wrapper {
-        width: 30px;
-        height: 30px;
+    :root {
+        --grid-cell-size: 30px;
     }
 
     .cell {
         font-size: 16px;
+    }
+
+    .main-container {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    :root {
+        --grid-cell-size: 24px;
+    }
+
+    .cell {
+        font-size: 12px;
     }
 
     .cell-number {
@@ -240,27 +254,8 @@ footer {
     .solution-indicator {
         font-size: 8px;
     }
-}
-
-@media (max-width: 480px) {
-    .grid-container {
-        grid-template-columns: repeat(15, 24px);
-    }
-
-    .cell-wrapper {
-        width: 24px;
-        height: 24px;
-    }
-
-    .cell {
-        font-size: 12px;
-    }
 
     h1 {
         font-size: 1.8rem;
-    }
-
-    .solution-info {
-        font-size: 1rem;
     }
 }
