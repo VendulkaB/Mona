@@ -5,54 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Křížovka pro Móňu</title>
     <link rel="stylesheet" href="./css/style.css">
+    <script defer src="./js/script.js"></script>
 </head>
 <body>
-    <div class="container">
-        <div class="photo-header">
-            <img src="./img/Image (21).jpg" alt="Hlavička">
-        </div>
-        
-        <h1>Křížovka pro Móňu</h1>
-
-        <div class="puzzle-wrapper">
-            <!-- Mřížka s čísly -->
-            <div class="grid-container">
-                <!-- Čísla sloupců -->
-                <div class="column-labels">
-                    <div class="empty-corner"></div>
-                    <div>1</div>
-                    <div>2</div>
-                    <!-- ... atd až 12 -->
-                </div>
-                
-                <div class="grid-with-labels">
-                    <!-- Čísla řádků -->
-                    <div class="row-labels">
-                        <div>1</div>
-                        <div>2</div>
-                        <!-- ... atd až 12 -->
-                    </div>
-                    
-                    <!-- Křížovka -->
-                    <div id="crosswordGrid"></div>
-                </div>
-            </div>
-
-            <!-- Otázky -->
-            <div class="clues">
-                <div class="horizontal">
-                    <h2>Vodorovně:</h2>
-                    <div id="acrossClues"></div>
-                </div>
-                <div class="vertical">
-                    <h2>Svisle:</h2>
-                    <div id="downClues"></div>
-                </div>
-            </div>
-        </div>
-
-        <button onclick="checkSolution()">Zkontrolovat tajenku</button>
+    <div class="photo-header">
+        <img src="./img/Image.jpg" alt="Hlavička křížovky" onerror="this.style.display='none'">
     </div>
-    <script src="./js/main.js"></script>
+    <h1>Křížovka pro Móňu</h1>
+    <div class="puzzle-wrapper">
+        <div class="grid-container" id="crosswordGrid"></div>
+        <div class="clues-container">
+            <div class="clues">
+                <h3>Vodorovně</h3>
+                <div id="acrossClues"></div>
+            </div>
+            <div class="clues">
+                <h3>Svisle</h3>
+                <div id="downClues"></div>
+            </div>
+        </div>
+    </div>
+    <button class="btn-check" onclick="checkSolution()">Zkontrolovat řešení</button>
 </body>
 </html>
