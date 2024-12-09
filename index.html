@@ -61,29 +61,30 @@
     <div class="clues">
         <div>
             <h3>Vodorovně</h3>
-            <p>1. Slovo na vodě</p>
-            <p>2. Druhý vodorovný tip</p>
+            <div id="acrossClues"></div>
         </div>
         <div>
             <h3>Svisle</h3>
-            <p>1. První svislý tip</p>
-            <p>2. Druhý svislý tip</p>
+            <div id="downClues"></div>
         </div>
     </div>
 
     <button class="btn-check" onclick="checkSolution()">Zkontrolovat řešení</button>
 
     <script>
+        // Data pro křížovku
         const crosswordData = {
             size: 10,
             words: {
-                1: { row: 1, col: 1, direction: "across", answer: "SLOVO" },
-                2: { row: 3, col: 3, direction: "down", answer: "TEST" }
+                1: { clue: "První vodorovná nápověda", answer: "EXAMPLE", row: 1, col: 1, direction: "across" },
+                2: { clue: "První svislá nápověda", answer: "SAMPLE", row: 1, col: 1, direction: "down" }
             }
         };
-        
+
+        // Vytvoření mřížky
         function createGrid() {
             const grid = document.getElementById('crosswordGrid');
+            grid.style.gridTemplateColumns = `repeat(${crosswordData.size}, 30px)`;
             for (let i = 0; i < crosswordData.size; i++) {
                 for (let j = 0; j < crosswordData.size; j++) {
                     const cell = document.createElement('input');
@@ -97,6 +98,7 @@
                 }
             }
 
+            // Aktivace políček pro slova
             for (const [id, word] of Object.entries(crosswordData.words)) {
                 const row = word.row - 1;
                 const col = word.col - 1;
@@ -107,15 +109,67 @@
                     const cellCol = word.direction === 'across' ? col + i : col;
                     const cell = grid.children[cellRow * crosswordData.size + cellCol];
                     cell.disabled = false;
+                    cell.dataset.wordId = id;
                 }
             }
         }
 
-        function checkSolution() {
-            alert('Kontrola řešení je aktuálně statická.');
+        // Načtení odpovědí uživatele
+        function getUserSolution() {
+            const solution = {};
+            for (const [id, word] of Object.entries(crosswordData.words)) {
+                let userWord = '';
+                const row = word.row - 1;
+                const col = word.col - 1;
+                const length = word.answer.length;
+
+                for (let i = 0; i < length; i++) {
+                    const cellRow = word.direction === 'across' ? row : row + i;
+                    const cellCol = word.direction === 'across' ? col + i : col;
+                    const cell = document.querySelector(`.cell[data-row="${cellRow}"][data-col="${cellCol}"]`);
+                    userWord += cell.value.toUpperCase() || ' ';
+                }
+                solution[id] = userWord.trim();
+            }
+            return solution;
         }
 
+        // Kontrola řešení
+        function checkSolution() {
+            const solution = getUserSolution();
+            let allCorrect = true;
+
+            for (const [id, userAnswer] of Object.entries(solution)) {
+                const correctAnswer = crosswordData.words[id].answer.toUpperCase();
+                if (userAnswer !== correctAnswer) {
+                    allCorrect = false;
+                    break;
+                }
+            }
+
+            alert(allCorrect ? 'Gratulujeme! Křížovka je správně vyřešena!' : 'Některá slova nejsou správně vyplněna.');
+        }
+
+        // Vygenerování nápověd
+        function generateClues() {
+            const acrossClues = document.getElementById('acrossClues');
+            const downClues = document.getElementById('downClues');
+
+            for (const [id, word] of Object.entries(crosswordData.words)) {
+                const clueElement = document.createElement('p');
+                clueElement.textContent = `${id}. ${word.clue}`;
+
+                if (word.direction === 'across') {
+                    acrossClues.appendChild(clueElement);
+                } else if (word.direction === 'down') {
+                    downClues.appendChild(clueElement);
+                }
+            }
+        }
+
+        // Inicializace
         createGrid();
+        generateClues();
     </script>
 </body>
 </html>
