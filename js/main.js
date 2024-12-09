@@ -4,11 +4,11 @@ document.addEventListener("DOMContentLoaded", () => {
         words: {
             1: { clue: "Hlavní město Itálie", answer: "RIM", row: 1, col: 1, direction: "across" },
             2: { clue: "Planeta nejblíže Slunci", answer: "MERKUR", row: 2, col: 2, direction: "across" },
-            3: { clue: "Největší oceán", answer: "PACIFIK", row: 4, col: 1, direction: "across" },
+            3: { clue: "Největší oceán na světě", answer: "PACIFIK", row: 4, col: 1, direction: "across" },
             4: { clue: "Řeka protékající Londýnem", answer: "TEMZE", row: 6, col: 3, direction: "across" },
             5: { clue: "Planeta pojmenovaná po bohu války", answer: "MARS", row: 8, col: 1, direction: "across" },
             6: { clue: "Největší kontinent světa", answer: "ASIE", row: 9, col: 5, direction: "across" },
-            7: { clue: "Název chemického prvku Au", answer: "ZLATO", row: 11, col: 2, direction: "across" },
+            7: { clue: "Chemický prvek Au", answer: "ZLATO", row: 11, col: 2, direction: "across" },
             8: { clue: "Hlavní město Francie", answer: "PARIZ", row: 12, col: 6, direction: "across" },
             9: { clue: "Nejvyšší hora světa", answer: "EVEREST", row: 1, col: 4, direction: "down" },
             10: { clue: "Autor Hamleta", answer: "SHAKESPEARE", row: 1, col: 8, direction: "down" },
@@ -57,6 +57,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 cell.disabled = false;
                 cell.dataset.answer = answer[i];
                 cell.dataset.word = id;
+
+                if (i === 0) {
+                    cell.placeholder = id; // Číslování otázky
+                    cell.style.color = "#00ffaa";
+                }
             }
         }
 
@@ -90,11 +95,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 const correctAnswer = cell.dataset.answer;
 
                 if (userInput === correctAnswer) {
-                    cell.style.backgroundColor = "#00ffcc"; // Zelená pro správnou odpověď
-                    cell.style.color = "#1e2a48";
+                    cell.style.backgroundColor = "#00ffcc"; // Zelená pro správné odpovědi
                 } else {
-                    cell.style.backgroundColor = "#ff4d4d"; // Červená pro špatnou odpověď
-                    cell.style.color = "#ffffff";
+                    cell.style.backgroundColor = "#ff4d4d"; // Červená pro špatné odpovědi
                     allCorrect = false;
                 }
             }
