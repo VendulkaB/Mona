@@ -14,143 +14,132 @@
             text-align: center;
         }
         h1 {
-            color: #ff69b4;
-            font-size: 2.8rem;
-            margin-top: 20px;
-            text-shadow: 1px 1px 10px rgba(255, 105, 180, 0.8);
+            font-size: 3rem;
+            margin: 20px 0;
+            color: #0ff;
+            text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 30px #00ffcc, 0 0 40px #00ffcc;
         }
         .photo-header {
             width: 100%;
-            height: 300px;
+            height: 250px;
             background-image: url('Image (21).jpg');
             background-size: cover;
             background-position: center;
+            border-bottom: 5px solid #00ffcc;
             margin-bottom: 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
         }
         .content {
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px;
+            padding: 10px;
         }
         .grid-container {
             margin: 20px 0;
-            padding: 10px;
             background-color: #ffffff;
             border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            max-width: 90%;
-            overflow: auto;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            width: 100%;
+            max-width: 600px;
+            overflow-x: auto;
         }
         .grid {
             display: grid;
-            grid-template-columns: repeat(12, 40px);
+            grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
             gap: 2px;
+            justify-content: center;
         }
         .cell {
             position: relative;
             width: 40px;
             height: 40px;
             background-color: #1e2a48;
-            border: 2px solid #ff69b4;
+            border: 2px solid #0ff;
             text-align: center;
             font-size: 18px;
             font-weight: bold;
-            color: #ff69b4;
+            color: #ffffff;
             text-transform: uppercase;
             outline: none;
-            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
         }
         .cell-tajenka {
-            background-color: #ff69b4;
-            color: #0e172c;
+            background-color: #00ffcc;
+            border: 2px solid #00ffcc;
+            color: #1e2a48;
             font-weight: bold;
-            border: 2px solid #ff69b4;
         }
         .cell-number {
             position: absolute;
             top: 2px;
             left: 2px;
             font-size: 12px;
-            font-weight: normal;
             color: #ffffff;
         }
         .clues-container {
             display: flex;
             flex-wrap: wrap;
-            justify-content: center;
+            justify-content: space-between;
             margin-top: 20px;
-            gap: 20px;
-            max-width: 1000px;
+            max-width: 800px;
         }
         .clues {
-            width: 45%;
             background-color: #1e2a48;
             padding: 15px;
             border-radius: 10px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            width: 45%;
         }
         .clues h3 {
-            color: #ff69b4;
             font-size: 1.8rem;
             margin-bottom: 10px;
-            text-shadow: 1px 1px 3px rgba(255, 105, 180, 0.8);
+            color: #00ffcc;
+            text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
         }
         .clues p {
-            margin: 10px 0;
             font-size: 1rem;
-            text-align: left;
             color: #ffffff;
+            margin: 10px 0;
         }
         .btn-check {
-            background-color: #ff69b4;
-            color: white;
+            background-color: #00ffcc;
+            color: #1e2a48;
             padding: 12px 30px;
-            border: none;
             border-radius: 25px;
             font-size: 1.2rem;
-            cursor: pointer;
-            margin-top: 30px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-            transition: background-color 0.3s ease;
+            margin-top: 20px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, background-color 0.3s ease;
         }
         .btn-check:hover {
-            background-color: #ff85c0;
+            background-color: #00ffa1;
+            transform: scale(1.05);
         }
         footer {
-            margin-top: 30px;
-            font-size: 0.9rem;
-            color: #ffffff;
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #00ffcc;
         }
 
         /* Responzivita */
         @media (max-width: 768px) {
-            .grid {
-                grid-template-columns: repeat(12, 30px);
-                gap: 1px;
+            .grid-container {
+                padding: 5px;
+                margin: 10px auto;
             }
             .cell {
                 width: 30px;
                 height: 30px;
                 font-size: 14px;
             }
-            .cell-number {
-                font-size: 10px;
-            }
             .clues {
                 width: 100%;
-                margin: 0 auto;
             }
             .clues h3 {
                 font-size: 1.5rem;
             }
             .clues p {
                 font-size: 0.9rem;
-            }
-            .btn-check {
-                font-size: 1rem;
-                padding: 10px 20px;
             }
         }
     </style>
@@ -213,8 +202,8 @@
                     const input = document.createElement('input');
                     input.type = 'text';
                     input.maxLength = 1;
-                    input.style.color = "#ffffff";
 
+                    // Zvýraznění tajenky
                     if (id === "1") {
                         cell.classList.add('cell-tajenka');
                     }
