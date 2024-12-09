@@ -11,35 +11,37 @@
         <img src="img/crossword-header.jpg" alt="Křížovka pro Móňu" loading="lazy">
     </div>
 
-    <main class="puzzle-container">
+    <div class="container">
         <h1>Křížovka pro Móňu</h1>
 
         <div class="solution-info">
             <p>Najděte tajenku! Písmena v barevných polích tvoří řešení.</p>
         </div>
 
-        <div id="crosswordGrid" class="grid-container"></div>
+        <div class="crossword-wrapper">
+            <div id="crosswordGrid" class="grid-container"></div>
 
-        <div class="clues-container">
-            <div class="clues">
-                <h3>Vodorovně</h3>
-                <div id="acrossClues"></div>
-            </div>
+            <div class="clues-container">
+                <div class="clues">
+                    <h3>Vodorovně</h3>
+                    <div id="acrossClues"></div>
+                </div>
 
-            <div class="clues">
-                <h3>Svisle</h3>
-                <div id="downClues"></div>
+                <div class="clues">
+                    <h3>Svisle</h3>
+                    <div id="downClues"></div>
+                </div>
             </div>
         </div>
 
         <button class="btn-check" onclick="checkSolution()">Zkontrolovat řešení</button>
-    </main>
+    </div>
 
     <footer>
         <p>Vytvořeno s láskou ❤️</p>
     </footer>
 
-    <div id="tooltip"></div>
+    <div id="tooltip" class="tooltip"></div>
     <script src="js/main.js"></script>
 </body>
 </html>
