@@ -7,14 +7,14 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(to bottom, #d1f4ff, #b2e4fa, #8cd4f3);
+            background: linear-gradient(to bottom, #d1f4ff, #8ecae6, #219ebc);
             color: #333;
             margin: 0;
             padding: 0;
             text-align: center;
         }
         h1 {
-            color: #045c99;
+            color: #023047;
             font-size: 2.8rem;
             margin-top: 20px;
             text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
@@ -30,7 +30,7 @@
             display: grid;
             grid-template-columns: repeat(12, 40px);
             gap: 2px;
-            background-color: #045c99;
+            background-color: #023047;
             padding: 10px;
             border-radius: 10px;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
@@ -39,17 +39,17 @@
             width: 40px;
             height: 40px;
             background-color: #e6f9ff;
-            border: 2px solid #045c99;
+            border: 2px solid #023047;
             text-align: center;
             font-size: 18px;
             font-weight: bold;
-            color: #045c99;
+            color: #023047;
             text-transform: uppercase;
             outline: none;
             box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
         }
         .cell:disabled {
-            background-color: #045c99;
+            background-color: #023047;
             color: white;
             font-weight: normal;
         }
@@ -64,7 +64,7 @@
             width: 45%;
         }
         .clues h3 {
-            color: #045c99;
+            color: #023047;
             font-size: 1.8rem;
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
         }
@@ -74,7 +74,7 @@
             text-align: left;
         }
         .btn-check {
-            background-color: #045c99;
+            background-color: #023047;
             color: white;
             padding: 10px 30px;
             border: none;
@@ -85,12 +85,12 @@
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
         }
         .btn-check:hover {
-            background-color: #0679b5;
+            background-color: #03538a;
         }
         footer {
             margin-top: 20px;
             font-size: 0.8rem;
-            color: #045c99;
+            color: #023047;
         }
     </style>
 </head>
@@ -187,4 +187,28 @@
                 const length = word.answer.length;
 
                 for (let i = 0; i < length; i++) {
-                    const cellRow
+                    const cellRow = word.direction === 'across' ? row : row + i;
+                    const cellCol = word.direction === 'across' ? col + i : col;
+                    const cell = document.querySelector(`.cell[data-row="${cellRow}"][data-col="${cellCol}"]`);
+                    userWord += cell.value.toUpperCase() || ' ';
+                }
+                solution[id] = userWord.trim();
+            }
+
+            let allCorrect = true;
+
+            for (const [id, word] of Object.entries(crosswordData.words)) {
+                if (solution[id] !== word.answer.toUpperCase()) {
+                    allCorrect = false;
+                    break;
+                }
+            }
+
+            alert(allCorrect ? 'Gratulujeme! Tajenka je správná!' : 'Některá slova nejsou správná.');
+        }
+
+        createGrid();
+        generateClues();
+    </script>
+</body>
+</html>
