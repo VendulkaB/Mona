@@ -14,7 +14,7 @@
         }
         .grid {
             display: grid;
-            grid-template-columns: repeat({{crossword.size}}, 30px);
+            grid-template-columns: repeat(10, 30px);
             gap: 1px;
             background-color: #333;
             padding: 2px;
@@ -61,26 +61,26 @@
     <div class="clues">
         <div>
             <h3>Vodorovně</h3>
-            {% for id, word in crossword.words.items() %}
-                {% if word.direction == 'across' %}
-                    <p>{{id}}. {{word.clue}}</p>
-                {% endif %}
-            {% endfor %}
+            <p>1. Slovo na vodě</p>
+            <p>2. Druhý vodorovný tip</p>
         </div>
         <div>
             <h3>Svisle</h3>
-            {% for id, word in crossword.words.items() %}
-                {% if word.direction == 'down' %}
-                    <p>{{id}}. {{word.clue}}</p>
-                {% endif %}
-            {% endfor %}
+            <p>1. První svislý tip</p>
+            <p>2. Druhý svislý tip</p>
         </div>
     </div>
 
     <button class="btn-check" onclick="checkSolution()">Zkontrolovat řešení</button>
 
     <script>
-        const crosswordData = {{ crossword|tojson|safe }};
+        const crosswordData = {
+            size: 10,
+            words: {
+                1: { row: 1, col: 1, direction: "across", answer: "SLOVO" },
+                2: { row: 3, col: 3, direction: "down", answer: "TEST" }
+            }
+        };
         
         function createGrid() {
             const grid = document.getElementById('crosswordGrid');
@@ -97,7 +97,6 @@
                 }
             }
 
-            // Enable cells for words
             for (const [id, word] of Object.entries(crosswordData.words)) {
                 const row = word.row - 1;
                 const col = word.col - 1;
@@ -108,42 +107,12 @@
                     const cellCol = word.direction === 'across' ? col + i : col;
                     const cell = grid.children[cellRow * crosswordData.size + cellCol];
                     cell.disabled = false;
-                    cell.dataset.wordId = id;
                 }
             }
         }
 
-        function getUserSolution() {
-            const solution = {};
-            for (const [id, word] of Object.entries(crosswordData.words)) {
-                let userWord = '';
-                const row = word.row - 1;
-                const col = word.col - 1;
-                const length = word.answer.length;
-
-                for (let i = 0; i < length; i++) {
-                    const cellRow = word.direction === 'across' ? row : row + i;
-                    const cellCol = word.direction === 'across' ? col + i : col;
-                    const cell = document.querySelector(`.cell[data-row="${cellRow}"][data-col="${cellCol}"]`);
-                    userWord += cell.value.toUpperCase() || ' ';
-                }
-                solution[id] = userWord.trim();
-            }
-            return solution;
-        }
-
-        async function checkSolution() {
-            const solution = getUserSolution();
-            const response = await fetch('/check', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(solution)
-            });
-            const result = await response.json();
-            
-            alert(result.correct ? 'Gratulujeme! Křížovka je správně vyřešena!' : 'Některá slova nejsou správně vyplněna.');
+        function checkSolution() {
+            alert('Kontrola řešení je aktuálně statická.');
         }
 
         createGrid();
