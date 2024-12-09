@@ -185,7 +185,8 @@
                 8: { clue: "Hudební nástroj s klávesami", answer: "PIANO", row: 3, col: 8, direction: "down" },
                 9: { clue: "První prezident Československa", answer: "MASARYK", row: 11, col: 3, direction: "across" },
                 10: { clue: "Název pro vědecký pokus", answer: "EXPERIMENT", row: 1, col: 6, direction: "down" }
-            }
+            },
+            tajenka: [1, 2, 3, 4, 5, 7]
         };
 
         function createGrid() {
@@ -215,7 +216,7 @@
                         cell.appendChild(number);
                     }
 
-                    if (id === "1") {
+                    if (crosswordData.tajenka.includes(parseInt(id))) {
                         cell.classList.add('cell-tajenka');
                     }
 
