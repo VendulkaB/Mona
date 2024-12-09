@@ -23,7 +23,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function createGrid() {
         const grid = document.getElementById("crosswordGrid");
-        grid.style.gridTemplateColumns = `repeat(${crosswordData.size}, 40px)`;
 
         for (let i = 0; i < crosswordData.size; i++) {
             for (let j = 0; j < crosswordData.size; j++) {
@@ -35,74 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 grid.appendChild(cell);
             }
         }
-
-        for (const [id, word] of Object.entries(crosswordData.words)) {
-            const { row, col, answer, direction } = word;
-
-            for (let i = 0; i < answer.length; i++) {
-                const index =
-                    (row - 1) * crosswordData.size +
-                    (direction === "across" ? col + i - 1 : col - 1);
-                const cell = grid.children[index];
-                cell.disabled = false;
-                cell.dataset.answer = answer[i];
-                cell.dataset.word = id;
-
-                if (i === 0) {
-                    cell.placeholder = id;
-                }
-            }
-        }
-    }
-
-    function attachTooltip() {
-        const tooltip = document.createElement("div");
-        tooltip.className = "tooltip";
-        tooltip.style.position = "absolute";
-        tooltip.style.display = "none";
-        tooltip.style.background = "#00ffaa";
-        tooltip.style.padding = "5px";
-        tooltip.style.borderRadius = "5px";
-        tooltip.style.boxShadow = "0 0 10px rgba(0,0,0,0.5)";
-        document.body.appendChild(tooltip);
-
-        document.querySelectorAll(".cell").forEach((cell) => {
-            cell.addEventListener("focus", (e) => {
-                const wordId = e.target.dataset.word;
-                if (wordId) {
-                    const wordData = crosswordData.words[wordId];
-                    tooltip.textContent = wordData.clue;
-                    tooltip.style.display = "block";
-                    tooltip.style.left = `${e.target.getBoundingClientRect().x}px`;
-                    tooltip.style.top = `${e.target.getBoundingClientRect().y + 40}px`;
-                }
-            });
-
-            cell.addEventListener("blur", () => {
-                tooltip.style.display = "none";
-            });
-        });
-    }
-
-    function checkSolution() {
-        let correct = 0;
-        let incorrect = 0;
-
-        document.querySelectorAll(".cell").forEach((cell) => {
-            if (!cell.disabled) {
-                if (cell.value.toUpperCase() === cell.dataset.answer) {
-                    cell.style.backgroundColor = "#00ff99";
-                    correct++;
-                } else {
-                    cell.style.backgroundColor = "#ff4d4d";
-                    incorrect++;
-                }
-            }
-        });
-
-        alert(`Správně: ${correct}, Špatně: ${incorrect}`);
     }
 
     createGrid();
-    attachTooltip();
 });
