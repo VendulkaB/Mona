@@ -90,23 +90,28 @@ body {
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 }
 
+/* Grid styles */
 .grid-container {
     display: grid;
-    gap: var(--cell-gap);
-    padding: var(--cell-gap);
-    background: transparent;
+    gap: 3px;
+    padding: 4px;
+    background: rgba(0, 47, 79, 0.2);
+    border-radius: 8px;
 }
-/* Cells */
+
 .cell-wrapper {
     position: relative;
     width: var(--cell-size);
     height: var(--cell-size);
+    background-color: var(--bg-dark);
     transition: all 0.2s ease;
+    margin: 2px;
 }
 
 .cell-wrapper.empty {
     opacity: 0;
     pointer-events: none;
+    background: transparent;
 }
 
 .cell {
@@ -121,6 +126,12 @@ body {
     font-family: var(--font-main);
     padding: 0;
     transition: all 0.2s ease;
+    border-radius: 4px;
+}
+
+/* Přidání mezer mezi nepropojené buňky */
+.cell-wrapper:not(.connected) {
+    margin: 4px;
 }
 
 .cell:focus {
