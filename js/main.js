@@ -3,95 +3,116 @@ const crosswordData = {
     solution: "OTEC FURA",
     words: {
         1: { 
-            clue: "Základní nástroj zahradníka", 
-            answer: "MOTYKA", 
+            clue: "Největší oceán na Zemi", 
+            answer: "TICHÝ", 
             row: 1, 
             col: 2, 
             direction: "across",
-            solutionLetters: {2: 0} // 'O' pro OTEC
+            solutionLetters: {0: 0} // 'O' pro OTEC
         },
         2: { 
-            clue: "Starší název pro televizi", 
-            answer: "TELEVIZOR", 
+            clue: "Chemický symbol pro železo",
+            answer: "FE", 
             row: 1, 
             col: 3, 
             direction: "down",
-            solutionLetters: {3: 1} // 'T' pro OTEC
+            solutionLetters: {1: 1} // 'T' pro OTEC
         },
         3: { 
-            clue: "Roční období", 
-            answer: "PODZIM", 
+            clue: "Hlavní součást jádra atomu",
+            answer: "PROTON", 
             row: 3, 
             col: 1, 
             direction: "across",
-            solutionLetters: {1: 2} // 'E' pro OTEC
+            solutionLetters: {2: 2} // 'E' pro OTEC
         },
         4: { 
-            clue: "Český vynálezce lodního šroubu (Josef)", 
-            answer: "RESSEL", 
+            clue: "Nejmenší planeta sluneční soustavy",
+            answer: "MERKUR",
             row: 4, 
             col: 3, 
             direction: "across",
-            solutionLetters: {4: 3} // 'C' pro OTEC
+            solutionLetters: {3: 3} // 'C' pro OTEC
         },
         5: { 
-            clue: "Hudební nástroj s klaviaturou", 
-            answer: "FORTE", 
+            clue: "Nejznámější africký savec",
+            answer: "LEV", 
             row: 6, 
             col: 1, 
             direction: "across",
             solutionLetters: {0: 4} // 'F' pro FURA
         },
         6: { 
-            clue: "Chemická značka uranu", 
-            answer: "U", 
+            clue: "Nejvyšší hora na světě",
+            answer: "EVEREST",
             row: 6, 
             col: 8, 
             direction: "across",
-            solutionLetters: {0: 5} // 'U' pro FURA
+            solutionLetters: {1: 5} // 'U' pro FURA
         },
         7: { 
-            clue: "Hlavní město Lotyšska", 
-            answer: "RIGA", 
+            clue: "Hlavní město Austrálie",
+            answer: "CANBERRA",
             row: 7, 
             col: 2, 
             direction: "across",
-            solutionLetters: {0: 6} // 'R' pro FURA
+            solutionLetters: {2: 6} // 'R' pro FURA
         },
         8: { 
-            clue: "První písmeno abecedy", 
-            answer: "A", 
+            clue: "První písmeno řecké abecedy",
+            answer: "ALFA",
             row: 8, 
             col: 5, 
             direction: "across",
-            solutionLetters: {0: 7} // 'A' pro FURA
+            solutionLetters: {3: 7} // 'A' pro FURA
         },
         9: {
-            clue: "Český král (Karel IV.)", 
-            answer: "KAREL", 
-            row: 2, 
-            col: 7, 
+            clue: "Nejdelší řeka na světě",
+            answer: "NIL",
+            row: 2,
+            col: 7,
             direction: "down"
         },
         10: {
-            clue: "Značka českých hodinek", 
-            answer: "PRIM", 
-            row: 3, 
-            col: 5, 
+            clue: "Vědecká jednotka intenzity světla",
+            answer: "LUX",
+            row: 4,
+            col: 7, 
             direction: "down"
         },
         11: {
-            clue: "Hlavní město Norska",
-            answer: "OSLO",
-            row: 2, 
-            col: 9, 
+            clue: "Nejvyšší hora v Evropě",
+            answer: "ELBRUS",
+            row: 6,
+            col: 9,
             direction: "down"
         },
         12: {
-            clue: "Český hudební skladatel (Bedřich)",
-            answer: "SMETANA",
-            row: 5, 
-            col: 2, 
+            clue: "Nejvyšší objem lidského těla",
+            answer: "MOZEK",
+            row: 3,
+            col: 8,
+            direction: "across"
+        },
+        13: {
+            clue: "První muž, který vstoupil na Měsíc",
+            answer: "ARMSTRONG",
+            row: 5,
+            col: 6,
+            direction: "across"
+        },
+        14: {
+            clue: "Nejrychlejší suchozemské zvíře",
+            answer: "GEPARD",
+            row: 9,
+            col: 1,
+            direction: "across" 
+        },
+        15: {
+            clue: "Hlavní složka vody",
+            answer: "VODÍK",
+            row: 8,
+            col: 7,
             direction: "across"
         }
     }
