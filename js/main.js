@@ -1,4 +1,14 @@
 // Konfigurace křížovky
+const crosswordConfig = {
+    // Interval pro kontrolu řešení (ms)
+    checkInterval: 500,
+    // Délka animace pro odhalení písmen (ms)
+    letterRevealDelay: 200,
+    // Minimální délka pro zvýraznění slova
+    minHighlightLength: 2
+};
+
+// Data křížovky
 const crosswordData = {
     solution: "OTEC FURA",
     words: {
@@ -8,7 +18,7 @@ const crosswordData = {
             row: 1, 
             col: 2, 
             direction: "across",
-            solutionLetters: {2: 0} // 'O' pro OTEC
+            solutionLetters: {2: 0}
         },
         2: { 
             clue: "Zařízení na sledování filmů", 
@@ -16,7 +26,7 @@ const crosswordData = {
             row: 1, 
             col: 3, 
             direction: "down",
-            solutionLetters: {3: 1} // 'T' pro OTEC
+            solutionLetters: {3: 1}
         },
         3: { 
             clue: "Jedno ze čtyř ročních období", 
@@ -24,7 +34,7 @@ const crosswordData = {
             row: 3, 
             col: 1, 
             direction: "across",
-            solutionLetters: {1: 2} // 'E' pro OTEC
+            solutionLetters: {1: 2}
         },
         4: { 
             clue: "Josef, český vynálezce lodního šroubu", 
@@ -32,7 +42,7 @@ const crosswordData = {
             row: 4, 
             col: 3, 
             direction: "across",
-            solutionLetters: {4: 3} // 'C' pro OTEC
+            solutionLetters: {4: 3}
         },
         5: { 
             clue: "Nástroj na hraní kláves", 
@@ -40,7 +50,7 @@ const crosswordData = {
             row: 6, 
             col: 1, 
             direction: "across",
-            solutionLetters: {0: 4} // 'F' pro FURA
+            solutionLetters: {0: 4}
         },
         6: { 
             clue: "Chemická značka uranu", 
@@ -48,7 +58,7 @@ const crosswordData = {
             row: 6, 
             col: 8, 
             direction: "across",
-            solutionLetters: {0: 5} // 'U' pro FURA
+            solutionLetters: {0: 5}
         },
         7: { 
             clue: "Hlavní město Lotyšska", 
@@ -56,7 +66,7 @@ const crosswordData = {
             row: 7, 
             col: 2, 
             direction: "across",
-            solutionLetters: {0: 6} // 'R' pro FURA
+            solutionLetters: {0: 6}
         },
         8: { 
             clue: "První písmeno abecedy", 
@@ -64,7 +74,7 @@ const crosswordData = {
             row: 8, 
             col: 5, 
             direction: "across",
-            solutionLetters: {0: 7} // 'A' pro FURA
+            solutionLetters: {0: 7}
         },
         9: { 
             clue: "Tajemství nebo záhada", 
@@ -125,39 +135,58 @@ const crosswordData = {
     }
 };
 
-// Inicializace
+// Stav aplikace
+const gameState = {
+    currentWordId: null,
+    currentDirection: null,
+    isChecking: false
+};
+
+// Event Listeners
 document.addEventListener('DOMContentLoaded', () => {
-    validateCrosswordData();
     initializeCrossword();
     setupEventListeners();
 });
 
-// Validace dat křížovky
-function validateCrosswordData() {
-    Object.entries(crosswordData.words).forEach(([id, word]) => {
-        if (!word.row || !word.col || !word.answer || !word.direction) {
-            console.error(`Chyba v definici slova ID ${id}`);
-        }
-    });
-}
-
 // Inicializace křížovky
 function initializeCrossword() {
-    createGrid();
-    generateClues();
-    setupTooltips();
+    try {
+        validateCrosswordData();
+        createGrid();
+        generateClues();
+        setupTooltips();
+        addSolutionRevealListener();
+    } catch (error) {
+        console.error('Chyba při inicializaci křížovky:', error);
+        showErrorMessage('Nepodařilo se inicializovat křížovku. Prosím, obnovte stránku.');
+    }
+}
+
+// Validace dat
+function validateCrosswordData() {
+    if (!crosswordData.solution || !crosswordData.words) {
+        throw new Error('Chybí základní data křížovky');
+    }
+
+    Object.entries(crosswordData.words).forEach(([id, word]) => {
+        if (!word.row || !word.col || !word.answer || !word.direction || !word.clue) {
+            throw new Error(`Neplatná definice slova ID ${id}`);
+        }
+    });
 }
 
 // Vytvoření mřížky
 function createGrid() {
     const grid = document.getElementById('crosswordGrid');
-    if (!grid) return;
-    
+    if (!grid) throw new Error('Chybí element mřížky');
+
     grid.innerHTML = '';
     
     const dimensions = calculateGridDimensions();
     setupGridTemplate(grid, dimensions);
-    createGridCells(grid, dimensions);
+    
+    const numberedCells = new Set();
+    createGridCells(grid, dimensions, numberedCells);
 }
 
 // Výpočet rozměrů mřížky
@@ -180,14 +209,14 @@ function calculateGridDimensions() {
     return { maxRow, maxCol, usedCells };
 }
 
+// Nastavení šablony mřížky
 function setupGridTemplate(grid, dimensions) {
     grid.style.gridTemplateRows = `repeat(${dimensions.maxRow}, var(--cell-size))`;
     grid.style.gridTemplateColumns = `repeat(${dimensions.maxCol}, var(--cell-size))`;
 }
 
-function createGridCells(grid, dimensions) {
-    const numberedCells = new Set();
-    
+// Vytvoření buněk mřížky
+function createGridCells(grid, dimensions, numberedCells) {
     for (let i = 1; i <= dimensions.maxRow; i++) {
         for (let j = 1; j <= dimensions.maxCol; j++) {
             const cellId = `${i}-${j}`;
@@ -204,6 +233,7 @@ function createGridCells(grid, dimensions) {
     });
 }
 
+// Vytvoření jednotlivé buňky
 function createCell(grid, row, col) {
     const wrapper = document.createElement('div');
     wrapper.className = 'cell-wrapper';
@@ -221,6 +251,7 @@ function createCell(grid, row, col) {
     grid.appendChild(wrapper);
 }
 
+// Vytvoření prázdného prostoru
 function createEmptySpace(grid, row, col) {
     const space = document.createElement('div');
     space.className = 'cell-wrapper empty';
@@ -229,47 +260,61 @@ function createEmptySpace(grid, row, col) {
     grid.appendChild(space);
 }
 
+// Aktivace buněk pro slovo
 function enableWordCells(id, word, numberedCells) {
     const { row, col, answer, direction, solutionLetters } = word;
     
-    // Přidat číslo k první buňce slova
     const firstCellId = `${row}-${col}`;
     if (!numberedCells.has(firstCellId)) {
-        const cell = findCell(row, col);
-        if (cell) {
-            const wrapper = cell.closest('.cell-wrapper');
-            const number = document.createElement('div');
-            number.className = 'cell-number';
-            number.textContent = id;
-            wrapper.appendChild(number);
-            numberedCells.add(firstCellId);
-        }
+        addCellNumber(row, col, id);
+        numberedCells.add(firstCellId);
     }
 
-    // Aktivovat buňky pro slovo
     for (let i = 0; i < answer.length; i++) {
         const currentRow = direction === 'across' ? row : row + i;
         const currentCol = direction === 'across' ? col + i : col;
-        const cell = findCell(currentRow, currentCol);
-        
-        if (cell) {
-            cell.dataset.wordId = id;
-            cell.dataset.direction = direction;
-            cell.dataset.index = i;
-            cell.dataset.correct = answer[i];
-            
-            if (solutionLetters && solutionLetters[i] !== undefined) {
-                cell.classList.add('solution-cell');
-                const wrapper = cell.closest('.cell-wrapper');
-                const indicator = document.createElement('div');
-                indicator.className = 'solution-indicator';
-                indicator.textContent = parseInt(solutionLetters[i]) + 1;
-                wrapper.appendChild(indicator);
-            }
-        }
+        setupCell(currentRow, currentCol, id, i, direction, answer[i], solutionLetters?.[i]);
     }
 }
 
+// Přidání čísla buňky
+function addCellNumber(row, col, id) {
+    const cell = findCell(row, col);
+    if (!cell) return;
+
+    const wrapper = cell.closest('.cell-wrapper');
+    const number = document.createElement('div');
+    number.className = 'cell-number';
+    number.textContent = id;
+    wrapper.appendChild(number);
+}
+
+// Nastavení buňky
+function setupCell(row, col, wordId, index, direction, correctLetter, solutionIndex) {
+    const cell = findCell(row, col);
+    if (!cell) return;
+
+    cell.dataset.wordId = wordId;
+    cell.dataset.direction = direction;
+    cell.dataset.index = index;
+    cell.dataset.correct = correctLetter;
+
+    if (solutionIndex !== undefined) {
+        cell.classList.add('solution-cell');
+        addSolutionIndicator(cell, solutionIndex);
+    }
+}
+
+// Přidání indikátoru řešení
+function addSolutionIndicator(cell, solutionIndex) {
+    const wrapper = cell.closest('.cell-wrapper');
+    const indicator = document.createElement('div');
+    indicator.className = 'solution-indicator';
+    indicator.textContent = parseInt(solutionIndex) + 1;
+    wrapper.appendChild(indicator);
+}
+
+// Generování nápověd
 function generateClues() {
     const acrossClues = document.getElementById('acrossClues');
     const downClues = document.getElementById('downClues');
@@ -278,46 +323,32 @@ function generateClues() {
     acrossClues.innerHTML = '';
     downClues.innerHTML = '';
 
-    Object.entries(crosswordData.words)
-        .sort((a, b) => parseInt(a[0]) - parseInt(b[0]))
-        .forEach(([id, word]) => {
-            const clueElement = createClueElement(id, word);
-            if (word.direction === 'across') {
-                acrossClues.appendChild(clueElement);
-            } else {
-                downClues.appendChild(clueElement);
-            }
-        });
+    const sortedWords = Object.entries(crosswordData.words)
+        .sort(([a], [b]) => parseInt(a) - parseInt(b));
+
+    sortedWords.forEach(([id, word]) => {
+        const clueElement = createClueElement(id, word);
+        (word.direction === 'across' ? acrossClues : downClues).appendChild(clueElement);
+    });
 }
 
+// Vytvoření elementu nápovědy
 function createClueElement(id, word) {
-    const clueElement = document.createElement('p');
-    clueElement.textContent = `${id}. ${word.clue}`;
-    clueElement.dataset.id = id;
-    clueElement.className = 'clue';
+    const element = document.createElement('p');
+    element.textContent = `${id}. ${word.clue}`;
+    element.className = 'clue';
+    element.dataset.id = id;
     
-    clueElement.addEventListener('click', () => {
+    element.addEventListener('click', () => {
         highlightWord(id);
         focusFirstCell(word);
         showActiveClue(word.clue, id);
     });
 
-    return clueElement;
+    return element;
 }
 
-function setupTooltips() {
-    document.querySelectorAll('.cell').forEach(cell => {
-        const wordId = cell.dataset.wordId;
-        if (wordId) {
-            const word = crosswordData.words[wordId];
-            const tooltip = document.createElement('div');
-            tooltip.className = 'tooltip';
-            tooltip.textContent = `${wordId}. ${word.clue} (${word.direction === 'across' ? 'vodorovně' : 'svisle'})`;
-            cell.parentElement.appendChild(tooltip);
-        }
-    });
-}
-
+// Nastavení událostí
 function setupEventListeners() {
     document.querySelectorAll('.cell').forEach(cell => {
         cell.addEventListener('input', handleInput);
@@ -332,6 +363,7 @@ function setupEventListeners() {
     }
 }
 
+// Obsluha vstupů
 function handleInput(event) {
     const cell = event.target;
     cell.value = cell.value.toUpperCase();
@@ -342,6 +374,7 @@ function handleInput(event) {
     }
 }
 
+// Obsluha kláves
 function handleKeydown(event) {
     const cell = event.target;
     
@@ -362,6 +395,7 @@ function handleKeydown(event) {
     }
 }
 
+// Obsluha focusu
 function handleFocus(event) {
     const cell = event.target;
     const wordId = cell.dataset.wordId;
@@ -371,27 +405,36 @@ function handleFocus(event) {
     }
 }
 
+// Obsluha kliknutí
 function handleClick(event) {
     const cell = event.target;
     const wordId = cell.dataset.wordId;
-    if (wordId) {
-        const word = crosswordData.words[wordId];
-        const currentDirection = cell.dataset.activeDirection || word.direction;
-        const newDirection = currentDirection === 'across' ? 'down' : 'across';
-        
-        const hasOtherDirection = Object.values(crosswordData.words).some(w => 
-            w.direction !== currentDirection && 
-            isCellInWord(cell, w)
-        );
-        
-        if (hasOtherDirection) {
-            cell.dataset.activeDirection = newDirection;
-            highlightWord(findWordInDirection(cell, newDirection));
+    if (!wordId) return;
+
+    const word = crosswordData.words[wordId];
+    const currentDirection = cell.dataset.activeDirection || word.direction;
+    toggleWordDirection(cell, currentDirection);
+}
+
+// Přepínání směru slova
+function toggleWordDirection(cell, currentDirection) {
+    const newDirection = currentDirection === 'across' ? 'down' : 'across';
+    
+    const hasOtherDirection = Object.values(crosswordData.words).some(w => 
+        w.direction !== currentDirection && 
+        isCellInWord(cell, w)
+    );
+    
+    if (hasOtherDirection) {
+        cell.dataset.activeDirection = newDirection;
+        const newWordId = findWordInDirection(cell, newDirection);
+        if (newWordId) {
+            highlightWord(newWordId);
         }
     }
 }
 
-// Pomocné funkce pro kontrolu a validaci
+// Kontrola a validace buněk
 function validateCell(cell) {
     const isCorrect = cell.value.toUpperCase() === cell.dataset.correct;
     cell.classList.toggle('correct', isCorrect);
@@ -405,6 +448,7 @@ function validateCell(cell) {
     }
 }
 
+// Kontrola dokončení slova
 function checkWordCompletion(word) {
     const cells = getWordCells(word);
     const isComplete = cells.every((cell, index) => 
@@ -419,7 +463,11 @@ function checkWordCompletion(word) {
     }
 }
 
+// Kontrola celého řešení
 function checkFullSolution() {
+    if (gameState.isChecking) return;
+    gameState.isChecking = true;
+
     let allCorrect = true;
     const solutionLetters = new Array(crosswordData.solution.length).fill('');
     
@@ -443,8 +491,13 @@ function checkFullSolution() {
     } else {
         showErrorFeedback();
     }
+
+    setTimeout(() => {
+        gameState.isChecking = false;
+    }, crosswordConfig.checkInterval);
 }
 
+// Zobrazení animace řešení
 function showSolutionAnimation(solution) {
     const solutionReveal = document.getElementById('solutionReveal');
     const content = solutionReveal.querySelector('.solution-content');
@@ -461,15 +514,11 @@ function showSolutionAnimation(solution) {
         
         setTimeout(() => {
             span.classList.add('reveal');
-        }, index * 200);
+        }, index * crosswordConfig.letterRevealDelay);
     });
-    
-    // Zavřít po kliknutí
-    solutionReveal.addEventListener('click', () => {
-        solutionReveal.classList.remove('show');
-    }, { once: true });
 }
 
+// Zobrazení zpětné vazby při chybě
 function showErrorFeedback() {
     document.querySelectorAll('.cell.error').forEach(cell => {
         cell.classList.add('shake');
@@ -477,7 +526,7 @@ function showErrorFeedback() {
     });
 }
 
-// Pomocné funkce pro navigaci
+// Navigační funkce
 function moveNext(cell) {
     const wordId = cell.dataset.wordId;
     if (!wordId) return;
@@ -546,68 +595,9 @@ function handleArrowKeys(event, cell) {
     }
 }
 
-function moveToNextWord(currentCell, reverse = false) {
-    const currentWordId = parseInt(currentCell.dataset.wordId);
-    const wordIds = Object.keys(crosswordData.words)
-        .map(id => parseInt(id))
-        .sort((a, b) => a - b);
-    
-    let nextWordId;
-    const currentIndex = wordIds.indexOf(currentWordId);
-    
-    if (reverse) {
-        nextWordId = wordIds[currentIndex - 1] || wordIds[wordIds.length - 1];
-    } else {
-        nextWordId = wordIds[currentIndex + 1] || wordIds[0];
-    }
-    
-    const nextWord = crosswordData.words[nextWordId];
-    focusFirstCell(nextWord);
-    highlightWord(nextWordId);
-    showActiveClue(nextWord.clue, nextWordId);
-}
-
-// Pomocné funkce pro zvýraznění a zobrazení
-function highlightWord(wordId) {
-    // Odstranit předchozí zvýraznění
-    document.querySelectorAll('.cell.highlight').forEach(cell => {
-        cell.classList.remove('highlight');
-    });
-    document.querySelectorAll('.clue.highlight').forEach(clue => {
-        clue.classList.remove('highlight');
-    });
-
-    // Zvýraznit nové slovo
-    const word = crosswordData.words[wordId];
-    const cells = getWordCells(word);
-    cells.forEach(cell => cell.classList.add('highlight'));
-
-    // Zvýraznit nápovědu
-    const clue = document.querySelector(`.clue[data-id="${wordId}"]`);
-    if (clue) clue.classList.add('highlight');
-}
-
-function showActiveClue(clueText, id) {
-    const activeClue = document.getElementById('activeClue');
-    if (!activeClue) return;
-
-    const clueTextElement = activeClue.querySelector('.clue-text');
-    if (clueTextElement) {
-        clueTextElement.textContent = `${id}. ${clueText}`;
-    }
-    activeClue.style.opacity = '1';
-}
-
 // Pomocné funkce pro práci s buňkami
 function findCell(row, col) {
     return document.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
-}
-
-function findNextCellInWord(word, index) {
-    if (index >= word.answer.length || index < 0) return null;
-    const row = word.direction === 'across' ? word.row : word.row + index;
-    const col = word.direction === 'across' ? word.col + index : word.col;
-    return findCell(row, col);
 }
 
 function getWordCells(word) {
@@ -621,9 +611,11 @@ function getWordCells(word) {
     return cells;
 }
 
-function focusFirstCell(word) {
-    const firstCell = findCell(word.row, word.col);
-    if (firstCell) firstCell.focus();
+function findNextCellInWord(word, index) {
+    if (index >= word.answer.length || index < 0) return null;
+    const row = word.direction === 'across' ? word.row : word.row + index;
+    const col = word.direction === 'across' ? word.col + index : word.col;
+    return findCell(row, col);
 }
 
 function findWordInDirection(cell, direction) {
@@ -646,4 +638,16 @@ function isCellInWord(cell, word) {
                cellRow >= word.row && 
                cellRow < word.row + word.answer.length;
     }
+}
+
+// Zobrazení chybové zprávy
+function showErrorMessage(message) {
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'error-message';
+    errorDiv.textContent = message;
+    document.body.appendChild(errorDiv);
+    
+    setTimeout(() => {
+        errorDiv.remove();
+    }, 5000);
 }
