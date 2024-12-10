@@ -65,34 +65,6 @@ const crosswordData = {
             col: 5, 
             direction: "across",
             solutionLetters: {0: 7} // 'A' pro FURA
-        },
-        9: {
-            clue: "Český král (Karel IV.)", 
-            answer: "KAREL", 
-            row: 2, 
-            col: 7, 
-            direction: "down"
-        },
-        10: {
-            clue: "Značka českých hodinek", 
-            answer: "PRIM", 
-            row: 3, 
-            col: 5, 
-            direction: "down"
-        },
-        11: {
-            clue: "Hlavní město Norska",
-            answer: "OSLO",
-            row: 2, 
-            col: 9, 
-            direction: "down"
-        },
-        12: {
-            clue: "Český hudební skladatel (Bedřich)",
-            answer: "SMETANA",
-            row: 5, 
-            col: 2, 
-            direction: "across"
         }
     }
 };
@@ -151,6 +123,7 @@ function createGrid() {
         enableWordCells(id, word, numberedCells);
     });
 }
+
 function createCell(grid, row, col) {
     const wrapper = document.createElement('div');
     wrapper.className = 'cell-wrapper';
@@ -265,22 +238,51 @@ function setupEventListeners() {
         cell.addEventListener('focus', handleFocus);
         cell.addEventListener('click', handleClick);
     });
-
-    const checkButton = document.querySelector('.btn-check');
-    if (checkButton) {
-        checkButton.addEventListener('click', checkSolution);
-    }
 }
 
+// Správné funkce handleInput a moveToNextCellInWord
 function handleInput(event) {
     const cell = event.target;
     cell.value = cell.value.toUpperCase();
     
     if (cell.value) {
         validateCell(cell);
-        moveToNextCellInWord(cell);
+        
+        const wordId = cell.dataset.wordId;
+        const word = crosswordData.words[wordId];
+        const currentIndex = parseInt(cell.dataset.index);
+        
+        if (currentIndex < word.answer.length - 1) {
+            const nextCell = findNextCellInWord(word, currentIndex + 1);
+            if (nextCell) nextCell.focus();
+        }
     }
 }
+
+function moveToNextCellInWord(cell) {
+    const wordId = cell.dataset.wordId;
+    const word = crosswordData.words[wordId];
+    const currentIndex = parseInt(cell.dataset.index);
+    
+    if (currentIndex < word.answer.length - 1) {
+        const nextCell = findNextCellInWord(word, currentIndex + 1);
+        if (nextCell) {
+            setTimeout(() => {
+                nextCell.focus();
+            }, 10);
+        }
+    }
+}
+
+function findNextCellInWord(word, index) {
+    if (index >= word.answer.length || index < 0) return null;
+    const row = word.direction === 'across' ? word.row : word.row + index;
+    const col = word.direction === 'across' ? word.col + index : word.col;
+    const cell = findCell(row, col);
+    return cell;
+}
+
+// Doplňková logika je stejná
 function handleKeydown(event) {
     const cell = event.target;
     const wordId = cell.dataset.wordId;
@@ -344,18 +346,6 @@ function handleClick(event) {
     }
 }
 
-// Navigační funkce
-function moveToNextCellInWord(cell) {
-    const wordId = cell.dataset.wordId;
-    const word = crosswordData.words[wordId];
-    const currentIndex = parseInt(cell.dataset.index);
-    
-    if (currentIndex < word.answer.length - 1) {
-        const nextCell = findNextCellInWord(word, currentIndex + 1);
-        if (nextCell) nextCell.focus();
-    }
-}
-
 function moveToNextWord(currentCell, reverse = false) {
     const currentWordId = parseInt(currentCell.dataset.wordId);
     const wordIds = Object.keys(crosswordData.words).map(Number);
@@ -370,13 +360,6 @@ function moveToNextWord(currentCell, reverse = false) {
     
     focusFirstCell(nextWord);
     highlightWord(nextWordId);
-}
-
-function findNextCellInWord(word, index) {
-    if (index >= word.answer.length || index < 0) return null;
-    const row = word.direction === 'across' ? word.row : word.row + index;
-    const col = word.direction === 'across' ? word.col + index : word.col;
-    return findCell(row, col);
 }
 
 function findPreviousCellInWord(word, currentIndex) {
@@ -426,6 +409,7 @@ function highlightWord(wordId) {
         clue.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 }
+
 // Validační funkce
 function validateCell(cell) {
     const wordId = cell.dataset.wordId;
@@ -485,12 +469,19 @@ function checkSolution() {
     }
 }
 
+function showErrorFeedback() {
+    const incorrectCells = document.querySelectorAll('.cell.error');
+    incorrectCells.forEach(cell => {
+        cell.classList.add('shake');
+        setTimeout(() => cell.classList.remove('shake'), 500);
+    });
+}
+
 function showSolutionAnimation(solution) {
     const reveal = document.getElementById('solutionReveal');
     const content = reveal.querySelector('.solution-content');
     content.innerHTML = '';
     
-    // Rozdělení řešení na slova
     const words = solution.split(' ');
     
     words.forEach((word, wordIndex) => {
@@ -517,45 +508,9 @@ function showSolutionAnimation(solution) {
         document.querySelectorAll('.solution-letter').forEach(letter => {
             letter.classList.add('reveal');
         });
-        createConfetti();
     }, 100);
 
     reveal.addEventListener('click', () => {
         reveal.classList.remove('show');
     }, { once: true });
 }
-
-function showErrorFeedback() {
-    const incorrectCells = document.querySelectorAll('.cell.error');
-    incorrectCells.forEach(cell => {
-        cell.classList.add('shake');
-        setTimeout(() => cell.classList.remove('shake'), 500);
-    });
-}
-
-function createConfetti() {
-    const colors = ['#00e0ff', '#ffd700', '#ff69b4', '#00ff00'];
-    const confettiCount = 200;
-    
-    for (let i = 0; i < confettiCount; i++) {
-        const confetti = document.createElement('div');
-        confetti.className = 'confetti';
-        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-        confetti.style.left = Math.random() * 100 + 'vw';
-        confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
-        confetti.style.opacity = Math.random();
-        confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
-        
-        document.body.appendChild(confetti);
-        
-        confetti.addEventListener('animationend', () => {
-            confetti.remove();
-        });
-    }
-}
-
-// Inicializace po načtení stránky
-document.addEventListener('DOMContentLoaded', () => {
-    initializeCrossword();
-    setupEventListeners();
-});
