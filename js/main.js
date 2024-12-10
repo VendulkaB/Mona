@@ -149,6 +149,7 @@ function createGrid() {
         enableWordCells(id, word, numberedCells);
     });
 }
+
 // Enable cells for a word
 function enableWordCells(id, word, numberedCells) {
     const { row, col, answer, direction, solutionLetters } = word;
@@ -316,6 +317,8 @@ function moveToNextCellInWord(cell) {
         if (nextCell) nextCell.focus();
     }
 }
+
+
 // Navigation helpers
 function handleHorizontalNavigation(key, cell, word, currentIndex) {
     const delta = key === 'ArrowRight' ? 1 : -1;
@@ -500,3 +503,74 @@ function focusFirstCell(word) {
         firstCell.focus();
     }
 }
+
+
+// Tooltip and highlight functionality
+function setupTooltipAndHighlight() {
+    const cells = document.querySelectorAll('.cell');
+
+    cells.forEach(cell => {
+        cell.addEventListener('mouseover', () => {
+            const clueId = cell.dataset.clueId;
+            if (clueId) {
+                highlightClue(clueId);
+            }
+        });
+
+        cell.addEventListener('mouseout', () => {
+            clearHighlight();
+        });
+
+        cell.addEventListener('focus', () => {
+            const clueId = cell.dataset.clueId;
+            if (clueId) {
+                highlightClue(clueId);
+            }
+        });
+
+        cell.addEventListener('blur', () => {
+            clearHighlight();
+        });
+    });
+}
+
+function highlightClue(clueId) {
+    const clueElements = document.querySelectorAll(`#acrossClues p[data-id="${clueId}"], #downClues p[data-id="${clueId}"]`);
+    clueElements.forEach(el => el.classList.add('highlight'));
+}
+
+function clearHighlight() {
+    const highlighted = document.querySelectorAll('.highlight');
+    highlighted.forEach(el => el.classList.remove('highlight'));
+}
+
+// Error feedback for incorrect answers
+function validateAnswers() {
+    const cells = document.querySelectorAll('.cell');
+    cells.forEach(cell => {
+        if (cell.value.toUpperCase() !== cell.dataset.correct) {
+            cell.classList.add('error');
+        } else {
+            cell.classList.remove('error');
+        }
+    });
+}
+
+// Modified checkSolution function to include validation
+function checkSolution() {
+    validateAnswers();
+    const cells = document.querySelectorAll('.cell');
+    const allCorrect = Array.from(cells).every(cell => cell.value.toUpperCase() === cell.dataset.correct);
+
+    if (allCorrect) {
+        revealSolution();
+    } else {
+        alert('Některé odpovědi jsou špatné. Opravte chyby a zkuste to znovu.');
+    }
+}
+
+// Initialize the crossword and additional features
+document.addEventListener('DOMContentLoaded', () => {
+    initializeCrossword();
+    setupTooltipAndHighlight();
+});
