@@ -4,8 +4,8 @@
     --accent-color: #ff1493;
     --bg-dark: #001220;
     --bg-medium: #002240;
-    --grid-cell-size: 40px;
-    --grid-line-color: rgba(0, 224, 255, 0.3);
+    --cell-size: 40px;
+    --grid-color: rgba(0, 224, 255, 0.3);
     --font-main: 'Poppins', sans-serif;
 }
 
@@ -30,11 +30,9 @@ body {
     padding: 20px;
 }
 
-/* Header Styles */
 .photo-header {
     max-width: 800px;
     margin: 0 auto 30px;
-    position: relative;
     border-radius: 15px;
     overflow: hidden;
     box-shadow: 0 8px 32px rgba(0, 224, 255, 0.15);
@@ -44,40 +42,16 @@ body {
     width: 100%;
     max-height: 200px;
     object-fit: cover;
-    transition: transform 0.3s ease;
+    display: block;
 }
 
-.photo-header:hover img {
-    transform: scale(1.05);
-}
-
-/* Typography */
-h1 {
+.title {
     text-align: center;
     color: var(--primary-color);
     font-size: 3rem;
     margin-bottom: 20px;
-    font-weight: 600;
-}
-
-.glow-effect {
-    text-shadow: 0 0 10px rgba(0, 224, 255, 0.5),
-                 0 0 20px rgba(0, 224, 255, 0.3),
-                 0 0 30px rgba(0, 224, 255, 0.2);
+    text-shadow: 0 0 10px rgba(0, 224, 255, 0.5);
     animation: glow 2s ease-in-out infinite alternate;
-}
-
-@keyframes glow {
-    from {
-        text-shadow: 0 0 10px rgba(0, 224, 255, 0.5),
-                     0 0 20px rgba(0, 224, 255, 0.3),
-                     0 0 30px rgba(0, 224, 255, 0.2);
-    }
-    to {
-        text-shadow: 0 0 20px rgba(0, 224, 255, 0.7),
-                     0 0 30px rgba(0, 224, 255, 0.5),
-                     0 0 40px rgba(0, 224, 255, 0.3);
-    }
 }
 
 .solution-info {
@@ -95,20 +69,15 @@ h1 {
     animation: sparkle 1.5s ease-in-out infinite;
 }
 
-@keyframes sparkle {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.2); opacity: 0.8; }
-}
-
-/* Grid Styles */
-.game-container {
+.game-layout {
     display: flex;
     flex-direction: column;
     gap: 30px;
     align-items: center;
+    margin-bottom: 30px;
 }
 
-.crossword-wrapper {
+.crossword-area {
     position: relative;
     padding: 20px;
     background: rgba(255, 255, 255, 0.05);
@@ -119,20 +88,23 @@ h1 {
 
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(15, var(--grid-cell-size));
     gap: 1px;
-    background-color: var(--grid-line-color);
+    background-color: var(--grid-color);
     padding: 1px;
     border-radius: 8px;
-    border: 1px solid var(--grid-line-color);
+    border: 1px solid var(--grid-color);
 }
 
 .cell-wrapper {
     position: relative;
-    width: var(--grid-cell-size);
-    height: var(--grid-cell-size);
+    width: var(--cell-size);
+    height: var(--cell-size);
     background-color: var(--bg-dark);
-    transition: all 0.3s ease;
+}
+
+.cell-wrapper.empty {
+    background-color: transparent;
+    border: none;
 }
 
 .cell {
@@ -145,6 +117,7 @@ h1 {
     text-align: center;
     text-transform: uppercase;
     font-family: var(--font-main);
+    padding: 0;
 }
 
 .cell:not([disabled]) {
@@ -154,10 +127,11 @@ h1 {
 .cell:focus {
     outline: none;
     background-color: rgba(0, 224, 255, 0.1);
+    box-shadow: 0 0 10px rgba(0, 224, 255, 0.2) inset;
 }
 
 .cell[disabled] {
-    background-color: transparent;
+    cursor: default;
 }
 
 .cell-number {
@@ -167,6 +141,7 @@ h1 {
     font-size: 10px;
     color: var(--primary-color);
     z-index: 2;
+    pointer-events: none;
 }
 
 .solution-cell {
@@ -181,9 +156,27 @@ h1 {
     font-size: 10px;
     color: var(--secondary-color);
     font-weight: bold;
+    pointer-events: none;
 }
 
-/* Clues Styles */
+/* Pokračování v další části... */
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px rgba(0, 224, 255, 0.5),
+                     0 0 20px rgba(0, 224, 255, 0.3);
+    }
+    to {
+        text-shadow: 0 0 20px rgba(0, 224, 255, 0.7),
+                     0 0 30px rgba(0, 224, 255, 0.5);
+    }
+}
+
+@keyframes sparkle {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0.8; }
+}
+/* Clues Container Styles */
 .clues-container {
     display: grid;
     grid-template-columns: repeat(2, minmax(300px, 1fr));
@@ -210,10 +203,12 @@ h1 {
 
 .clues-list p {
     margin: 8px 0;
-    padding: 8px;
+    padding: 10px;
     cursor: pointer;
     border-radius: 5px;
     transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
 .clues-list p:hover {
@@ -221,10 +216,89 @@ h1 {
     transform: translateX(5px);
 }
 
-.highlight {
-    background: rgba(0, 255, 204, 0.1) !important;
-    color: #00ffcc;
+.clues-list p.highlight {
+    background: rgba(0, 224, 255, 0.15);
+    color: var(--primary-color);
     transform: translateX(5px);
+}
+
+/* Tooltip Styles */
+.tooltip {
+    position: absolute;
+    background: rgba(0, 18, 32, 0.95);
+    color: white;
+    padding: 12px 15px;
+    border-radius: 8px;
+    display: none;
+    z-index: 100;
+    font-size: 14px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    max-width: 250px;
+    border: 1px solid rgba(0, 224, 255, 0.2);
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.tooltip.show {
+    display: block;
+    animation: tooltipAppear 0.3s ease forwards;
+}
+
+.tooltip-content {
+    position: relative;
+}
+
+.tooltip-arrow {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: rgba(0, 18, 32, 0.95);
+    transform: rotate(45deg);
+    top: -5px;
+    left: 20px;
+    border-left: 1px solid rgba(0, 224, 255, 0.2);
+    border-top: 1px solid rgba(0, 224, 255, 0.2);
+}
+
+/* Solution Reveal Animation */
+.solution-reveal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 18, 32, 0.98);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+
+.solution-reveal.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.solution-content {
+    text-align: center;
+}
+
+.solution-letter {
+    display: inline-block;
+    font-size: 4rem;
+    color: var(--primary-color);
+    text-shadow: 0 0 20px rgba(0, 224, 255, 0.5);
+    opacity: 0;
+    transform: translateY(20px);
+    margin: 0 5px;
+}
+
+.solution-letter.reveal {
+    animation: letterReveal 0.5s ease forwards;
 }
 
 /* Button Styles */
@@ -232,7 +306,6 @@ h1 {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin: 30px auto;
     padding: 15px 40px;
     font-size: 18px;
     color: white;
@@ -243,6 +316,7 @@ h1 {
     transition: all 0.3s ease;
     backdrop-filter: blur(10px);
     border: 1px solid rgba(0, 224, 255, 0.2);
+    font-family: var(--font-main);
 }
 
 .btn-check:hover {
@@ -251,19 +325,8 @@ h1 {
     box-shadow: 0 5px 15px rgba(0, 224, 255, 0.2);
 }
 
-.tooltip {
-    position: absolute;
-    background: rgba(0, 0, 0, 0.9);
-    color: white;
-    padding: 8px 15px;
-    border-radius: 8px;
-    display: none;
-    z-index: 100;
-    font-size: 14px;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    max-width: 250px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+.btn-check:active {
+    transform: translateY(0);
 }
 
 /* Footer Styles */
@@ -276,7 +339,27 @@ footer {
 
 .heart {
     display: inline-block;
+    color: var(--accent-color);
     animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+/* Animations */
+@keyframes tooltipAppear {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes letterReveal {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes heartbeat {
@@ -293,25 +376,29 @@ footer {
 
 @media (max-width: 768px) {
     :root {
-        --grid-cell-size: 30px;
+        --cell-size: 30px;
     }
 
     .cell {
         font-size: 16px;
     }
 
-    h1 {
+    .title {
         font-size: 2.5rem;
+    }
+
+    .solution-letter {
+        font-size: 3rem;
     }
 }
 
 @media (max-width: 480px) {
     :root {
-        --grid-cell-size: 24px;
+        --cell-size: 25px;
     }
 
     .cell {
-        font-size: 12px;
+        font-size: 14px;
     }
 
     .cell-number {
@@ -322,7 +409,11 @@ footer {
         font-size: 8px;
     }
 
-    h1 {
+    .title {
         font-size: 2rem;
+    }
+
+    .solution-letter {
+        font-size: 2.5rem;
     }
 }
