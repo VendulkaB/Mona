@@ -1,60 +1,64 @@
-::::::::::::::::: main-container
-::: photo-header
-![Křížovka pro Móňu](img/crossword-header.jpg){loading="lazy"}
-:::
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Křížovka pro Móňu</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="main-container">
+        <div class="photo-header">
+            <img src="img/crossword-header.jpg" alt="Křížovka pro Móňu" loading="lazy">
+        </div>
 
-::::::::::::::: {.puzzle-section role="main"}
-# Křížovka pro Móňu {#křížovka-pro-móňu .title .glow-effect}
+        <main class="puzzle-section">
+            <h1 class="title glow-effect">Křížovka pro Móňu</h1>
 
-::: solution-info
-[✨]{.sparkle}
+            <div class="solution-info">
+                <span class="sparkle">✨</span>
+                Najděte tajenku! Písmena v barevných polích tvoří řešení.
+                <span class="sparkle">✨</span>
+            </div>
 
-Najděte tajenku! Písmena v barevných polích tvoří řešení.
+            <div class="game-layout">
+                <div class="crossword-area">
+                    <div id="crosswordGrid" class="grid-container"></div>
+                    <div id="activeClue" class="active-clue">
+                        <span class="clue-text"></span>
+                    </div>
+                </div>
 
-[✨]{.sparkle}
-:::
+                <div class="clues-container">
+                    <div class="clues-section">
+                        <h2>Vodorovně</h2>
+                        <div id="acrossClues" class="clues-list"></div>
+                    </div>
+                    <div class="clues-section">
+                        <h2>Svisle</h2>
+                        <div id="downClues" class="clues-list"></div>
+                    </div>
+                </div>
+            </div>
 
-::::::::::: game-layout
-::::: crossword-area
-::: {#crosswordGrid .grid-container}
-:::
+            <button class="btn-check">Zkontrolovat řešení</button>
 
-::: {#activeClue .active-clue}
-[]{.clue-text}
-:::
-:::::
+            <div id="crosswordCompleteMessage" class="solution-reveal">
+                <h2 id="gratulace" class="completion-message">Gratulace!</h2>
+                <div class="animated-solution"></div>
+            </div>
+        </main>
 
-::::::: clues-container
-:::: clues-section
-## Vodorovně
+        <footer>
+            Vytvořeno s láskou ❤️
+        </footer>
+    </div>
 
-::: {#acrossClues .clues-list}
-:::
-::::
+    <div id="solutionReveal" class="solution-reveal">
+        <div class="solution-content"></div>
+    </div>
 
-:::: clues-section
-## Svisle
-
-::: {#downClues .clues-list}
-:::
-::::
-:::::::
-:::::::::::
-
-[Zkontrolovat řešení]{.btn-check}
-
-:::: {#crosswordCompleteMessage .solution-reveal}
-## Gratulace! {#gratulace .completion-message}
-
-::: animated-solution
-:::
-::::
-:::::::::::::::
-
-Vytvořeno s láskou ❤️
-:::::::::::::::::
-
-:::: {#solutionReveal .solution-reveal}
-::: solution-content
-:::
-::::
+    <script src="main.js"></script>
+</body>
+</html>
