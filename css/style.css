@@ -4,7 +4,6 @@
     --bg-dark: #001220;
     --bg-medium: #002240;
     --cell-size: 45px;
-    --grid-color: rgba(0, 224, 255, 0.3);
     --font-main: 'Poppins', sans-serif;
 }
 
@@ -91,30 +90,20 @@ body {
 
 .grid-container {
     display: grid;
-    gap: 1px;
-    background-color: var(--grid-color);
-    padding: 1px;
-    border-radius: 8px;
-    border: 1px solid var(--grid-color);
+    background: transparent;
+    border: none;
 }
 
 .cell-wrapper {
     position: relative;
     width: var(--cell-size);
     height: var(--cell-size);
-    background-color: var(--bg-dark);
-    transition: all 0.2s ease;
-}
-
-.cell-wrapper.empty {
-    background-color: transparent;
-    pointer-events: none;
 }
 
 .cell {
     width: 100%;
     height: 100%;
-    border: 1px solid rgba(0, 224, 255, 0.2);
+    border: 1px solid transparent;
     background: transparent;
     color: white;
     font-size: 24px;
@@ -132,7 +121,6 @@ body {
 .cell:focus {
     outline: none;
     background-color: rgba(0, 224, 255, 0.1);
-    border-color: var(--primary-color);
     box-shadow: 0 0 10px rgba(0, 224, 255, 0.2);
 }
 
@@ -147,12 +135,10 @@ body {
 
 .cell.solution-cell {
     background-color: rgba(255, 215, 0, 0.1);
-    border: 1px solid rgba(255, 215, 0, 0.3);
 }
 
 .cell.solution-cell:focus {
     background-color: rgba(255, 215, 0, 0.2);
-    border-color: var(--secondary-color);
 }
 
 .solution-indicator {
@@ -207,11 +193,24 @@ body {
     cursor: pointer;
     border-radius: 5px;
     transition: all 0.3s ease;
+    position: relative;
 }
 
 .clues-list p:hover {
     background: rgba(0, 224, 255, 0.1);
     transform: translateX(5px);
+}
+
+.clues-list p:hover::after {
+    content: attr(data-clue);
+    position: absolute;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 5px;
+    border-radius: 3px;
+    font-size: 0.8em;
+    white-space: nowrap;
+    z-index: 10;
 }
 
 .clues-list p.highlight {
@@ -248,7 +247,10 @@ body {
     text-shadow: 0 0 20px rgba(0, 224, 255, 0.5);
     opacity: 0;
     transform: translateY(20px);
-    margin: 0 10px;
+}
+
+.solution-letter.space {
+    width: 20px;
 }
 
 .solution-letter.reveal {
@@ -256,7 +258,7 @@ body {
 }
 
 /* Button */
-.btn-check {
+.btn-text {
     display: block;
     margin: 30px auto;
     padding: 15px 40px;
@@ -270,7 +272,7 @@ body {
     font-family: var(--font-main);
 }
 
-.btn-check:hover {
+.btn-text:hover {
     background: rgba(0, 224, 255, 0.2);
     transform: translateY(-2px);
 }
@@ -288,6 +290,12 @@ body {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+/* Error feedback */
+.cell.error {
+    background-color: rgba(255, 0, 0, 0.3);
+    border-color: red;
 }
 
 /* Responsive Design */
@@ -318,17 +326,3 @@ body {
         font-size: 8px;
     }
 }
-
-/* Highlight styles */
-.clues-list p.highlight {
-    background-color: var(--secondary-color);
-    color: black;
-}
-
-/* Error feedback */
-.cell.error {
-    background-color: rgba(255, 0, 0, 0.3);
-    border-color: red;
-}
-
-/* Tooltip effect handled via question highlighting */
