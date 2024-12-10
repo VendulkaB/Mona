@@ -16,7 +16,7 @@
         </header>
 
         <main class="puzzle-section">
-            <h1 class="title">Křížovka pro Móňu</h1>
+            <h1 class="title glow-effect">Křížovka pro Móňu</h1>
             
             <div class="solution-info">
                 <span class="sparkle">✨</span>
@@ -27,9 +27,8 @@
             <div class="game-layout">
                 <div class="crossword-area">
                     <div id="crosswordGrid" class="grid-container"></div>
-                    <div id="tooltip" class="tooltip">
-                        <div class="tooltip-content"></div>
-                        <div class="tooltip-arrow"></div>
+                    <div id="activeClue" class="active-clue">
+                        <span class="clue-text"></span>
                     </div>
                 </div>
 
@@ -46,7 +45,7 @@
                 </div>
             </div>
 
-            <button class="btn-check" onclick="checkSolution()">
+            <button class="btn-check glass-effect" onclick="checkSolution()">
                 <span class="btn-text">Zkontrolovat řešení</span>
             </button>
         </main>
