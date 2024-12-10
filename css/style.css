@@ -1,414 +1,150 @@
-@charset "UTF-8";
-
-/* Custom properties */
+/* Base styles */
 :root {
     --primary-color: #00e0ff;
     --secondary-color: #ffd700;
     --bg-dark: #001220;
-    --bg-medium: #002240;
-    --cell-size: 40px;
-    --cell-gap: 1px;
-    --font-main: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    --correct-color: #4CAF50;
-    --error-color: #FF5252;
-    --tooltip-bg: rgba(0, 18, 32, 0.95);
-    --tooltip-border: var(--primary-color);
-    --transition-default: all 0.2s ease;
 }
 
-/* Reset and base styles */
-*, *::before, *::after {
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-html {
-    font-size: 16px;
-    line-height: 1.5;
 }
 
 body {
-    font-family: var(--font-main);
+    font-family: 'Poppins', sans-serif;
     background: var(--bg-dark);
-    color: #ffffff;
-    min-height: 100vh;
-    padding: 20px;
+    color: white;
+    line-height: 1.6;
 }
 
-/* Layout containers */
-.main-container {
+.container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
 }
 
-/* Header styles */
-.photo-header {
-    max-width: 600px;
-    margin: 0 auto 30px;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 8px 32px rgba(0, 224, 255, 0.15);
-}
-
-.photo-header img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    display: block;
-}
-
-/* Title and info */
-.title {
+/* Header */
+header {
     text-align: center;
+    margin-bottom: 2rem;
+}
+
+h1 {
     color: var(--primary-color);
-    font-size: clamp(2rem, 5vw, 2.5rem);
-    margin-bottom: 20px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 2px;
+    font-size: 2.5rem;
+    margin: 1rem 0;
 }
 
-.glow-effect {
-    text-shadow: 
-        0 0 10px rgba(0, 224, 255, 0.5),
-        0 0 20px rgba(0, 224, 255, 0.3),
-        0 0 30px rgba(0, 224, 255, 0.2);
-    animation: glow 2s ease-in-out infinite alternate;
+.header-image {
+    max-width: 600px;
+    margin: 0 auto;
 }
 
-.solution-info {
-    text-align: center;
-    color: var(--secondary-color);
-    margin-bottom: 30px;
-    font-size: 1.1rem;
-    padding: 15px;
-    background: rgba(0, 224, 255, 0.05);
+.header-image img {
+    width: 100%;
+    height: auto;
     border-radius: 10px;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
 }
 
-/* Game layout */
-.game-layout {
+/* Instructions */
+.instructions {
+    text-align: center;
+    margin: 2rem 0;
+    color: var(--secondary-color);
+}
+
+/* Crossword Grid */
+.crossword {
+    margin: 2rem 0;
     display: flex;
-    gap: 40px;
     justify-content: center;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    margin-bottom: 30px;
 }
 
-.crossword-area {
-    padding: 20px;
-    background: rgba(0, 47, 79, 0.3);
-    border-radius: 15px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-    position: relative;
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-}
-
-/* Grid styles */
-.grid-container {
+#crosswordGrid {
     display: grid;
-    gap: var(--cell-gap);
-    padding: 4px;
-    background: rgba(0, 47, 79, 0.2);
+    gap: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px;
     border-radius: 8px;
-    user-select: none;
-    -webkit-user-select: none;
 }
 
 .cell-wrapper {
     position: relative;
-    width: var(--cell-size);
-    height: var(--cell-size);
-    background-color: var(--bg-dark);
-    transition: var(--transition-default);
-}
-
-.cell-wrapper.empty {
-    opacity: 0;
-    pointer-events: none;
-    background: transparent;
+    width: 40px;
+    height: 40px;
 }
 
 .cell {
     width: 100%;
     height: 100%;
-    border: 1px solid rgba(0, 224, 255, 0.2);
-    background: rgba(0, 47, 79, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.3);
     color: white;
-    font-size: 20px;
     text-align: center;
+    font-size: 1.2rem;
     text-transform: uppercase;
-    font-family: var(--font-main);
-    padding: 0;
-    transition: var(--transition-default);
-    border-radius: 4px;
-    cursor: pointer;
 }
 
-.cell:focus {
-    outline: none;
-    background-color: rgba(0, 224, 255, 0.15);
-    border-color: var(--primary-color);
-    box-shadow: 0 0 10px rgba(0, 224, 255, 0.2);
-}
-
-.cell-number {
-    position: absolute;
-    top: 1px;
-    left: 1px;
-    font-size: 10px;
-    color: var(--primary-color);
-    background: rgba(0, 0, 0, 0.5);
-    padding: 1px 3px;
-    border-radius: 2px;
-    z-index: 2;
-}
-
-/* Solution cells */
-.cell.solution-cell {
-    background-color: rgba(255, 215, 0, 0.1);
-    border: 1px solid rgba(255, 215, 0, 0.3);
-}
-
-.solution-indicator {
-    position: absolute;
-    bottom: 1px;
-    right: 1px;
-    font-size: 9px;
-    color: var(--secondary-color);
-    background: rgba(0, 0, 0, 0.5);
-    padding: 1px 3px;
-    border-radius: 2px;
-    z-index: 2;
-}
-
-/* Cell states */
-.cell.highlight {
-    background-color: rgba(0, 224, 255, 0.15);
-}
-
-.cell.correct {
-    color: var(--correct-color);
-}
-
-.cell.error {
-    color: var(--error-color);
-    animation: shake 0.3s ease-in-out;
-}
-
-/* Clues styles */
-.clues-container {
+/* Clues */
+.clues {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    max-width: 600px;
+    gap: 2rem;
+    margin: 2rem 0;
 }
 
-.clues-section {
-    background: rgba(0, 47, 79, 0.3);
-    padding: 20px;
-    border-radius: 15px;
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-}
-
-.clues-section h2 {
+.clues h2 {
     color: var(--primary-color);
-    font-size: 1.2rem;
-    margin-bottom: 15px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--primary-color);
+    margin-bottom: 1rem;
 }
 
 .clue {
-    margin: 8px 0;
-    padding: 8px;
+    padding: 0.5rem;
     cursor: pointer;
-    border-radius: 5px;
-    transition: var(--transition-default);
-    font-size: 0.9rem;
 }
 
 .clue:hover {
-    background: rgba(0, 224, 255, 0.1);
-    padding-left: 12px;
+    background: rgba(255, 255, 255, 0.1);
 }
 
-.clue.highlight {
-    background: rgba(0, 224, 255, 0.15);
-    color: var(--primary-color);
-}
-
-/* Active clue */
-.active-clue {
-    position: absolute;
-    bottom: -40px;
-    left: 0;
-    right: 0;
-    text-align: center;
-    color: var(--primary-color);
-    font-size: 1rem;
-    padding: 10px;
-    background: rgba(0, 47, 79, 0.3);
-    border-radius: 8px;
-    transition: opacity 0.3s ease;
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-}
-
-/* Button styles */
-.btn-check {
+/* Button */
+#checkButton {
     display: block;
-    margin: 30px auto;
-    padding: 12px 30px;
-    font-size: 1rem;
+    margin: 2rem auto;
+    padding: 1rem 2rem;
+    background: transparent;
+    border: 2px solid var(--primary-color);
     color: white;
-    background: rgba(0, 224, 255, 0.1);
-    border: 1px solid var(--primary-color);
-    border-radius: 25px;
+    font-size: 1rem;
     cursor: pointer;
-    transition: var(--transition-default);
-    font-family: var(--font-main);
+    border-radius: 25px;
 }
 
-.btn-check:hover {
-    background: rgba(0, 224, 255, 0.2);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 224, 255, 0.2);
+#checkButton:hover {
+    background: rgba(0, 224, 255, 0.1);
 }
 
-/* Solution reveal */
+/* Solution Reveal */
 .solution-reveal {
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 18, 32, 0.98);
-    display: flex;
+    background: rgba(0, 0, 0, 0.9);
     justify-content: center;
     align-items: center;
-    z-index: 1000;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.5s ease;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
 }
 
 .solution-reveal.show {
-    opacity: 1;
-    pointer-events: auto;
+    display: flex;
 }
 
-.solution-content {
-    padding: 40px;
-    background: rgba(0, 47, 79, 0.3);
-    border-radius: 20px;
-    box-shadow: 0 0 50px rgba(0, 224, 255, 0.2);
+/* Footer */
+footer {
     text-align: center;
-}
-
-.solution-letter {
-    display: inline-block;
-    font-size: clamp(2.5rem, 8vw, 3.5rem);
+    margin-top: 2rem;
     color: var(--primary-color);
-    text-shadow: 0 0 20px rgba(0, 224, 255, 0.5);
-    opacity: 0;
-    transform: translateY(20px);
-    margin: 0 10px;
-    font-weight: bold;
-}
-
-.solution-letter.reveal {
-    animation: letterReveal 0.5s ease forwards;
-}
-
-/* Animations */
-@keyframes glow {
-    from {
-        text-shadow: 
-            0 0 10px rgba(0, 224, 255, 0.5),
-            0 0 20px rgba(0, 224, 255, 0.3);
-    }
-    to {
-        text-shadow: 
-            0 0 20px rgba(0, 224, 255, 0.7),
-            0 0 30px rgba(0, 224, 255, 0.5);
-    }
-}
-
-@keyframes letterReveal {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-3px); }
-    75% { transform: translateX(3px); }
-}
-
-/* Media queries */
-@media (max-width: 768px) {
-    :root {
-        --cell-size: 35px;
-    }
-
-    .game-layout {
-        gap: 20px;
-    }
-
-    .solution-letter {
-        margin: 0 5px;
-    }
-}
-
-@media (max-width: 480px) {
-    :root {
-        --cell-size: 30px;
-    }
-
-    .cell {
-        font-size: 16px;
-    }
-
-    .cell-number {
-        font-size: 8px;
-    }
-}
-
-/* Print styles */
-@media print {
-    .solution-reveal,
-    .btn-check {
-        display: none;
-    }
-
-    body {
-        background: white;
-        color: black;
-    }
-
-    .crossword-area,
-    .clues-section {
-        background: none;
-        box-shadow: none;
-        print-color-adjust: exact;
-        -webkit-print-color-adjust: exact;
-    }
 }
