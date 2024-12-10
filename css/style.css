@@ -7,7 +7,12 @@
     --cell-gap: 1px;
     --font-main: 'Poppins', sans-serif;
 }
-
+:root {
+    --correct-color: #4CAF50;
+    --error-color: #FF5252;
+    --tooltip-bg: rgba(0, 18, 32, 0.95);
+    --tooltip-border: var(--primary-color);
+}
 /* Reset a základní styly */
 * {
     margin: 0;
