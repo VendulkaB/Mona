@@ -679,3 +679,104 @@ setInterval(debounce(saveProgress, 1000), 30000);
 document.addEventListener('DOMContentLoaded', () => {
     loadProgress();
 });
+// Přidání do main.js - nové optimalizační funkce
+
+// Detekce zařízení a nastavení odpovídajících event listenerů
+function setupDeviceSpecificEvents() {
+    const isTouchDevice = ('ontouchstart' in window) || 
+                         (navigator.maxTouchPoints > 0) || 
+                         (navigator.msMaxTouchPoints > 0);
+
+    if (isTouchDevice) {
+        setupTouchEvents();
+    } else {
+        setupMouseEvents();
+    }
+}
+
+// Nastavení pro dotykové události
+function setupTouchEvents() {
+    document.querySelectorAll('.cell').forEach(cell => {
+        cell.addEventListener('touchstart', handleTouchStart, { passive: true });
+        cell.addEventListener('touchend', handleTouchEnd, { passive: true });
+    });
+}
+
+// Zpracování dotykových událostí
+function handleTouchStart(event) {
+    const cell = event.target;
+    cell.focus();
+    highlightWord(cell.dataset.wordId);
+}
+
+function handleTouchEnd(event) {
+    if (event.cancelable) {
+        event.preventDefault();
+    }
+}
+
+// Optimalizace výkonu
+const performanceOptimizations = {
+    // Debounce pro úsporu výkonu
+    debounce: (func, wait) => {
+        let timeout;
+        return (...args) => {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func.apply(this, args), wait);
+        };
+    },
+
+    // Throttle pro omezení počtu volání funkce
+    throttle: (func, limit) => {
+        let inThrottle;
+        return (...args) => {
+            if (!inThrottle) {
+                func.apply(this, args);
+                inThrottle = true;
+                setTimeout(() => inThrottle = false, limit);
+            }
+        };
+    }
+};
+
+// Optimalizace pro různé velikosti obrazovek
+function handleResize() {
+    const grid = document.getElementById('crosswordGrid');
+    if (!grid) return;
+
+    // Přepočítání velikosti buněk podle šířky obrazovky
+    const containerWidth = grid.parentElement.clientWidth;
+    const maxCols = Math.max(...Object.values(crosswordData.words)
+        .map(word => word.direction === 'across' ? word.col + word.answer.length : word.col));
+
+    // Nastavení minimální velikosti buňky
+    const minCellSize = 30;
+    const calculatedCellSize = Math.max(minCellSize, Math.floor(containerWidth / (maxCols + 2)));
+    
+    document.documentElement.style.setProperty('--cell-size', `${calculatedCellSize}px`);
+}
+
+// Přidání event listenerů pro změnu velikosti okna
+window.addEventListener('resize', performanceOptimizations.debounce(handleResize, 250));
+window.addEventListener('orientationchange', handleResize);
+
+// Optimalizace pro offline použití
+function setupOfflineSupport() {
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js')
+            .catch(error => console.error('ServiceWorker registration failed:', error));
+    }
+}
+
+// Inicializace všech optimalizací
+function initOptimizations() {
+    setupDeviceSpecificEvents();
+    handleResize();
+    setupOfflineSupport();
+}
+
+// Přidání do hlavní inicializační funkce
+document.addEventListener('DOMContentLoaded', () => {
+    init();
+    initOptimizations();
+});
