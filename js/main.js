@@ -1,5 +1,4 @@
 // Konfigurace křížovky
-// Konfigurace křížovky
 const crosswordData = {
     solution: "OTEC FURA",
     words: {
@@ -14,62 +13,89 @@ const crosswordData = {
         2: { 
             clue: "Starší název pro televizi", 
             answer: "TELEVIZOR", 
-            row: 1, 
-            col: 3, 
+            row: 2, 
+            col: 1, 
             direction: "down",
             solutionLetters: {3: 1} // 'T' pro OTEC
         },
         3: { 
             clue: "Roční období", 
             answer: "PODZIM", 
-            row: 3, 
-            col: 1, 
+            row: 2, 
+            col: 4, 
             direction: "across",
             solutionLetters: {1: 2} // 'E' pro OTEC
         },
         4: { 
             clue: "Český vynálezce lodního šroubu (Josef)", 
             answer: "RESSEL", 
-            row: 4, 
-            col: 3, 
+            row: 3, 
+            col: 2, 
             direction: "across",
             solutionLetters: {4: 3} // 'C' pro OTEC
         },
-        5: {
-            clue: "Hlavní město Francie",
-            answer: "PAŘÍŽ",
-            row: 6,
-            col: 1,
+        5: { 
+            clue: "Hudební nástroj s klaviaturou", 
+            answer: "FORTE", 
+            row: 4, 
+            col: 3, 
             direction: "across",
-            solutionLetters: {1: 5} // 'F' pro FURA
+            solutionLetters: {0: 4} // 'F' pro FURA
         },
-        6: {
-            clue: "Největší město USA",
-            answer: "NEW YORK",
-            row: 6,
-            col: 3,
-            direction: "down",
-            solutionLetters: {3: 6} // 'U' pro FURA
-        },
-        7: {
-            clue: "Nejdelší řeka světa",
-            answer: "NIL",
-            row: 8,
-            col: 1,
+        6: { 
+            clue: "Chemická značka uranu", 
+            answer: "U", 
+            row: 5, 
+            col: 5, 
             direction: "across",
-            solutionLetters: {1: 7} // 'R' pro FURA
+            solutionLetters: {0: 5} // 'U' pro FURA
         },
-        8: {
-            clue: "Hlavní město Itálie",
-            answer: "ŘÍM",
-            row: 8,
-            col: 3,
-            direction: "down",
-            solutionLetters: {3: 8} // 'A' pro FURA
+        7: { 
+            clue: "Hlavní město Lotyšska", 
+            answer: "RIGA", 
+            row: 6, 
+            col: 2, 
+            direction: "across",
+            solutionLetters: {0: 6} // 'R' pro FURA
+        },
+        8: { 
+            clue: "První písmeno abecedy", 
+            answer: "A", 
+            row: 7, 
+            col: 4, 
+            direction: "across",
+            solutionLetters: {0: 7} // 'A' pro FURA
+        },
+        9: {
+            clue: "Český král (Karel IV.)", 
+            answer: "KAREL", 
+            row: 3, 
+            col: 6, 
+            direction: "down"
+        },
+        10: {
+            clue: "Značka českých hodinek", 
+            answer: "PRIM", 
+            row: 4, 
+            col: 1, 
+            direction: "down"
+        },
+        11: {
+            clue: "Hlavní město Norska",
+            answer: "OSLO",
+            row: 1,
+            col: 8,
+            direction: "down"
+        },
+        12: {
+            clue: "Český hudební skladatel (Bedřich)",
+            answer: "SMETANA",
+            row: 5,
+            col: 2,
+            direction: "across"
         }
     }
 };
-
 
 // Inicializace
 document.addEventListener('DOMContentLoaded', () => {
