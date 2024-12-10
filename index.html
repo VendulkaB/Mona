@@ -4,25 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Křížovka pro Móňu</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div class="main-container">
-        <div class="photo-header">
+        <!-- Header Section -->
+        <header class="photo-header">
             <img src="img/crossword-header.jpg" alt="Křížovka pro Móňu" loading="lazy">
-        </div>
+        </header>
 
+        <!-- Main Puzzle Section -->
         <main class="puzzle-section">
-            <h1 class="title glow-effect">Křížovka pro Móňu</h1>
-
+            <h1 id="crossword-title" class="title glow-effect">Křížovka pro Móňu</h1>
+            
+            <!-- Solution Info -->
             <div class="solution-info">
                 <span class="sparkle">✨</span>
                 Najděte tajenku! Písmena v barevných polích tvoří řešení.
                 <span class="sparkle">✨</span>
             </div>
 
+            <!-- Game Layout -->
             <div class="game-layout">
+                <!-- Crossword Area -->
                 <div class="crossword-area">
                     <div id="crosswordGrid" class="grid-container"></div>
                     <div id="activeClue" class="active-clue">
@@ -30,35 +39,40 @@
                     </div>
                 </div>
 
+                <!-- Clues Container -->
                 <div class="clues-container">
-                    <div class="clues-section">
+                    <!-- Across Clues -->
+                    <section class="clues-section">
                         <h2>Vodorovně</h2>
                         <div id="acrossClues" class="clues-list"></div>
-                    </div>
-                    <div class="clues-section">
+                    </section>
+
+                    <!-- Down Clues -->
+                    <section class="clues-section">
                         <h2>Svisle</h2>
                         <div id="downClues" class="clues-list"></div>
-                    </div>
+                    </section>
                 </div>
             </div>
 
-            <button class="btn-check">Zkontrolovat řešení</button>
-
-            <div id="crosswordCompleteMessage" class="solution-reveal">
-                <h2 id="gratulace" class="completion-message">Gratulace!</h2>
-                <div class="animated-solution"></div>
-            </div>
+            <!-- Check Solution Button -->
+            <button id="checkSolution" class="btn-check">
+                <span class="btn-text">Zkontrolovat řešení</span>
+            </button>
         </main>
 
-        <footer>
-            Vytvořeno s láskou ❤️
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Vytvořeno s láskou ❤️</p>
         </footer>
     </div>
 
+    <!-- Solution Reveal Modal -->
     <div id="solutionReveal" class="solution-reveal">
         <div class="solution-content"></div>
     </div>
 
-    <script src="main.js"></script>
+    <!-- Custom JavaScript -->
+    <script src="js/main.js"></script>
 </body>
 </html>
