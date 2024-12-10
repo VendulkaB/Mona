@@ -15,8 +15,8 @@
             <img src="img/crossword-header.jpg" alt="Křížovka pro Móňu" loading="lazy">
         </header>
 
-        <main class="puzzle-section">
-            <h1 class="title glow-effect">Křížovka pro Móňu</h1>
+        <div class="content">
+            <h1 class="title">Křížovka pro Móňu</h1>
             
             <div class="solution-info">
                 <span class="sparkle">✨</span>
@@ -24,12 +24,10 @@
                 <span class="sparkle">✨</span>
             </div>
 
-            <div class="game-layout">
+            <div class="game-section">
                 <div class="crossword-area">
                     <div id="crosswordGrid" class="grid-container"></div>
-                    <div id="activeClue" class="active-clue">
-                        <span class="clue-text"></span>
-                    </div>
+                    <div id="activeWord" class="active-word"></div>
                 </div>
 
                 <div class="clues-container">
@@ -37,7 +35,6 @@
                         <h2>Vodorovně</h2>
                         <div id="acrossClues" class="clues-list"></div>
                     </div>
-
                     <div class="clues-section">
                         <h2>Svisle</h2>
                         <div id="downClues" class="clues-list"></div>
@@ -45,20 +42,25 @@
                 </div>
             </div>
 
-            <button class="btn-check glass-effect" onclick="checkSolution()">
-                <span class="btn-text">Zkontrolovat řešení</span>
+            <button type="button" class="btn-check" onclick="checkSolution()">
+                Zkontrolovat řešení
             </button>
-        </main>
+        </div>
 
         <footer>
-            <p>Vytvořeno s láskou ❤️</p>
+            <p>Vytvořeno s láskou <span class="heart">❤️</span></p>
         </footer>
     </div>
 
+    <!-- Tooltip container -->
+    <div id="tooltip" class="tooltip"></div>
+
+    <!-- Solution reveal overlay -->
     <div id="solutionReveal" class="solution-reveal">
         <div class="solution-content"></div>
     </div>
 
+    <script src="js/crosswordData.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
