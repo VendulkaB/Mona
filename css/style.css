@@ -1,10 +1,9 @@
 :root {
     --primary-color: #00e0ff;
     --secondary-color: #ffd700;
-    --accent-color: #ff1493;
     --bg-dark: #001220;
     --bg-medium: #002240;
-    --cell-size: 40px;
+    --cell-size: 45px;
     --grid-color: rgba(0, 224, 255, 0.3);
     --font-main: 'Poppins', sans-serif;
 }
@@ -21,7 +20,6 @@ body {
     color: #ffffff;
     min-height: 100vh;
     padding: 20px;
-    line-height: 1.6;
 }
 
 .main-container {
@@ -30,6 +28,7 @@ body {
     padding: 20px;
 }
 
+/* Header Styles */
 .photo-header {
     max-width: 800px;
     margin: 0 auto 30px;
@@ -45,12 +44,18 @@ body {
     display: block;
 }
 
+/* Title and Info */
 .title {
     text-align: center;
     color: var(--primary-color);
     font-size: 3rem;
     margin-bottom: 20px;
-    text-shadow: 0 0 10px rgba(0, 224, 255, 0.5);
+    font-weight: 600;
+}
+
+.glow-effect {
+    text-shadow: 0 0 10px rgba(0, 224, 255, 0.5),
+                 0 0 20px rgba(0, 224, 255, 0.3);
     animation: glow 2s ease-in-out infinite alternate;
 }
 
@@ -65,25 +70,23 @@ body {
     gap: 10px;
 }
 
-.sparkle {
-    animation: sparkle 1.5s ease-in-out infinite;
-}
-
+/* Grid Layout */
 .game-layout {
     display: flex;
-    flex-direction: column;
-    gap: 30px;
-    align-items: center;
+    gap: 40px;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
     margin-bottom: 30px;
 }
 
 .crossword-area {
     position: relative;
     padding: 20px;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(0, 47, 79, 0.3);
     backdrop-filter: blur(10px);
     border-radius: 15px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
 
 .grid-container {
@@ -100,24 +103,26 @@ body {
     width: var(--cell-size);
     height: var(--cell-size);
     background-color: var(--bg-dark);
+    transition: all 0.2s ease;
 }
 
 .cell-wrapper.empty {
     background-color: transparent;
-    border: none;
+    pointer-events: none;
 }
 
 .cell {
     width: 100%;
     height: 100%;
-    border: none;
+    border: 1px solid rgba(0, 224, 255, 0.2);
     background: transparent;
     color: white;
-    font-size: 20px;
+    font-size: 24px;
     text-align: center;
     text-transform: uppercase;
     font-family: var(--font-main);
     padding: 0;
+    transition: all 0.2s ease;
 }
 
 .cell:not([disabled]) {
@@ -127,26 +132,27 @@ body {
 .cell:focus {
     outline: none;
     background-color: rgba(0, 224, 255, 0.1);
-    box-shadow: 0 0 10px rgba(0, 224, 255, 0.2) inset;
-}
-
-.cell[disabled] {
-    cursor: default;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 10px rgba(0, 224, 255, 0.2);
 }
 
 .cell-number {
     position: absolute;
     top: 2px;
     left: 2px;
-    font-size: 10px;
+    font-size: 12px;
     color: var(--primary-color);
-    z-index: 2;
     pointer-events: none;
 }
 
-.solution-cell {
+.cell.solution-cell {
     background-color: rgba(255, 215, 0, 0.1);
     border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.cell.solution-cell:focus {
+    background-color: rgba(255, 215, 0, 0.2);
+    border-color: var(--secondary-color);
 }
 
 .solution-indicator {
@@ -159,35 +165,29 @@ body {
     pointer-events: none;
 }
 
-/* Pokračování v další části... */
-
-@keyframes glow {
-    from {
-        text-shadow: 0 0 10px rgba(0, 224, 255, 0.5),
-                     0 0 20px rgba(0, 224, 255, 0.3);
-    }
-    to {
-        text-shadow: 0 0 20px rgba(0, 224, 255, 0.7),
-                     0 0 30px rgba(0, 224, 255, 0.5);
-    }
+/* Active Clue Display */
+.active-clue {
+    position: absolute;
+    bottom: -40px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    min-height: 30px;
+    transition: opacity 0.3s ease;
 }
 
-@keyframes sparkle {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.2); opacity: 0.8; }
-}
-/* Clues Container Styles */
+/* Clues Section */
 .clues-container {
+    max-width: 600px;
     display: grid;
-    grid-template-columns: repeat(2, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
-    width: 100%;
-    max-width: 1000px;
 }
 
 .clues-section {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
+    background: rgba(0, 47, 79, 0.3);
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
@@ -207,8 +207,6 @@ body {
     cursor: pointer;
     border-radius: 5px;
     transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
 }
 
 .clues-list p:hover {
@@ -219,56 +217,16 @@ body {
 .clues-list p.highlight {
     background: rgba(0, 224, 255, 0.15);
     color: var(--primary-color);
-    transform: translateX(5px);
 }
 
-/* Tooltip Styles */
-.tooltip {
-    position: absolute;
-    background: rgba(0, 18, 32, 0.95);
-    color: white;
-    padding: 12px 15px;
-    border-radius: 8px;
-    display: none;
-    z-index: 100;
-    font-size: 14px;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    max-width: 250px;
-    border: 1px solid rgba(0, 224, 255, 0.2);
-    pointer-events: none;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.tooltip.show {
-    display: block;
-    animation: tooltipAppear 0.3s ease forwards;
-}
-
-.tooltip-content {
-    position: relative;
-}
-
-.tooltip-arrow {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    background: rgba(0, 18, 32, 0.95);
-    transform: rotate(45deg);
-    top: -5px;
-    left: 20px;
-    border-left: 1px solid rgba(0, 224, 255, 0.2);
-    border-top: 1px solid rgba(0, 224, 255, 0.2);
-}
-
-/* Solution Reveal Animation */
+/* Solution Reveal */
 .solution-reveal {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 18, 32, 0.98);
+    background: rgba(0, 18, 32, 0.95);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -283,10 +241,6 @@ body {
     pointer-events: auto;
 }
 
-.solution-content {
-    text-align: center;
-}
-
 .solution-letter {
     display: inline-block;
     font-size: 4rem;
@@ -294,18 +248,17 @@ body {
     text-shadow: 0 0 20px rgba(0, 224, 255, 0.5);
     opacity: 0;
     transform: translateY(20px);
-    margin: 0 5px;
+    margin: 0 10px;
 }
 
 .solution-letter.reveal {
     animation: letterReveal 0.5s ease forwards;
 }
 
-/* Button Styles */
+/* Button */
 .btn-check {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    display: block;
+    margin: 30px auto;
     padding: 15px 40px;
     font-size: 18px;
     color: white;
@@ -314,45 +267,20 @@ body {
     border-radius: 30px;
     cursor: pointer;
     transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(0, 224, 255, 0.2);
     font-family: var(--font-main);
 }
 
 .btn-check:hover {
     background: rgba(0, 224, 255, 0.2);
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 224, 255, 0.2);
-}
-
-.btn-check:active {
-    transform: translateY(0);
-}
-
-/* Footer Styles */
-footer {
-    text-align: center;
-    margin-top: 40px;
-    color: var(--primary-color);
-    font-size: 16px;
-}
-
-.heart {
-    display: inline-block;
-    color: var(--accent-color);
-    animation: heartbeat 1.5s ease-in-out infinite;
 }
 
 /* Animations */
-@keyframes tooltipAppear {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+@keyframes glow {
+    from { text-shadow: 0 0 10px rgba(0, 224, 255, 0.5),
+                       0 0 20px rgba(0, 224, 255, 0.3); }
+    to { text-shadow: 0 0 20px rgba(0, 224, 255, 0.7),
+                     0 0 30px rgba(0, 224, 255, 0.5); }
 }
 
 @keyframes letterReveal {
@@ -362,19 +290,22 @@ footer {
     }
 }
 
-@keyframes heartbeat {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-}
-
 /* Responsive Design */
-@media (max-width: 1200px) {
-    .clues-container {
-        grid-template-columns: 1fr;
+@media (max-width: 768px) {
+    :root {
+        --cell-size: 35px;
+    }
+
+    .cell {
+        font-size: 20px;
+    }
+
+    .title {
+        font-size: 2.5rem;
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 480px) {
     :root {
         --cell-size: 30px;
     }
@@ -383,37 +314,7 @@ footer {
         font-size: 16px;
     }
 
-    .title {
-        font-size: 2.5rem;
-    }
-
-    .solution-letter {
-        font-size: 3rem;
-    }
-}
-
-@media (max-width: 480px) {
-    :root {
-        --cell-size: 25px;
-    }
-
-    .cell {
-        font-size: 14px;
-    }
-
     .cell-number {
         font-size: 8px;
-    }
-
-    .solution-indicator {
-        font-size: 8px;
-    }
-
-    .title {
-        font-size: 2rem;
-    }
-
-    .solution-letter {
-        font-size: 2.5rem;
     }
 }
