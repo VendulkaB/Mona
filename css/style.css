@@ -1,10 +1,10 @@
 :root {
     --primary-color: #00e0ff;
     --secondary-color: #ffd700;
+    --accent-color: #ff1493;
     --bg-dark: #001220;
     --bg-medium: #002240;
     --cell-size: 45px;
-    --grid-color: rgba(0, 224, 255, 0.3);
     --font-main: 'Poppins', sans-serif;
 }
 
@@ -19,7 +19,7 @@ body {
     background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-medium) 100%);
     color: #ffffff;
     min-height: 100vh;
-    padding: 20px;
+    line-height: 1.6;
 }
 
 .main-container {
@@ -34,93 +34,85 @@ body {
     margin: 0 auto 30px;
     border-radius: 15px;
     overflow: hidden;
-    box-shadow: 0 8px 32px rgba(0, 224, 255, 0.15);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .photo-header img {
     width: 100%;
-    max-height: 200px;
+    height: 200px;
     object-fit: cover;
     display: block;
 }
 
-/* Title and Info */
+/* Title and Info Section */
 .title {
-    text-align: center;
-    color: var(--primary-color);
     font-size: 3rem;
+    color: var(--primary-color);
+    text-align: center;
     margin-bottom: 20px;
-    font-weight: 600;
-}
-
-.glow-effect {
-    text-shadow: 0 0 10px rgba(0, 224, 255, 0.5),
-                 0 0 20px rgba(0, 224, 255, 0.3);
+    text-shadow: 0 0 10px rgba(0, 224, 255, 0.5);
     animation: glow 2s ease-in-out infinite alternate;
 }
 
 .solution-info {
     text-align: center;
     color: var(--secondary-color);
-    margin-bottom: 30px;
     font-size: 1.2rem;
+    margin-bottom: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
 }
 
-/* Grid Layout */
-.game-layout {
+/* Game Section */
+.game-section {
     display: flex;
     gap: 40px;
     justify-content: center;
-    align-items: flex-start;
     flex-wrap: wrap;
     margin-bottom: 30px;
 }
 
 .crossword-area {
     position: relative;
-    padding: 20px;
     background: rgba(0, 47, 79, 0.3);
-    backdrop-filter: blur(10px);
+    padding: 25px;
     border-radius: 15px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
 }
 
+/* Grid Styles */
 .grid-container {
     display: grid;
     gap: 1px;
-    background-color: var(--grid-color);
+    background: var(--primary-color);
     padding: 1px;
     border-radius: 8px;
-    border: 1px solid var(--grid-color);
 }
 
 .cell-wrapper {
     position: relative;
     width: var(--cell-size);
     height: var(--cell-size);
-    background-color: var(--bg-dark);
+    background: var(--bg-dark);
     transition: all 0.2s ease;
 }
 
 .cell-wrapper.empty {
-    background-color: transparent;
-    pointer-events: none;
+    background: transparent;
 }
 
 .cell {
     width: 100%;
     height: 100%;
-    border: 1px solid rgba(0, 224, 255, 0.2);
+    border: none;
     background: transparent;
     color: white;
     font-size: 24px;
     text-align: center;
     text-transform: uppercase;
-    font-family: var(--font-main);
     padding: 0;
     transition: all 0.2s ease;
 }
@@ -131,9 +123,12 @@ body {
 
 .cell:focus {
     outline: none;
-    background-color: rgba(0, 224, 255, 0.1);
-    border-color: var(--primary-color);
-    box-shadow: 0 0 10px rgba(0, 224, 255, 0.2);
+    background: rgba(0, 224, 255, 0.1);
+    box-shadow: 0 0 10px rgba(0, 224, 255, 0.3) inset;
+}
+
+.cell.highlight {
+    background: rgba(0, 224, 255, 0.15);
 }
 
 .cell-number {
@@ -146,13 +141,8 @@ body {
 }
 
 .cell.solution-cell {
-    background-color: rgba(255, 215, 0, 0.1);
+    background: rgba(255, 215, 0, 0.1);
     border: 1px solid rgba(255, 215, 0, 0.3);
-}
-
-.cell.solution-cell:focus {
-    background-color: rgba(255, 215, 0, 0.2);
-    border-color: var(--secondary-color);
 }
 
 .solution-indicator {
@@ -163,19 +153,6 @@ body {
     color: var(--secondary-color);
     font-weight: bold;
     pointer-events: none;
-}
-
-/* Active Clue Display */
-.active-clue {
-    position: absolute;
-    bottom: -40px;
-    left: 0;
-    right: 0;
-    text-align: center;
-    color: var(--primary-color);
-    font-size: 1.1rem;
-    min-height: 30px;
-    transition: opacity 0.3s ease;
 }
 
 /* Clues Section */
@@ -191,6 +168,7 @@ body {
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
 }
 
 .clues-section h2 {
@@ -214,9 +192,27 @@ body {
     transform: translateX(5px);
 }
 
-.clues-list p.highlight {
-    background: rgba(0, 224, 255, 0.15);
+.clues-list p.active {
+    background: rgba(0, 224, 255, 0.2);
     color: var(--primary-color);
+}
+
+/* Tooltip */
+.tooltip {
+    position: absolute;
+    background: rgba(0, 18, 32, 0.95);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    display: none;
+    z-index: 1000;
+    font-size: 14px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    max-width: 250px;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 224, 255, 0.2);
 }
 
 /* Solution Reveal */
@@ -226,11 +222,11 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 18, 32, 0.95);
+    background: rgba(0, 18, 32, 0.98);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    z-index: 2000;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.5s ease;
@@ -239,6 +235,10 @@ body {
 .solution-reveal.show {
     opacity: 1;
     pointer-events: auto;
+}
+
+.solution-content {
+    text-align: center;
 }
 
 .solution-letter {
@@ -273,14 +273,26 @@ body {
 .btn-check:hover {
     background: rgba(0, 224, 255, 0.2);
     transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 224, 255, 0.2);
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    margin-top: 40px;
+    color: var(--primary-color);
+}
+
+.heart {
+    color: var(--accent-color);
+    display: inline-block;
+    animation: heartbeat 1.5s ease-in-out infinite;
 }
 
 /* Animations */
 @keyframes glow {
-    from { text-shadow: 0 0 10px rgba(0, 224, 255, 0.5),
-                       0 0 20px rgba(0, 224, 255, 0.3); }
-    to { text-shadow: 0 0 20px rgba(0, 224, 255, 0.7),
-                     0 0 30px rgba(0, 224, 255, 0.5); }
+    from { text-shadow: 0 0 10px rgba(0, 224, 255, 0.5); }
+    to { text-shadow: 0 0 20px rgba(0, 224, 255, 0.8); }
 }
 
 @keyframes letterReveal {
@@ -290,18 +302,23 @@ body {
     }
 }
 
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     :root {
         --cell-size: 35px;
     }
 
-    .cell {
-        font-size: 20px;
-    }
-
     .title {
         font-size: 2.5rem;
+    }
+
+    .solution-letter {
+        font-size: 3rem;
     }
 }
 
@@ -310,11 +327,20 @@ body {
         --cell-size: 30px;
     }
 
+    .title {
+        font-size: 2rem;
+    }
+
+    .solution-letter {
+        font-size: 2.5rem;
+        margin: 0 5px;
+    }
+
     .cell {
-        font-size: 16px;
+        font-size: 18px;
     }
 
     .cell-number {
-        font-size: 8px;
+        font-size: 10px;
     }
 }
