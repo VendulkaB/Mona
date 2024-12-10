@@ -3,7 +3,7 @@ const crosswordData = {
     solution: "OTEC FURA",
     words: {
         1: { 
-            clue: "Základní nástroj zahradníka", 
+            clue: "Zahradní nářadí s dřevěnou násadou", 
             answer: "MOTYKA", 
             row: 1, 
             col: 2, 
@@ -11,7 +11,7 @@ const crosswordData = {
             solutionLetters: {2: 0} // 'O' pro OTEC
         },
         2: { 
-            clue: "Starší název pro televizi", 
+            clue: "Zařízení na sledování filmů", 
             answer: "TELEVIZOR", 
             row: 1, 
             col: 3, 
@@ -19,7 +19,7 @@ const crosswordData = {
             solutionLetters: {3: 1} // 'T' pro OTEC
         },
         3: { 
-            clue: "Roční období", 
+            clue: "Jedno ze čtyř ročních období", 
             answer: "PODZIM", 
             row: 3, 
             col: 1, 
@@ -27,7 +27,7 @@ const crosswordData = {
             solutionLetters: {1: 2} // 'E' pro OTEC
         },
         4: { 
-            clue: "Český vynálezce lodního šroubu (Josef)", 
+            clue: "Josef, český vynálezce lodního šroubu", 
             answer: "RESSEL", 
             row: 4, 
             col: 3, 
@@ -35,7 +35,7 @@ const crosswordData = {
             solutionLetters: {4: 3} // 'C' pro OTEC
         },
         5: { 
-            clue: "Hudební nástroj s klaviaturou", 
+            clue: "Nástroj na hraní kláves", 
             answer: "FORTE", 
             row: 6, 
             col: 1, 
@@ -65,9 +65,66 @@ const crosswordData = {
             col: 5, 
             direction: "across",
             solutionLetters: {0: 7} // 'A' pro FURA
+        },
+        9: { 
+            clue: "Tajemství nebo záhada", 
+            answer: "MYSTERY", 
+            row: 2, 
+            col: 6, 
+            direction: "down"
+        },
+        10: { 
+            clue: "Domácí mazlíček, který štěká", 
+            answer: "PES", 
+            row: 5, 
+            col: 7, 
+            direction: "across"
+        },
+        11: { 
+            clue: "Třetí planeta sluneční soustavy", 
+            answer: "ZEME", 
+            row: 4, 
+            col: 9, 
+            direction: "down"
+        },
+        12: { 
+            clue: "Český básník Karel ___ Mácha", 
+            answer: "HYNEK", 
+            row: 8, 
+            col: 1, 
+            direction: "across"
+        },
+        13: { 
+            clue: "Opačný směr od jihu", 
+            answer: "SEVER", 
+            row: 7, 
+            col: 7, 
+            direction: "down"
+        },
+        14: { 
+            clue: "Hlavní město Francie", 
+            answer: "PARIZ", 
+            row: 3, 
+            col: 6, 
+            direction: "across"
+        },
+        15: { 
+            clue: "Planeta známá jako červená", 
+            answer: "MARS", 
+            row: 9, 
+            col: 3, 
+            direction: "across"
+        },
+        16: { 
+            clue: "Zpěvné ptactvo", 
+            answer: "SLAVIK", 
+            row: 5, 
+            col: 10, 
+            direction: "down"
         }
     }
 };
+
 
 // Inicializace
 document.addEventListener('DOMContentLoaded', () => {
