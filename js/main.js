@@ -1,127 +1,99 @@
 // Crossword data structure
 const crosswordData = {
-    size: 15,
+    size: 12,
     solution: "OTEC FURA",
     words: {
         1: { 
-            clue: "Pevná část motoru", 
-            answer: "STATOR", 
+            clue: "Ruční nářadí na kopání", 
+            answer: "MOTYKA", 
             row: 1, 
-            col: 3, 
+            col: 2, 
             direction: "across",
-            solutionLetters: {2: 0} // 'O' pro OTEC
+            solutionLetters: {1: 0} // 'O' pro OTEC
         },
         2: { 
-            clue: "Silniční poplatek", 
-            answer: "MYTNE", 
+            clue: "Stroj na lisování", 
+            answer: "LIS", 
+            row: 1, 
+            col: 2, 
+            direction: "down"
+        },
+        3: { 
+            clue: "Pomůcka k psaní", 
+            answer: "TUZKA", 
             row: 2, 
             col: 1, 
             direction: "across",
-            solutionLetters: {2: 1} // 'T' pro OTEC
-        },
-        3: { 
-            clue: "Nemocniční oddělení", 
-            answer: "INTERNA", 
-            row: 3, 
-            col: 4, 
-            direction: "down",
-            solutionLetters: {3: 2} // 'E' pro OTEC
+            solutionLetters: {0: 1} // 'T' pro OTEC
         },
         4: { 
-            clue: "Část molekuly vody", 
-            answer: "VODIK", 
-            row: 1, 
-            col: 5, 
-            direction: "down",
-            solutionLetters: {4: 3} // 'C' pro OTEC
+            clue: "Český vědec (Jaroslav)", 
+            answer: "HEYROVSKY", 
+            row: 3, 
+            col: 3, 
+            direction: "across",
+            solutionLetters: {1: 2} // 'E' pro OTEC
         },
         5: { 
-            clue: "Hlavní město Francie", 
-            answer: "PARIZ", 
+            clue: "Italská metropole", 
+            answer: "ROMA", 
             row: 4, 
             col: 2, 
             direction: "across",
-            solutionLetters: {3: 4} // 'F' pro FURA
+            solutionLetters: {0: 3} // 'C' pro OTEC
         },
         6: { 
-            clue: "Severský mořský pták", 
-            answer: "ALKA", 
+            clue: "Lesní plod", 
+            answer: "FIALKA", 
             row: 5, 
-            col: 6, 
+            col: 1, 
             direction: "across",
-            solutionLetters: {2: 5} // 'U' pro FURA
+            solutionLetters: {0: 4} // 'F' pro FURA
         },
         7: { 
-            clue: "Český hudebník (Karel)", 
-            answer: "KRYL", 
+            clue: "Část vozu", 
+            answer: "UHEL", 
             row: 6, 
             col: 3, 
             direction: "across",
-            solutionLetters: {1: 6} // 'R' pro FURA
+            solutionLetters: {0: 5} // 'U' pro FURA
         },
         8: { 
-            clue: "Jméno herce Rodena", 
-            answer: "KAREL", 
-            row: 3, 
-            col: 7, 
-            direction: "down",
-            solutionLetters: {3: 7} // 'A' pro FURA
-        },
-        9: {
-            clue: "Část svíčky", 
-            answer: "KNOT", 
-            row: 2, 
-            col: 8, 
-            direction: "down"
-        },
-        10: {
-            clue: "Plemeno psa", 
-            answer: "BOXR", 
+            clue: "Druh obilí", 
+            answer: "RÝŽE", 
             row: 7, 
-            col: 1, 
-            direction: "across"
+            col: 2, 
+            direction: "across",
+            solutionLetters: {0: 6} // 'R' pro FURA
         },
-        11: {
-            clue: "Část nohy", 
-            answer: "PATA", 
-            row: 5, 
-            col: 1, 
-            direction: "down"
-        },
-        12: {
-            clue: "Tužkou nakreslený obrázek", 
-            answer: "SKICA", 
+        9: { 
+            clue: "Planetka", 
+            answer: "ADAM", 
             row: 8, 
             col: 4, 
-            direction: "across"
+            direction: "across",
+            solutionLetters: {0: 7} // 'A' pro FURA
         },
-        13: {
-            clue: "Dopravní prostředek", 
-            answer: "METRO", 
-            row: 4, 
-            col: 8, 
+        10: {
+            clue: "České pohoří", 
+            answer: "TATRY", 
+            row: 2, 
+            col: 5, 
             direction: "down"
         },
-        14: {
-            clue: "Citoslovce bolesti", 
-            answer: "AU", 
-            row: 9, 
-            col: 6, 
-            direction: "across"
-        },
-        15: {
-            clue: "Český zpěvák (Václav)", 
-            answer: "NECKAR", 
-            row: 6, 
-            col: 7, 
-            direction: "down"
-        },
-        16: {
-            clue: "Chemická značka dusíku", 
-            answer: "N", 
+        11: {
+            clue: "Chemická značka sodíku", 
+            answer: "NA", 
             row: 3, 
-            col: 10, 
+            col: 7, 
             direction: "across"
+        },
+        12: {
+            clue: "Proud vody", 
+            answer: "TOK", 
+            row: 4, 
+            col: 6, 
+            direction: "down"
         }
     }
 };
@@ -131,62 +103,86 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeCrossword();
 });
 
-// Initialize all crossword components
 function initializeCrossword() {
     createGrid();
     generateClues();
     setupEventListeners();
-    setupTooltip();
 }
 
-// Create the crossword grid
 function createGrid() {
     const grid = document.getElementById('crosswordGrid');
     grid.innerHTML = '';
+    
+    // Find actual grid dimensions
+    let maxRow = 0;
+    let maxCol = 0;
+    const usedCells = new Set();
+    
+    // Calculate grid size and mark used cells
+    Object.values(crosswordData.words).forEach(word => {
+        const { row, col, answer, direction } = word;
+        for (let i = 0; i < answer.length; i++) {
+            const currentRow = direction === 'across' ? row : row + i;
+            const currentCol = direction === 'across' ? col + i : col;
+            maxRow = Math.max(maxRow, currentRow);
+            maxCol = Math.max(maxCol, currentCol);
+            usedCells.add(`${currentRow}-${currentCol}`);
+        }
+    });
 
-    // Create cells
-    for (let i = 1; i <= crosswordData.size; i++) {
-        for (let j = 1; j <= crosswordData.size; j++) {
+    // Set grid dimensions
+    grid.style.gridTemplateRows = `repeat(${maxRow}, var(--cell-size))`;
+    grid.style.gridTemplateColumns = `repeat(${maxCol}, var(--cell-size))`;
+
+    // Create only necessary cells
+    for (let i = 1; i <= maxRow; i++) {
+        for (let j = 1; j <= maxCol; j++) {
             const wrapper = document.createElement('div');
             wrapper.className = 'cell-wrapper';
+            wrapper.style.gridRow = i;
+            wrapper.style.gridColumn = j;
             
-            const cell = document.createElement('input');
-            cell.type = 'text';
-            cell.maxLength = 1;
-            cell.className = 'cell';
-            cell.dataset.row = i;
-            cell.dataset.col = j;
-            cell.disabled = true;
+            if (!usedCells.has(`${i}-${j}`)) {
+                wrapper.classList.add('empty');
+            } else {
+                const cell = document.createElement('input');
+                cell.type = 'text';
+                cell.maxLength = 1;
+                cell.className = 'cell';
+                cell.dataset.row = i;
+                cell.dataset.col = j;
+                wrapper.appendChild(cell);
+            }
             
-            wrapper.appendChild(cell);
             grid.appendChild(wrapper);
         }
     }
 
-    // Enable cells and add numbers
+    // Enable cells for words and add numbers
     const numberedCells = new Set();
     Object.entries(crosswordData.words).forEach(([id, word]) => {
-        enableWordCells(id, word);
-        
-        // Add cell number
-        const cellId = `${word.row}-${word.col}`;
-        if (!numberedCells.has(cellId)) {
-            const cell = findCell(word.row, word.col);
-            if (cell) {
-                const wrapper = cell.closest('.cell-wrapper');
-                const number = document.createElement('div');
-                number.className = 'cell-number';
-                number.textContent = id;
-                wrapper.appendChild(number);
-                numberedCells.add(cellId);
-            }
-        }
+        enableWordCells(id, word, numberedCells);
     });
 }
-// Enable cells for a word
-function enableWordCells(id, word) {
+
+function enableWordCells(id, word, numberedCells) {
     const { row, col, answer, direction, solutionLetters } = word;
     
+    // Add cell number if needed
+    const cellId = `${row}-${col}`;
+    if (!numberedCells.has(cellId)) {
+        const cell = findCell(row, col);
+        if (cell) {
+            const wrapper = cell.closest('.cell-wrapper');
+            const number = document.createElement('div');
+            number.className = 'cell-number';
+            number.textContent = id;
+            wrapper.appendChild(number);
+            numberedCells.add(cellId);
+        }
+    }
+
+    // Enable cells for the word
     for (let i = 0; i < answer.length; i++) {
         const currentRow = direction === 'across' ? row : row + i;
         const currentCol = direction === 'across' ? col + i : col;
@@ -209,8 +205,7 @@ function enableWordCells(id, word) {
         }
     }
 }
-
-// Generate clues
+// Generate clues with enhanced interaction
 function generateClues() {
     const acrossClues = document.getElementById('acrossClues');
     const downClues = document.getElementById('downClues');
@@ -223,6 +218,8 @@ function generateClues() {
             const clueElement = document.createElement('p');
             clueElement.textContent = `${id}. ${word.clue}`;
             clueElement.dataset.id = id;
+            clueElement.dataset.direction = word.direction;
+
             clueElement.addEventListener('click', () => {
                 highlightWord(id);
                 focusFirstCell(word);
@@ -236,7 +233,7 @@ function generateClues() {
         });
 }
 
-// Setup event listeners
+// Setup event listeners for all interactive elements
 function setupEventListeners() {
     document.querySelectorAll('.cell:not([disabled])').forEach(cell => {
         cell.addEventListener('input', handleInput);
@@ -248,29 +245,7 @@ function setupEventListeners() {
     });
 }
 
-// Setup tooltip
-function setupTooltip() {
-    const tooltip = document.getElementById('tooltip');
-    if (!tooltip) {
-        const newTooltip = document.createElement('div');
-        newTooltip.id = 'tooltip';
-        newTooltip.className = 'tooltip';
-        document.body.appendChild(newTooltip);
-    }
-}
-
-// Handle input
-function handleInput(event) {
-    const cell = event.target;
-    cell.value = cell.value.toUpperCase();
-    
-    if (cell.value) {
-        checkWord(cell);
-        moveToNextCell(cell);
-    }
-}
-
-// Show tooltip
+// Enhanced tooltip handling
 function showTooltip(event) {
     const cell = event.target;
     const wordId = cell.dataset.wordId;
@@ -278,46 +253,79 @@ function showTooltip(event) {
     const tooltip = document.getElementById('tooltip');
     
     if (tooltip && word) {
-        tooltip.textContent = `${wordId}. ${word.clue}`;
-        tooltip.style.display = 'block';
+        const tooltipContent = `${wordId}. ${word.clue} (${word.answer.length} písmen)`;
+        tooltip.querySelector('.tooltip-content').textContent = tooltipContent;
         
         const rect = cell.getBoundingClientRect();
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
         
-        tooltip.style.top = `${rect.bottom + scrollTop + 5}px`;
-        tooltip.style.left = `${rect.left + scrollLeft}px`;
+        tooltip.style.top = `${rect.bottom + scrollTop + 10}px`;
+        tooltip.style.left = `${rect.left + scrollLeft - 10}px`;
         
-        // Highlight current word
+        tooltip.classList.add('show');
         highlightWord(wordId);
     }
 }
 
-// Hide tooltip
 function hideTooltip() {
     const tooltip = document.getElementById('tooltip');
     if (tooltip) {
-        tooltip.style.display = 'none';
+        tooltip.classList.remove('show');
+    }
+}
+
+// Handle input in cells
+function handleInput(event) {
+    const cell = event.target;
+    cell.value = cell.value.toUpperCase();
+    
+    if (cell.value) {
+        validateCell(cell);
+        moveToNextCellInWord(cell);
+    }
+}
+
+// Move to next cell within the same word
+function moveToNextCellInWord(cell) {
+    const wordId = cell.dataset.wordId;
+    const word = crosswordData.words[wordId];
+    const currentIndex = parseInt(cell.dataset.index);
+    
+    if (currentIndex < word.answer.length - 1) {
+        const nextRow = word.direction === 'across' ? word.row : word.row + currentIndex + 1;
+        const nextCol = word.direction === 'across' ? word.col + currentIndex + 1 : word.col;
+        const nextCell = findCell(nextRow, nextCol);
+        if (nextCell) {
+            nextCell.focus();
+        }
     }
 }
 
 // Handle keyboard navigation
 function handleKeydown(event) {
     const cell = event.target;
+    const wordId = cell.dataset.wordId;
+    const word = crosswordData.words[wordId];
+    const currentIndex = parseInt(cell.dataset.index);
     
     switch (event.key) {
-        case 'ArrowRight':
+        case 'Backspace':
+            handleBackspace(event, cell, word, currentIndex);
+            break;
         case 'ArrowLeft':
+        case 'ArrowRight':
+            if (word.direction === 'across') {
+                event.preventDefault();
+                handleHorizontalNavigation(event.key, cell, word, currentIndex);
+            }
+            break;
         case 'ArrowUp':
         case 'ArrowDown':
-            event.preventDefault();
-            handleArrowKey(event.key, cell);
-            break;
-        case 'Backspace':
-            handleBackspace(event, cell);
-            break;
-        case 'Delete':
-            cell.value = '';
+            if (word.direction === 'down') {
+                event.preventDefault();
+                handleVerticalNavigation(event.key, cell, word, currentIndex);
+            }
             break;
         case 'Tab':
             event.preventDefault();
@@ -326,79 +334,48 @@ function handleKeydown(event) {
     }
 }
 
-// Handle arrow key navigation
-function handleArrowKey(key, cell) {
-    const movements = {
-        'ArrowRight': [0, 1],
-        'ArrowLeft': [0, -1],
-        'ArrowUp': [-1, 0],
-        'ArrowDown': [1, 0]
-    };
-    const [rowDelta, colDelta] = movements[key];
-    moveFocus(cell, rowDelta, colDelta);
-}
-
-// Handle backspace
-function handleBackspace(event, cell) {
+// Handle backspace key
+function handleBackspace(event, cell, word, currentIndex) {
     if (!cell.value) {
         event.preventDefault();
-        const prevCell = findPrevCell(cell);
-        if (prevCell) {
-            prevCell.focus();
-            prevCell.value = '';
+        if (currentIndex > 0) {
+            const prevRow = word.direction === 'across' ? word.row : word.row + currentIndex - 1;
+            const prevCol = word.direction === 'across' ? word.col + currentIndex - 1 : word.col;
+            const prevCell = findCell(prevRow, prevCol);
+            if (prevCell) {
+                prevCell.focus();
+                prevCell.value = '';
+            }
         }
     }
 }
 
-// Focus first cell of a word
-function focusFirstCell(word) {
-    const cell = findCell(word.row, word.col);
-    if (cell) {
-        cell.focus();
-    }
-}
-// Move focus in specified direction
-function moveFocus(cell, rowDelta, colDelta) {
-    const currentRow = parseInt(cell.dataset.row);
-    const currentCol = parseInt(cell.dataset.col);
-    const nextCell = findCell(currentRow + rowDelta, currentCol + colDelta);
-    if (nextCell && !nextCell.disabled) {
-        nextCell.focus();
+// Handle horizontal navigation
+function handleHorizontalNavigation(key, cell, word, currentIndex) {
+    const delta = key === 'ArrowRight' ? 1 : -1;
+    const newIndex = currentIndex + delta;
+    
+    if (newIndex >= 0 && newIndex < word.answer.length) {
+        const nextCell = findCell(word.row, word.col + newIndex);
+        if (nextCell) {
+            nextCell.focus();
+        }
     }
 }
 
-// Move to next cell
-function moveToNextCell(cell) {
-    const direction = cell.dataset.direction;
-    const nextCell = findNextCell(cell, direction);
-    if (nextCell && !nextCell.disabled) {
-        nextCell.focus();
+// Handle vertical navigation
+function handleVerticalNavigation(key, cell, word, currentIndex) {
+    const delta = key === 'ArrowDown' ? 1 : -1;
+    const newIndex = currentIndex + delta;
+    
+    if (newIndex >= 0 && newIndex < word.answer.length) {
+        const nextCell = findCell(word.row + newIndex, word.col);
+        if (nextCell) {
+            nextCell.focus();
+        }
     }
 }
-
-// Move to next word
-function moveToNextWord(cell, reverse = false) {
-    const currentWordId = parseInt(cell.dataset.wordId);
-    const wordIds = Object.keys(crosswordData.words)
-        .map(Number)
-        .sort((a, b) => a - b);
-    
-    const currentIndex = wordIds.indexOf(currentWordId);
-    const nextIndex = reverse ? 
-        (currentIndex - 1 + wordIds.length) % wordIds.length : 
-        (currentIndex + 1) % wordIds.length;
-    
-    const nextWordId = wordIds[nextIndex];
-    const nextWord = crosswordData.words[nextWordId];
-    const nextCell = findCell(nextWord.row, nextWord.col);
-    
-    if (nextCell) {
-        nextCell.focus();
-        highlightWord(nextWordId);
-    }
-}
-
-// Highlight word
+// Highlight active word
 function highlightWord(wordId) {
     // Remove previous highlights
     document.querySelectorAll('.cell.highlight, .clues-list p.highlight')
@@ -408,8 +385,14 @@ function highlightWord(wordId) {
     if (!word) return;
 
     // Highlight cells
-    const cells = getWordCells(word);
-    cells.forEach(cell => cell.classList.add('highlight'));
+    for (let i = 0; i < word.answer.length; i++) {
+        const currentRow = word.direction === 'across' ? word.row : word.row + i;
+        const currentCol = word.direction === 'across' ? word.col + i : word.col;
+        const cell = findCell(currentRow, currentCol);
+        if (cell) {
+            cell.classList.add('highlight');
+        }
+    }
 
     // Highlight clue
     const clue = document.querySelector(`.clues-list p[data-id="${wordId}"]`);
@@ -419,18 +402,31 @@ function highlightWord(wordId) {
     }
 }
 
-// Check word completion
-function checkWord(cell) {
+// Validate cell input
+function validateCell(cell) {
     const wordId = cell.dataset.wordId;
     const word = crosswordData.words[wordId];
-    const userAnswer = getUserAnswer(word);
+    const index = parseInt(cell.dataset.index);
     
-    if (userAnswer.length === word.answer.length) {
-        const isCorrect = userAnswer === word.answer;
-        const cells = getWordCells(word);
+    if (cell.value.toUpperCase() === word.answer[index]) {
+        cell.classList.add('correct');
+        checkWordCompletion(word);
+    } else {
+        cell.classList.remove('correct');
+    }
+}
+
+// Check if word is complete
+function checkWordCompletion(word) {
+    const cells = getWordCells(word);
+    const isComplete = cells.every(cell => 
+        cell.value.toUpperCase() === word.answer[parseInt(cell.dataset.index)]
+    );
+    
+    if (isComplete) {
         cells.forEach(cell => {
-            cell.classList.toggle('correct', isCorrect);
-            if (isCorrect && cell.classList.contains('solution-cell')) {
+            cell.classList.add('correct');
+            if (cell.classList.contains('solution-cell')) {
                 cell.classList.add('solution-revealed');
             }
         });
@@ -440,49 +436,53 @@ function checkWord(cell) {
 // Get cells for a word
 function getWordCells(word) {
     const cells = [];
-    const { row, col, answer, direction } = word;
-    
-    for (let i = 0; i < answer.length; i++) {
-        const currentRow = direction === 'across' ? row : row + i;
-        const currentCol = direction === 'across' ? col + i : col;
+    for (let i = 0; i < word.answer.length; i++) {
+        const currentRow = word.direction === 'across' ? word.row : word.row + i;
+        const currentCol = word.direction === 'across' ? word.col + i : word.col;
         const cell = findCell(currentRow, currentCol);
         if (cell) cells.push(cell);
     }
     return cells;
 }
 
-// Get user's answer for a word
-function getUserAnswer(word) {
-    const cells = getWordCells(word);
-    return cells.map(cell => cell.value || '').join('').toUpperCase();
-}
-
-// Helper functions
-function findCell(row, col) {
-    return document.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
-}
-
-function findNextCell(cell, direction) {
-    const currentRow = parseInt(cell.dataset.row);
-    const currentCol = parseInt(cell.dataset.col);
+// Show solution animation
+function showSolutionAnimation(solution) {
+    const reveal = document.getElementById('solutionReveal');
+    const content = reveal.querySelector('.solution-content');
+    content.innerHTML = '';
     
-    if (direction === 'across') {
-        return findCell(currentRow, currentCol + 1);
-    } else {
-        return findCell(currentRow + 1, currentCol);
-    }
-}
+    // Create letters with staggered animation
+    solution.split('').forEach((letter, index) => {
+        const span = document.createElement('span');
+        span.className = 'solution-letter';
+        span.textContent = letter;
+        span.style.animationDelay = `${index * 0.1}s`;
+        content.appendChild(span);
+        
+        // Add space after OTEC
+        if (index === 3) {
+            const space = document.createElement('span');
+            space.className = 'solution-letter';
+            space.innerHTML = '&nbsp;';
+            space.style.animationDelay = `${index * 0.1}s`;
+            content.appendChild(space);
+        }
+    });
 
-function findPrevCell(cell) {
-    const currentRow = parseInt(cell.dataset.row);
-    const currentCol = parseInt(cell.dataset.col);
-    const direction = cell.dataset.direction;
+    // Show the reveal container
+    reveal.classList.add('show');
     
-    if (direction === 'across') {
-        return findCell(currentRow, currentCol - 1);
-    } else {
-        return findCell(currentRow - 1, currentCol);
-    }
+    // Trigger letter animations
+    setTimeout(() => {
+        document.querySelectorAll('.solution-letter').forEach(letter => {
+            letter.classList.add('reveal');
+        });
+    }, 100);
+
+    // Add click to dismiss
+    reveal.addEventListener('click', () => {
+        reveal.classList.remove('show');
+    }, { once: true });
 }
 
 // Check complete solution
@@ -493,11 +493,9 @@ function checkSolution() {
     let incorrectWords = [];
 
     Object.entries(crosswordData.words).forEach(([id, word]) => {
-        const userAnswer = getUserAnswer(word);
-        
+        const userAnswer = getWordAnswer(word);
         if (userAnswer === word.answer) {
             correct++;
-            // Add solution letters if word is correct
             if (word.solutionLetters) {
                 Object.entries(word.solutionLetters).forEach(([letterIndex, solutionIndex]) => {
                     revealedSolution[solutionIndex] = word.answer[letterIndex];
@@ -509,64 +507,42 @@ function checkSolution() {
         total++;
     });
 
-    const percentage = Math.round((correct / total) * 100);
-    const solution = revealedSolution.join('');
-    
     if (correct === total) {
-        createSuccessModal(`
-            <h2>🎉 Gratulujeme! 🎉</h2>
-            <p>Úspěšně jste vyřešili křížovku!</p>
-            <p>Tajenka je: <strong>${solution}</strong></p>
-        `);
-        
-        // Highlight all solution cells
-        document.querySelectorAll('.solution-cell').forEach(cell => {
-            cell.classList.add('solution-revealed');
-        });
+        const solution = revealedSolution.join('');
+        showSolutionAnimation(solution);
     } else {
-        const message = `
-            <h2>Ještě to není ono...</h2>
-            <p>Správně vyplněno: ${correct} z ${total} slov (${percentage}%)</p>
-            ${incorrectWords.length > 0 ? 
-                `<p>Zkontrolujte slova s čísly: ${incorrectWords.join(', ')}</p>` : 
-                ''}
-        `;
-        createInfoModal(message);
+        const percentage = Math.round((correct / total) * 100);
+        alert(`Správně vyplněno: ${correct} z ${total} slov (${percentage}%)\n` +
+              `Zkontrolujte slova s čísly: ${incorrectWords.join(', ')}`);
     }
 }
 
-// Create modal for messages
-function createModal(content, type = 'info') {
-    const modal = document.createElement('div');
-    modal.className = `modal modal-${type}`;
-    modal.innerHTML = `
-        <div class="modal-content">
-            ${content}
-            <button class="modal-close">Zavřít</button>
-        </div>
-    `;
-    
-    document.body.appendChild(modal);
-    
-    const closeBtn = modal.querySelector('.modal-close');
-    closeBtn.addEventListener('click', () => {
-        modal.remove();
-    });
-
-    setTimeout(() => {
-        modal.classList.add('show');
-    }, 10);
+// Helper functions
+function findCell(row, col) {
+    return document.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
 }
 
-function createSuccessModal(content) {
-    createModal(content, 'success');
+function focusFirstCell(word) {
+    const firstCell = findCell(word.row, word.col);
+    if (firstCell) {
+        firstCell.focus();
+    }
 }
 
-function createInfoModal(content) {
-    createModal(content, 'info');
+function getWordAnswer(word) {
+    let answer = '';
+    for (let i = 0; i < word.answer.length; i++) {
+        const currentRow = word.direction === 'across' ? word.row : word.row + i;
+        const currentCol = word.direction === 'across' ? word.col + i : word.col;
+        const cell = findCell(currentRow, currentCol);
+        if (cell) {
+            answer += (cell.value || '').toUpperCase();
+        }
+    }
+    return answer;
 }
 
-// Handle focus and blur events
+// Handle focus and blur
 function handleFocus(event) {
     const cell = event.target;
     const wordId = cell.dataset.wordId;
@@ -575,7 +551,7 @@ function handleFocus(event) {
     }
 }
 
-function handleBlur(event) {
-    // Optional: Remove highlights
-    // Keeping highlights for better UX
+function handleBlur() {
+    // Optional: Remove highlights on blur
+    // Currently kept for better UX
 }
