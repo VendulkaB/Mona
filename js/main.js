@@ -3,96 +3,68 @@ const crosswordData = {
     solution: "OTEC FURA",
     words: {
         1: { 
-            clue: "Základní nástroj zahradníka", 
-            answer: "MOTYKA", 
+            clue: "Vodní tok menší než řeka", 
+            answer: "POTOK", 
             row: 1, 
-            col: 2, 
+            col: 1, 
             direction: "across",
-            solutionLetters: {2: 0} // 'O' pro OTEC
+            solutionLetters: {1: 0} // 'O' pro OTEC
         },
         2: { 
-            clue: "Starší název pro televizi", 
-            answer: "TELEVIZOR", 
-            row: 1, 
-            col: 3, 
-            direction: "down",
-            solutionLetters: {3: 1} // 'T' pro OTEC
+            clue: "Vodní rostlina s velkými květy", 
+            answer: "LOTOS", 
+            row: 2, 
+            col: 1, 
+            direction: "across",
+            solutionLetters: {1: 1} // 'T' pro OTEC
         },
         3: { 
-            clue: "Roční období", 
-            answer: "PODZIM", 
+            clue: "Vesmírné těleso, které shoří v atmosféře", 
+            answer: "METEOR", 
             row: 3, 
             col: 1, 
             direction: "across",
-            solutionLetters: {1: 2} // 'E' pro OTEC
+            solutionLetters: {2: 2} // 'E' pro OTEC
         },
         4: { 
-            clue: "Český vynálezce lodního šroubu (Josef)", 
-            answer: "RESSEL", 
+            clue: "Část ruky nebo nohy", 
+            answer: "PALEC", 
             row: 4, 
-            col: 3, 
+            col: 1, 
             direction: "across",
-            solutionLetters: {4: 3} // 'C' pro OTEC
+            solutionLetters: {3: 3} // 'C' pro OTEC
         },
         5: { 
-            clue: "Hudební nástroj s klaviaturou", 
-            answer: "FORTE", 
-            row: 6, 
+            clue: "Pouštní liška", 
+            answer: "FENKA", 
+            row: 5, 
             col: 1, 
             direction: "across",
             solutionLetters: {0: 4} // 'F' pro FURA
         },
         6: { 
-            clue: "Chemická značka uranu", 
-            answer: "U", 
+            clue: "Přístroj na měření času", 
+            answer: "BUDIK", 
             row: 6, 
-            col: 8, 
+            col: 1, 
             direction: "across",
             solutionLetters: {0: 5} // 'U' pro FURA
         },
         7: { 
-            clue: "Hlavní město Lotyšska", 
-            answer: "RIGA", 
+            clue: "Mořský živočich tvořící útesy", 
+            answer: "KORAL", 
             row: 7, 
-            col: 2, 
+            col: 1, 
             direction: "across",
             solutionLetters: {0: 6} // 'R' pro FURA
         },
         8: { 
-            clue: "První písmeno abecedy", 
-            answer: "A", 
+            clue: "Hlavní město ČR", 
+            answer: "PRAHA", 
             row: 8, 
-            col: 5, 
+            col: 1, 
             direction: "across",
             solutionLetters: {0: 7} // 'A' pro FURA
-        },
-        9: {
-            clue: "Český král (Karel IV.)", 
-            answer: "KAREL", 
-            row: 2, 
-            col: 7, 
-            direction: "down"
-        },
-        10: {
-            clue: "Značka českých hodinek", 
-            answer: "PRIM", 
-            row: 3, 
-            col: 5, 
-            direction: "down"
-        },
-        11: {
-            clue: "Hlavní město Norska",
-            answer: "OSLO",
-            row: 2, 
-            col: 9, 
-            direction: "down"
-        },
-        12: {
-            clue: "Český hudební skladatel (Bedřich)",
-            answer: "SMETANA",
-            row: 5, 
-            col: 2, 
-            direction: "across"
         }
     }
 };
@@ -151,6 +123,7 @@ function createGrid() {
         enableWordCells(id, word, numberedCells);
     });
 }
+
 function createCell(grid, row, col) {
     const wrapper = document.createElement('div');
     wrapper.className = 'cell-wrapper';
@@ -217,11 +190,13 @@ function enableWordCells(id, word, numberedCells) {
     }
 }
 
+function findCell(row, col) {
+    return document.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
+}
+
 function generateClues() {
     const acrossClues = document.getElementById('acrossClues');
-    const downClues = document.getElementById('downClues');
     acrossClues.innerHTML = '';
-    downClues.innerHTML = '';
 
     Object.entries(crosswordData.words)
         .sort((a, b) => parseInt(a[0]) - parseInt(b[0]))
@@ -237,11 +212,7 @@ function generateClues() {
                 showActiveClue(word.clue, id);
             });
 
-            if (word.direction === 'across') {
-                acrossClues.appendChild(clueElement);
-            } else {
-                downClues.appendChild(clueElement);
-            }
+            acrossClues.appendChild(clueElement);
         });
 }
 
@@ -252,7 +223,7 @@ function setupTooltips() {
             const word = crosswordData.words[wordId];
             const tooltip = document.createElement('div');
             tooltip.className = 'tooltip';
-            tooltip.textContent = `${wordId}. ${word.clue} (${word.direction === 'across' ? 'vodorovně' : 'svisle'})`;
+            tooltip.textContent = `${wordId}. ${word.clue} (vodorovně)`;
             cell.parentElement.appendChild(tooltip);
         }
     });
@@ -300,22 +271,18 @@ function handleKeydown(event) {
             break;
             
         case 'ArrowRight':
-        case 'ArrowLeft':
             if (word.direction === 'across') {
                 event.preventDefault();
-                const delta = event.key === 'ArrowRight' ? 1 : -1;
-                const nextCell = findNextCellInWord(word, index + delta);
+                const nextCell = findNextCellInWord(word, index + 1);
                 if (nextCell) nextCell.focus();
             }
             break;
             
-        case 'ArrowUp':
-        case 'ArrowDown':
-            if (word.direction === 'down') {
+        case 'ArrowLeft':
+            if (word.direction === 'across') {
                 event.preventDefault();
-                const delta = event.key === 'ArrowDown' ? 1 : -1;
-                const nextCell = findNextCellInWord(word, index + delta);
-                if (nextCell) nextCell.focus();
+                const prevCell = findPreviousCellInWord(word, index);
+                if (prevCell) prevCell.focus();
             }
             break;
             
