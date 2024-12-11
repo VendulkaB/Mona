@@ -16,7 +16,7 @@ const crosswordData = {
             row: 2, 
             col: 1, 
             direction: "across",
-            solutionLetters: {1: 1} // 'T' pro OTEC
+            solutionLetters: {2: 1} // 'T' pro OTEC
         },
         3: { 
             clue: "Vesmírné těleso, které shoří v atmosféře", 
@@ -24,7 +24,7 @@ const crosswordData = {
             row: 3, 
             col: 1, 
             direction: "across",
-            solutionLetters: {2: 2} // 'E' pro OTEC
+            solutionLetters: {1: 2} // 'E' pro OTEC
         },
         4: { 
             clue: "Část ruky nebo nohy", 
@@ -32,7 +32,7 @@ const crosswordData = {
             row: 4, 
             col: 1, 
             direction: "across",
-            solutionLetters: {3: 3} // 'C' pro OTEC
+            solutionLetters: {4: 3} // 'C' pro OTEC
         },
         5: { 
             clue: "Pouštní liška", 
@@ -48,7 +48,7 @@ const crosswordData = {
             row: 6, 
             col: 1, 
             direction: "across",
-            solutionLetters: {0: 5} // 'U' pro FURA
+            solutionLetters: {1: 5} // 'U' pro FURA
         },
         7: { 
             clue: "Mořský živočich tvořící útesy", 
@@ -56,7 +56,7 @@ const crosswordData = {
             row: 7, 
             col: 1, 
             direction: "across",
-            solutionLetters: {0: 6} // 'R' pro FURA
+            solutionLetters: {2: 6} // 'R' pro FURA
         },
         8: { 
             clue: "Hlavní město ČR", 
@@ -64,7 +64,7 @@ const crosswordData = {
             row: 8, 
             col: 1, 
             direction: "across",
-            solutionLetters: {0: 7} // 'A' pro FURA
+            solutionLetters: {4: 7} // 'A' pro FURA
         }
     }
 };
